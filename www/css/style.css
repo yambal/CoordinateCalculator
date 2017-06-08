@@ -24,3 +24,15 @@ body {
     width: 20%;
     display: inline-block;
 }
+
+.teble{
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+.teble .teble-cell{
+	display: table-cell;
+}
+.teble .teble-cell.vm{
+	vertical-align: middle;
+}
