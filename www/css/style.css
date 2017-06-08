@@ -19,3 +19,7 @@ body {
 #keyboad .keyboad-row {
     height: 20%;
 }
+
+#keyboad .keyboad-row .keyboad-col {
+    width: 20%;
+}
