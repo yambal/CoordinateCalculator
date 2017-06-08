@@ -17,14 +17,16 @@ body {
 }
 
 #keyboad .keyboad-row {
-    height: 20%;
-    text-align: center;
+    	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
 }
 
 #keyboad .keyboad-row .keyboad-col {
-    width: 18.5vmin;
-    display: inline-block;
-    height: 100%;
+	width: 20%;
 }
 
 .teble{
