@@ -5,3 +5,13 @@ body {
     width: 100%;
     height: 100%;
 }
+
+#display{
+	width:100vmin;
+	height: calc(100vmax - 125vmin);
+}
+
+#keyboad{
+	width:100vmin;
+	height:100vmin;
+}
