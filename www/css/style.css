@@ -23,6 +23,7 @@ body {
 	justify-content: flex-start;
 	align-items: stretch;
 	align-content: stretch;
+	height: 20vmin;
 }
 
 #keyboad .keyboad-row .keyboad-col {
