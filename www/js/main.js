@@ -1,7 +1,9 @@
-
 (function($) {
     $(document).ready(function() {
-        var key = $('.keyboad-col').data("key");
-        console.log(key);
+        $('.keyboad-col').click(function(event) {
+            var key = $(this).data("key");
+            console.log(key);
+        });
+
     });
 })(window.jQuery);
