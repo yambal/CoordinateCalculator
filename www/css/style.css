@@ -18,10 +18,11 @@ body {
 
 #keyboad .keyboad-row {
     height: 20%;
+    text-align: center;
 }
 
 #keyboad .keyboad-row .keyboad-col {
-    width: 20%;
+    width: 18.5vmin;
     display: inline-block;
     height: 100%;
 }
