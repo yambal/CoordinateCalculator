@@ -4,9 +4,11 @@
 var isMonaca = false;
 var isDeviceready = false;
 var isFiredStart = false;
+//console.log(monaca);
 if(typeof monaca !== "undefined"){
     isMonaca = true;
     document.addEventListener("deviceready", function() {
+        console.log("deviceready");
         isDeviceready = true;
         onDeviceReady();
     }, false);
@@ -14,6 +16,7 @@ if(typeof monaca !== "undefined"){
 
 (function($) {
     $(document).ready(function() {
+        console.log("document ready");
         onDeviceReady();
     });
 })(window.jQuery);
@@ -27,4 +30,9 @@ function onDeviceReady(){
             appStart();
         }
         return;
+}
+
+//　====================================================
+function appStart(){
+    console.log("appStart");
 }
