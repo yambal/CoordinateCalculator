@@ -23,6 +23,7 @@ body {
 #keyboad .keyboad-row .keyboad-col {
     width: 20%;
     display: inline-block;
+    height: 100%;
 }
 
 .teble{
