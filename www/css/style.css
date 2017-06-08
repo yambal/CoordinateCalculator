@@ -6,12 +6,16 @@ body {
     height: 100%;
 }
 
-#display{
-	width:100vmin;
-	height: calc(100vmax - 125vmin);
+#display {
+    width: 100vmin;
+    height: calc(100vmax - 100vmin);
 }
 
-#keyboad{
-	width:100vmin;
-	height:100vmin;
+#keyboad {
+    width: 100vmin;
+    height: 100vmin;
+}
+
+#keyboad .keyboad-row {
+    height: 20%;
 }
