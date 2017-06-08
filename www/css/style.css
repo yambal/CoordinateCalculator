@@ -17,27 +17,30 @@ body {
 }
 
 #keyboad .keyboad-row {
-    	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: stretch;
-	align-content: stretch;
-	height: 20vmin;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    height: 20vmin;
 }
 
 #keyboad .keyboad-row .keyboad-col {
-	width: 20%;
+    width: 20%;
+    text-align: center;
 }
 
-.teble{
-	display: table;
-	height: 100%;
-	width: 100%;
+.teble {
+    display: table;
+    height: 100%;
+    width: 100%;
 }
-.teble .teble-cell{
-	display: table-cell;
+
+.teble .teble-cell {
+    display: table-cell;
 }
-.teble .teble-cell.vm{
-	vertical-align: middle;
+
+.teble .teble-cell.vm {
+    vertical-align: middle;
 }
