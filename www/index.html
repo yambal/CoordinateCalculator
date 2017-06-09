@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <div id="display">
+    <div id="display" class="mode-input-target">
         <div class="display-rows">
             <div class="display-row display-row-map">
                 a
@@ -21,50 +21,97 @@
             <div class="display-row display-row-input">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-1">123</div>
-                        <div class="col-1">123</div>
-                        <div class="col-5">
-                            <div class="input-group">
-                                <div class="type">t</div>
-                                <div class="type">f</div>
-                                <div class="type">e</div>
-                                <div class="input input-number">123.12.12.111</div>
+                        <div class="col">
+                            <div class="mode mode-datum">
+                                <span class="icon-datum icon-datum-wgs84">w</span><span class="icon-datum icon-datum-tokyo">T</span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mode mode-latlng">
+                                <span class="icon-latlng">latlng</span>
                             </div>
                         </div>
                         <div class="col-5">
-                            <div class="input-group">
-                                <div class="type">t</div>
-                                <div class="type">f</div>
-                                <div class="type">e</div>
-                                <div class="input input-number">123.12.12.111</div>
+                            <div class="input-group input-group-lat">
+                                <div class="type">
+                                    <div class="mode mode-lat">
+                                        <span class="icon-lat">lat</span>
+                                    </div>
+                                </div>
+                                <div class="type">
+                                    <div class="mode mode-error">
+                                        <span class="icon-error">error</span>
+                                    </div> 
+                                </div>
+                                <div class="input input-number"></div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="input-group input-group-lng">
+                                <div class="type">
+                                    <div class="mode mode-lng">
+                                        <span class="icon-lng">lng</span>
+                                    </div>
+                                </div>
+                                <div class="type">
+                                    <div class="mode mode-error">
+                                        <span class="icon-error">error</span>
+                                    </div> 
+                                </div>
+                                <div class="input input-number"></div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-1"></div>
-                        <div class="col-1">n</div>
-                        <div class="col-3">
-                            <div class="input-group">
-                                <div class="type">t</div>
-                                <div class="type">f</div>
-                                <div class="type">e</div>
-                                <div class="input input-number">a4</div>
+                        <div class="col-1">
+                            <div class="mode mode-n">
+                                <span class="icon-n">n</span>
                             </div>
                         </div>
                         <div class="col-3">
-                            <div class="input-group">
-                                <div class="type">t</div>
-                                <div class="type">f</div>
-                                <div class="type">e</div>
-                                <div class="input input-number">1234</div>
+                            <div class="input-group input-group-n-block">
+                                <div class="type">
+                                    <div class="mode mode-n-block">
+                                        <span class="icon-n-block">block</span>
+                                    </div>
+                                </div>
+                                <div class="type">
+                                    <div class="mode mode-error">
+                                        <span class="icon-error">error</span>
+                                    </div> 
+                                </div>
+                                <div class="input input-number"></div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group input-group-n-unit">
+                                <div class="type">
+                                    <div class="mode icon-n-unit">
+                                        <span class="icon-n-unit">unit</span>
+                                    </div>
+                                </div>
+                                <div class="type">
+                                    <div class="mode mode-error">
+                                        <span class="icon-error">error</span>
+                                    </div> 
+                                </div>
+                                <div class="input input-number"></div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="input-group">
-                                <div class="type">t</div>
-                                <div class="type">f</div>
-                                <div class="type">e</div>
-                                <div class="input input-number">1234-5678</div>
+                            <div class="input-group input-group-n-mesh input-group-error">
+                                <div class="type">
+                                    <div class="mode mode-mesh">
+                                        <span class="icon-n-mesh">mesh</span>
+                                    </div>
+                                </div>
+                                <div class="type">
+                                    <div class="mode mode-error">
+                                        <span class="icon-error">error</span>
+                                    </div> 
+                                </div>
+                                <div class="input input-number"></div>
                             </div>
                         </div>
                     </div>
@@ -82,30 +129,30 @@
         </div>
         <div class="keyboad-row">
             <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="7"><div class="teble"><div class="teble-cell vm">7</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="8"><div class="teble"><div class="teble-cell vm">8</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="9"><div class="teble"><div class="teble-cell vm">9</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="datum"><div class="teble"><div class="teble-cell vm">Datum</div></div></div></div>
         </div>
         <div class="keyboad-row">
             <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="4"><div class="teble"><div class="teble-cell vm">4</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="5"><div class="teble"><div class="teble-cell vm">5</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="6"><div class="teble"><div class="teble-cell vm">6</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="latlng"><div class="teble"><div class="teble-cell vm">latlng</div></div></div></div> 
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="c"><div class="teble"><div class="teble-cell vm">c</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="1"><div class="teble"><div class="teble-cell vm">1</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="2"><div class="teble"><div class="teble-cell vm">2</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="3"><div class="teble"><div class="teble-cell vm">3</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="n"><div class="teble"><div class="teble-cell vm">n</div></div></div></div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="ac"><div class="teble"><div class="teble-cell vm">ac</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="0"><div class="teble"><div class="teble-cell vm">0</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="."><div class="teble"><div class="teble-cell vm">.</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="="><div class="teble"><div class="teble-cell vm">=</div></div></div></div>
             <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
         </div>
     </div>
