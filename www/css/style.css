@@ -14,6 +14,7 @@ body {
 #keyboad {
     width: 100vmin;
     height: 100vmin;
+    box-sizing: border-box;
 }
 
 #keyboad .keyboad-row {
@@ -24,10 +25,14 @@ body {
     align-items: stretch;
     align-content: stretch;
     height: 20vmin;
+    box-sizing: border-box;
 }
 
 #keyboad .keyboad-row .keyboad-col {
     width: 20%;
+    box-sizing: border-box;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 #keyboad .keyboad-row .keyboad-col .key{
