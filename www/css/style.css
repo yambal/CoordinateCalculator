@@ -9,7 +9,10 @@ body {
 body.mode-ll-wgs84 .mode-ll-wgs84,
 body.mode-ll-tokyo .mode-ll-tokyo,
 body.mode-map .mode-map,
-body.mode-n .mode-n{
+body.mode-n .mode-n,
+body.submode-n-block .submode-n-block
+body.submode-n-unit .submode-n-unit,
+body.submode-n-mesh .submode-n-mesh{
     display: block;
 }
 body.mode-ll-wgs84 .display-container.mode-ll-wgs84,
@@ -28,15 +31,39 @@ body.mode-n .display-container.mode-n{
 body.mode-ll-wgs84 .mode-ll-tokyo,
 body.mode-ll-wgs84 .mode-map,
 body.mode-ll-wgs84 .mode-n,
+body.mode-ll-wgs84 .submode-n-block,
+body.mode-ll-wgs84 .submode-n-unit,
+body.mode-ll-wgs84 .submode-n-mesh,
 body.mode-ll-tokyo .mode-ll-wgs84,
 body.mode-ll-tokyo .mode-map,
 body.mode-ll-tokyo .mode-n,
+body.mode-ll-tokyo .submode-n-block,
+body.mode-ll-tokyo .submode-n-unit,
+body.mode-ll-tokyo .submode-n-mesh,
 body.mode-map .mode-ll-wgs84,
 body.mode-map .mode-ll-tokyo,
 body.mode-map .mode-n,
+body.mode-map .submode-n-block,
+body.mode-map .submode-n-unit,
+body.mode-map .submode-n-mesh,
 body.mode-n .mode-ll-wgs84,
 body.mode-n .mode-ll-tokyo,
-body.mode-n .mode-map{
+body.mode-n .mode-map,
+body.submode-n-block .mode-ll-wgs84,
+body.submode-n-block .mode-ll-tokyo,
+body.submode-n-block .mode-map,
+body.submode-n-block .submode-n-unit,
+body.submode-n-block .submode-n-mesh,
+body.submode-n-unit .mode-ll-wgs84,
+body.submode-n-unit .mode-ll-tokyo,
+body.submode-n-unit .mode-map,
+body.submode-n-unit .submode-n-block,
+body.submode-n-unit .submode-n-mesh,
+body.submode-n-mesh .mode-ll-wgs84,
+body.submode-n-mesh .mode-ll-tokyo,
+body.submode-n-mesh .mode-ll-map,
+body.submode-n-mesh .submode-n-block,
+body.submode-n-mesh .submode-n-unit{
     display: none ;
 }
 
@@ -69,13 +96,13 @@ body.mode-n .mode-map{
     background-color: rgba(0,0,0,0.125);
 }
 
-#keyboad {
+.keyboad {
     width: 100vmin;
     height: 100vmin;
     box-sizing: border-box;
 }
 
-#keyboad .keyboad-row {
+.keyboad .keyboad-row {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -95,7 +122,7 @@ body.mode-n .mode-map{
     box-sizing: border-box;
 }
 
-#keyboad .keyboad-row .keyboad-col {
+.keyboad .keyboad-row .keyboad-col {
     width: 20%;
     box-sizing: border-box;
     flex-grow: 1;
@@ -103,12 +130,15 @@ body.mode-n .mode-map{
     padding: 1px;
 }
 
-#keyboad .keyboad-row .keyboad-col .key{
+.keyboad .keyboad-row .keyboad-col .key{
     width: 100%;
     height: 100%;
     text-align: center;
     box-sizing: border-box;
     border: 1px solid rgba(0, 0,0, 0.125);
+}
+.keyboad .keyboad-row .keyboad-col .key.key-desable{
+    border: none;
 }
 
 .layout-teble {
