@@ -23,38 +23,45 @@ var CoordinateCalculator = function(){
 	function _onKeyPress(val){
 		switch(val){
 			case modes[0].name:
-				if(mode == val && subMode == modes[0].subMode[0]){
-					subMode = modes[0].subMode[1];
+				var preMode = mode;
+				var preSububMode = subMode;
+				if(preMode == val && preSububMode == modes[0].subMode[0]){
+					preSububMode = modes[0].subMode[1];
 				}else{
-					subMode = modes[0].subMode[0];
+					preSububMode = modes[0].subMode[0];
 				}
-				mode = val;
-				updateMode();
+				preMode = val;
+				changeMode(preMode, preSububMode);
 				break;
 			case modes[1].name:
-				if(mode == val && subMode == modes[1].subMode[0]){
-					subMode = modes[1].subMode[1];
+				var preMode = mode;
+				var preSububMode = subMode;
+				if(preMode == val && preSububMode == modes[1].subMode[0]){
+					preSububMode = modes[1].subMode[1];
 				}else{
-					subMode = modes[1].subMode[0];
+					preSububMode = modes[1].subMode[0];
 				}
-				mode = val;
-				updateMode();
+				preMode = val;
+				changeMode(preMode, preSububMode);
 				break;
 			case modes[2].name:
-				subMode = modes[2].subMode[0];
-				mode = val;
-				updateMode();
+				var preMode = mode;
+				var preSububMode = modes[2].subMode[0];
+				preMode = val;
+				changeMode(preMode, preSububMode);
 				break;
 			case modes[3].name:
-				if(mode == val && subMode == modes[3].subMode[0]){
-					subMode = modes[3].subMode[1];
-				}else if(mode == val && subMode == modes[3].subMode[1]){
-					subMode = modes[3].subMode[2];
+				var preMode = mode;
+				var preSububMode = subMode;
+				if(preMode == val && preSububMode == modes[3].subMode[0]){
+					preSububMode = modes[3].subMode[1];
+				}else if(preMode == val && preSububMode == modes[3].subMode[1]){
+					preSububMode = modes[3].subMode[2];
 				}else{
-					subMode = modes[3].subMode[0];
+					preSububMode = modes[3].subMode[0];
 				}
-				mode = val;
-				updateMode();
+				preMode = val;
+				changeMode(preMode, preSububMode);
 				break;
 			case "c":
 				clearInputTarget();
@@ -68,12 +75,21 @@ var CoordinateCalculator = function(){
 		}
 	}
 
+	function changeMode(_mode, _subMode){
+		$('body').removeClass("mode-" + mode).removeClass("submode-" + subMode);
+		mode = _mode;
+		subMode = _subMode;
+		updateMode();
+		$('body').addClass("mode-" + mode).addClass("submode-" + subMode);
+	}
+
 	function updateMode(){
+		/*
 		updateModeLLWgs84();
 		updateModeLLTokyo();
 		updateModeMap();
 		updateModeN();
-
+		*/
 		updateModeLLWgs84Lat();
 		updateModeLLWgs84Lng();
 		updateModeLLTokyoLat();
@@ -135,7 +151,7 @@ var CoordinateCalculator = function(){
 		$(elem).removeClass('active');
 	}
 
-	updateMode();
+	changeMode(mode, subMode);
 
 	return {
 		onKeyPress:function(val){

@@ -6,12 +6,16 @@ body {
     height: 100%;
 }
 
-#display{
-    width: 100vmin;
-    height: calc(100vmax - 100vmin);
+body.mode-ll-wgs84 .mode-ll-wgs84,
+body.mode-ll-tokyo .mode-ll-tokyo,
+body.mode-map .mode-map,
+body.mode-n .mode-n{
+    display: block;
 }
-
-#display .display-container{
+body.mode-ll-wgs84 .display-container.mode-ll-wgs84,
+body.mode-ll-tokyo .display-container.mode-ll-tokyo,
+body.mode-map .display-container.mode-map,
+body.mode-n .display-container.mode-n{
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -21,6 +25,26 @@ body {
     align-content: stretch;
     box-sizing: border-box;
 }
+body.mode-ll-wgs84 .mode-ll-tokyo,
+body.mode-ll-wgs84 .mode-map,
+body.mode-ll-wgs84 .mode-n,
+body.mode-ll-tokyo .mode-ll-wgs84,
+body.mode-ll-tokyo .mode-map,
+body.mode-ll-tokyo .mode-n,
+body.mode-map .mode-ll-wgs84,
+body.mode-map .mode-ll-tokyo,
+body.mode-map .mode-n,
+body.mode-n .mode-ll-wgs84,
+body.mode-n .mode-ll-tokyo,
+body.mode-n .mode-map{
+    display: none ;
+}
+
+#display{
+    width: 100vmin;
+    height: calc(100vmax - 100vmin);
+}
+
 #display .display-container .display-header{
     flex-shrink: 1;
 }
