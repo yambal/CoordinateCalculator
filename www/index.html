@@ -14,105 +14,79 @@
 </head>
 <body>
     <div id="display" class="mode-input-target">
-        <div class="display-rows">
-            <div class="display-row display-row-map">
-                a
-            </div>
-            <div class="display-row display-row-input">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-1">
-                            <div class="mode mode-datum">
-                                <span class="icon-datum icon-datum-wgs84">w</span><span class="icon-datum icon-datum-tokyo">T</span>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <div class="mode mode-latlng">
-                                <span class="icon-latlng">latlng</span>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="input-group input-group-lat">
-                                <div class="type">
-                                    <div class="mode mode-lat">
-                                        <span class="icon-lat">lat</span>
-                                    </div>
-                                </div>
-                                <div class="type">
-                                    <div class="mode mode-error">
-                                        <span class="icon-error">e</span>
-                                    </div> 
-                                </div>
-                                <div class="input input-number"></div>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="input-group input-group-lng">
-                                <div class="type">
-                                    <div class="mode mode-lng">
-                                        <span class="icon-lng">lng</span>
-                                    </div>
-                                </div>
-                                <div class="type">
-                                    <div class="mode mode-error">
-                                        <span class="icon-error">e</span>
-                                    </div> 
-                                </div>
-                                <div class="input input-number"></div>
+        <div class="display-container mode-ll-wgs84">
+            <div class="display-header">LatLng:WGS84</div>
+            <div class="display-body">
+                <div class="display-body-group ll-wgs84-lat" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">
+                            Lat
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-1">
-                            <div class="mode mode-n">
-                                <span class="icon-n">n</span>
-                            </div>
+                </div>
+                <div class="display-body-group ll-wgs84-lng" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Lng</div>
                         </div>
-                        <div class="col-3">
-                            <div class="input-group input-group-n-block">
-                                <div class="type">
-                                    <div class="mode mode-n-block">
-                                        <span class="icon-n-block">b</span>
-                                    </div>
-                                </div>
-                                <div class="type">
-                                    <div class="mode mode-error">
-                                        <span class="icon-error">e</span>
-                                    </div> 
-                                </div>
-                                <div class="input input-number"></div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display-container mode-ll-tokyo">
+            <div class="display-header">LatLng:Tokyo</div>
+            <div class="display-body">
+                <div class="display-body-group ll-tokyo-lat" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Lat</div>
                         </div>
-                        <div class="col-3">
-                            <div class="input-group input-group-n-unit">
-                                <div class="type">
-                                    <div class="mode icon-n-unit">
-                                        <span class="icon-n-unit">u</span>
-                                    </div>
-                                </div>
-                                <div class="type">
-                                    <div class="mode mode-error">
-                                        <span class="icon-error">e</span>
-                                    </div> 
-                                </div>
-                                <div class="input input-number"></div>
-                            </div>
+                    </div>
+                </div>
+                <div class="display-body-group ll-tokyo-lng" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Lng</div>
                         </div>
-                        <div class="col-4">
-                            <div class="input-group input-group-n-mesh input-group-error">
-                                <div class="type">
-                                    <div class="mode mode-mesh">
-                                        <span class="icon-n-mesh">m</span>
-                                    </div>
-                                </div>
-                                <div class="type">
-                                    <div class="mode mode-error">
-                                        <span class="icon-error">e</span>
-                                    </div> 
-                                </div>
-                                <div class="input input-number"></div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display-container mode-map">
+            <div class="display-header">Map</div>
+            <div class="display-body">
+                <div class="display-body-group map-map" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Map</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display-container mode-n">
+            <div class="display-header">N-Code</div>
+            <div class="display-body">
+                <div class="display-body-group n-block" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Block</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="display-body-group n-unit" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Unit</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="display-body-group n-mesh" style="position: relative;">
+                    <div style="position: absolute;top:0; bottom:0; left:0; right:0;">
+                        <div style="display:table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;">Mesh</div>
                         </div>
                     </div>
                 </div>
@@ -121,39 +95,39 @@
     </div>
     <div id="keyboad">
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="ll-wgs84"><div class="layout-teble"><div class="teble-cell vm">WGS84</div></div></div></div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="7"><div class="teble"><div class="teble-cell vm">7</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="8"><div class="teble"><div class="teble-cell vm">8</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="9"><div class="teble"><div class="teble-cell vm">9</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="datum"><div class="teble"><div class="teble-cell vm">Datum</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="7"><div class="layout-teble"><div class="teble-cell vm">7</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="8"><div class="layout-teble"><div class="teble-cell vm">8</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="9"><div class="layout-teble"><div class="teble-cell vm">9</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="ll-tokyo"><div class="layout-teble"><div class="teble-cell vm">Tokyo</div></div></div></div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="4"><div class="teble"><div class="teble-cell vm">4</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="5"><div class="teble"><div class="teble-cell vm">5</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="6"><div class="teble"><div class="teble-cell vm">6</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="latlng"><div class="teble"><div class="teble-cell vm">latlng</div></div></div></div> 
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="4"><div class="layout-teble"><div class="teble-cell vm">4</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="5"><div class="layout-teble"><div class="teble-cell vm">5</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="6"><div class="layout-teble"><div class="teble-cell vm">6</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="map"><div class="layout-teble"><div class="teble-cell vm">Map</div></div></div></div> 
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key="c"><div class="teble"><div class="teble-cell vm">c</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="1"><div class="teble"><div class="teble-cell vm">1</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="2"><div class="teble"><div class="teble-cell vm">2</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="3"><div class="teble"><div class="teble-cell vm">3</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="n"><div class="teble"><div class="teble-cell vm">n</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="c"><div class="layout-teble"><div class="teble-cell vm">c</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="1"><div class="layout-teble"><div class="teble-cell vm">1</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="2"><div class="layout-teble"><div class="teble-cell vm">2</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="3"><div class="layout-teble"><div class="teble-cell vm">3</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="n"><div class="layout-teble"><div class="teble-cell vm">n</div></div></div></div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div class="key material-ripple" data-key="ac"><div class="teble"><div class="teble-cell vm">ac</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="0"><div class="teble"><div class="teble-cell vm">0</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="."><div class="teble"><div class="teble-cell vm">.</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key="="><div class="teble"><div class="teble-cell vm">=</div></div></div></div>
-            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="teble"><div class="teble-cell vm">x</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="ac"><div class="layout-teble"><div class="teble-cell vm">ac</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="0"><div class="layout-teble"><div class="teble-cell vm">0</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="."><div class="layout-teble"><div class="teble-cell vm">.</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key="="><div class="layout-teble"><div class="teble-cell vm">=</div></div></div></div>
+            <div class="keyboad-col"><div class="key material-ripple" data-key=""><div class="layout-teble"><div class="teble-cell vm">x</div></div></div></div>
         </div>
     </div>
     <script src="js/jquery-3.2.1.min.js"></script>

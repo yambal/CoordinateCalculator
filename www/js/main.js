@@ -11,33 +11,50 @@
 })(window.jQuery);
 
 var CoordinateCalculator = function(){
-	var inputTargets = ['lat', 'lng', 'n-block', 'n-unit', 'n-mesh'];
-	var inputTarget = inputTargets[0];
-
-	var datums = ['wgs84', 'tokyo'];
-	var datum = datums[0];
+	var modes = [
+		{name:'ll-wgs84', subMode:['ll-wgs84-lat', 'll-wgs84-lng']},
+		{name:'ll-tokyo', subMode:['ll-tokyo-lat', 'll-tokyo-lng']},
+		{name:'map', subMode:['map-map']},
+		{name:'n', subMode:['n-block', 'n-unit', 'n-mesh']}
+	];
+	var mode = modes[0].name;
+	var subMode = modes[0].subMode[0];
 
 	function _onKeyPress(val){
 		switch(val){
-			case "latlng":
-				if(inputTarget == inputTargets[0]){
-					inputTarget = inputTargets[1];
+			case modes[0].name:
+				if(mode == val && subMode == modes[0].subMode[0]){
+					subMode = modes[0].subMode[1];
 				}else{
-					inputTarget = inputTargets[0];
+					subMode = modes[0].subMode[0];
 				}
-				updateInputTarget();
+				mode = val;
+				updateMode();
 				break;
-			case "n":
-				if(inputTarget == inputTargets[4]){
-					inputTarget = inputTargets[3];
-				}else if(inputTarget == inputTargets[3]){
-					inputTarget = inputTargets[2];
-				}else if(inputTarget == inputTargets[2]){
-					inputTarget = inputTargets[4];
+			case modes[1].name:
+				if(mode == val && subMode == modes[1].subMode[0]){
+					subMode = modes[1].subMode[1];
 				}else{
-					inputTarget = inputTargets[4];
+					subMode = modes[1].subMode[0];
 				}
-				updateInputTarget();
+				mode = val;
+				updateMode();
+				break;
+			case modes[2].name:
+				subMode = modes[2].subMode[0];
+				mode = val;
+				updateMode();
+				break;
+			case modes[3].name:
+				if(mode == val && subMode == modes[3].subMode[0]){
+					subMode = modes[3].subMode[1];
+				}else if(mode == val && subMode == modes[3].subMode[1]){
+					subMode = modes[3].subMode[2];
+				}else{
+					subMode = modes[3].subMode[0];
+				}
+				mode = val;
+				updateMode();
 				break;
 			case "c":
 				clearInputTarget();
@@ -45,87 +62,80 @@ var CoordinateCalculator = function(){
 			case "ac":
 				clearAllInputTarget();
 				break;
-			case "datum":
-				if(datum == datums[0]){
-					datum = datums[1];
-					updateDatumMode();
-					return;
-				}
-				datum = datums[0];
-				updateDatumMode();
-				break;
 			default:
 				console.log(val);
 				addCharToInputTarget(val);
 		}
 	}
 
-	// ---------------------------------------------------------------
-	function clearInputTarget(){
-		$(".input-group-" + inputTarget + " .input").html('');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-	}
+	function updateMode(){
+		updateModeLLWgs84();
+		updateModeLLTokyo();
+		updateModeMap();
+		updateModeN();
 
-	function clearAllInputTarget(){
-		for (var i = inputTargets.length - 1; i >= 0; i--) {
-			$(".input-group-" + inputTargets[i] + " .input").html('');
-		}
+		updateModeLLWgs84Lat();
+		updateModeLLWgs84Lng();
+		updateModeLLTokyoLat();
+		updateModeLLTokyoLng();
+		updateModeMapMap();
+		updateNBlock();
+		updateNUnit();
+		updateNMesh();
 	}
-
-	// ---------------------------------------------------------------
-	function addCharToInputTarget(char){
-		var val = $(".input-group-" + inputTarget + " .input").html();
-		$(".input-group-" + inputTarget + " .input").html(val + char);
+	function updateModeLLWgs84(){
+		isDisplay(".mode-ll-wgs84", mode == modes[0].name);
 	}
-
-	// ---------------------------------------------------------------
-	function updateDatumMode(){
-		console.log("updateDatumMode:" + datum);
-		if(datum == datums[0]){
-			$('.mode-datum').addClass('mode-datum-' + datums[0]);
-			$('.mode-datum').removeClass('mode-datum-' + datums[1]);
-			return;
-		}
-		$('.mode-datum').addClass('mode-datum-' + datums[1]);
-		$('.mode-datum').removeClass('mode-datum-' + datums[0]);
+	function updateModeLLTokyo(){
+		isDisplay(".mode-ll-tokyo", mode == modes[1].name);
 	}
-	
-	// ---------------------------------------------------------------
-	function updateInputTarget(){
-		latIsActuve(inputTarget == inputTargets[0]);
-		lngIsActuve(inputTarget == inputTargets[1]);
-		nBlockIsActuve(inputTarget == inputTargets[2]);
-		nUnitIsActuve(inputTarget == inputTargets[3]);
-		nMeshIsActuve(inputTarget == inputTargets[4]);
-		for (var i = inputTargets .length - 1; i >= 0; i--) {
-			$(".mode-input-target").removeClass('mode-input-target-' + inputTargets [i]);
-		}
-		$(".mode-input-target").addClass('mode-input-target-' + inputTarget);
+	function updateModeMap(){
+		isDisplay(".mode-map", mode == modes[2].name);
 	}
-	function latIsActuve(bool){
-		isActive(".input-group-lat", bool);
+	function updateModeN(){
+		isDisplay(".mode-n", mode == modes[3].name);
 	}
-	function lngIsActuve(bool){
-		isActive(".input-group-lng", bool);
-	}
-	function nBlockIsActuve(bool){
-		isActive(".input-group-n-block", bool);
-	}
-	function nUnitIsActuve(bool){
-		isActive(".input-group-n-unit", bool);
-	}
-	function nMeshIsActuve(bool){
-		isActive(".input-group-n-mesh", bool);
-	}
-	function isActive(elm, bool){
+	function isDisplay(elem, bool){
 		if(bool){
-			$(elm).addClass('active');
+			$(elem).show();
 			return;
 		}
-		$(elm).removeClass('active');
+		$(elem).hide();
 	}
 
-	updateInputTarget();
-	updateDatumMode();
+	function updateModeLLWgs84Lat(){
+		isActive(".ll-wgs84-lat", subMode == modes[0].subMode[0]);
+	}
+	function updateModeLLWgs84Lng(){
+		isActive(".ll-wgs84-lng", subMode == modes[0].subMode[1]);
+	}
+	function updateModeLLTokyoLat(){
+		isActive(".ll-tokyo-lat", subMode == modes[1].subMode[0]);
+	}
+	function updateModeLLTokyoLng(){
+		isActive(".ll-tokyo-lng", subMode == modes[1].subMode[1]);
+	}
+	function updateModeMapMap(){
+		isActive(".map-map", subMode == modes[2].subMode[0]);
+	}
+	function updateNBlock(){
+		isActive(".n-block", subMode == modes[3].subMode[0]);
+	}
+	function updateNUnit(){
+		isActive(".n-unit", subMode == modes[3].subMode[1]);
+	}
+	function updateNMesh(){
+		isActive(".n-mesh", subMode == modes[3].subMode[2]);
+	}
+	function isActive(elem, bool){
+		if(bool){
+			$(elem).addClass('active');
+			return;
+		}
+		$(elem).removeClass('active');
+	}
+
+	updateMode();
 
 	return {
 		onKeyPress:function(val){
