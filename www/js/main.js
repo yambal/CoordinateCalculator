@@ -325,6 +325,7 @@ var CoordinateCalculator = function(){
 			$('body').removeClass("gps-setview");
 			if(gpsMaker){
 				map.removeLayer(gpsMaker);
+				gpsMaker = null;
 			}
 			gpsIsActive = false;
 			gpsSetView = false;
