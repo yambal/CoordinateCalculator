@@ -78,8 +78,11 @@ var CoordinateCalculator = function(){
 	var subMode = null;
 	var map;
 	var gpsIsActive = false;
+	var gpsSetView = false;
+	var lastGPSLatLng;
 	var mapActiveLayer;
 	var mapActiveLayerName;
+	var gpsMaker = false;
 
 	function _onKeyPress(val){
 		switch(val){
@@ -211,6 +214,13 @@ var CoordinateCalculator = function(){
 	}
 
 	// ************************************************************
+	var maker = L.icon({
+	    iconUrl: 'images/marker-icon.png',
+	    iconSize: [25, 40],
+	    iconAnchor: [12, 40],
+	    popupAnchor: [12 - 2]
+	});
+
 	var mapLayers = [
 		{
 			name:"map-std",
@@ -266,7 +276,19 @@ var CoordinateCalculator = function(){
 	}
 
 	function onLocationFound(e){
-		console.log(e.latlng);
+		lastGPSLatLng = e.latlng;
+
+	    if (!gpsMaker) {
+	        gpsMaker = L.marker(lastGPSLatLng, { icon: maker }).addTo(map);
+	    } else {
+	        gpsMaker.setLatLng(lastGPSLatLng);
+	    }
+
+	    if(gpsSetView){
+			map.panTo(lastGPSLatLng, {
+	            noMoveStart:true
+	        });
+	    }
 	}
 
 	function onLocationError(e) {
@@ -274,18 +296,38 @@ var CoordinateCalculator = function(){
 	}
 
 	function _gpsToggle(){
-		if(gpsIsActive){
-			map.stopLocate();
-			$('body').removeClass("gps-active");
-			gpsIsActive = false;
-		}else{
+
+		if(!gpsIsActive){
+			// GPSが無効の時 > GPSを有効
 			map.locate({
 				watch:true,
-				setView:true,
+				setView:false,
 				enableHighAccuracy:true
 			});
 			$('body').addClass("gps-active");
+			$('body').removeClass("gps-setview");
 			gpsIsActive = true;
+			gpsSetView = false
+
+		}else if(!gpsSetView){
+			// GPSが有効でセンター化が無効 > センター化有効
+			$('body').addClass("gps-setview");
+			gpsSetView = true;
+			if(lastGPSLatLng){
+				map.panTo(lastGPSLatLng, {
+		            noMoveStart:true
+		        });
+			}
+		}else{
+			// GPSが有効でセンター化も有効 > GPSをOff
+			map.stopLocate();
+			$('body').removeClass("gps-active");
+			$('body').removeClass("gps-setview");
+			if(gpsMaker){
+				map.removeLayer(gpsMaker);
+			}
+			gpsIsActive = false;
+			gpsSetView = false;
 		}
 	}
 
