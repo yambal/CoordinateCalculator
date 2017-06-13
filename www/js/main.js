@@ -42,8 +42,8 @@ var CoordinateCalculator = function(){
 			[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
 			[{name:"zoom<br />in", value:"zoomIn"},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
 			[{name:"zoom<br />out", value:"zoomOut"},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
-			[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+			[{name:"GPS", value:"gps"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+			[{name:null, value:null},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'n', subMode:[
 			'n-block',
@@ -77,6 +77,9 @@ var CoordinateCalculator = function(){
 	var mode = null;
 	var subMode = null;
 	var map;
+	var gpsIsActive = false;
+	var mapActiveLayer;
+	var mapActiveLayerName;
 
 	function _onKeyPress(val){
 		switch(val){
@@ -132,6 +135,9 @@ var CoordinateCalculator = function(){
 			case "zoomOut":
 				map.zoomOut();
 				break;
+			case "gps":
+				_gpsToggle();
+				break;
 			default:
 				addDisplayValue(val);
 				break;
@@ -155,10 +161,15 @@ var CoordinateCalculator = function(){
 					_isActive("." + modes[i].subMode[j], subMode == modes[i].subMode[j]);
 				}
 			}
+			_updateKey();
 			$('body').addClass("submode-" + subMode);
 		}
 		if(mode == "map"){
-			_mapSetup(subMode);
+			_mapSetup();
+			if(mapActiveLayerName != _subMode){
+				console.log(mapActiveLayerName, _subMode);
+				setActiveLayer(_subMode);
+			}
 		}
 	}
 	function _isActive(elem, bool){
@@ -199,45 +210,86 @@ var CoordinateCalculator = function(){
 		}
 	}
 
-	var std = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-		maxZoom: 18,
-		maxNativeZoom:18,
-		minZoom:2,
-		minNativeZoom:2,
-		errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
-		attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
-	});
+	// ************************************************************
+	var mapLayers = [
+		{
+			name:"map-std",
+			layer:L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				maxNativeZoom:18,
+				minZoom:2,
+				minNativeZoom:2,
+				errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
+				attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
+			})
+		},
+		{
+			name:"map-photo",
+			layer:L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+				maxZoom: 18,
+				maxNativeZoom:18,
+				minZoom:14,
+				minNativeZoom:14 ,
+				errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
+				attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
+			})
+		}
+	];
 
-	var seamlessphoto = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
-		maxZoom: 18,
-		maxNativeZoom:18,
-		minZoom:14,
-		minNativeZoom:14 ,
-		errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
-		attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
-	});
-
-	function _mapSetup(subMode){
+	function _mapSetup(){
 		if(!map){
-
-			var baseLayers = {
-				"標準": std
-			};
-
-			var overlayMaps = {
-			    "写真": seamlessphoto
-			};
-
 			map = L.map('map', {
 				center: [35, 135],
-		    	zoom: 5,
-		    	layers: [std, seamlessphoto]
+		    	zoom: 5
 			});
 
-			L.control.layers(baseLayers, overlayMaps).addTo(map);
+			setActiveLayer(mapLayers[0].name);  
+
+			map.on('locationfound', onLocationFound);
+			map.on('locationerror', onLocationError);
+		}
+	};
+
+	// マップに表示する地図を変更する
+	function setActiveLayer(name){
+		var filtered  = mapLayers.filter(function(element, index, array){
+			return element.name == name;
+		});
+		if(filtered.length >= 0){
+			if(mapActiveLayer){
+				map.removeLayer(mapActiveLayer);
+			}
+			map.addLayer(filtered[0].layer);
+			mapActiveLayer = filtered[0].layer;
+			mapActiveLayerName = filtered[0].name;
 		}
 	}
 
+	function onLocationFound(e){
+		console.log(e.latlng);
+	}
+
+	function onLocationError(e) {
+		alert(e.message);
+	}
+
+	function _gpsToggle(){
+		if(gpsIsActive){
+			map.stopLocate();
+			$('body').removeClass("gps-active");
+			gpsIsActive = false;
+		}else{
+			map.locate({
+				watch:true,
+				setView:true,
+				enableHighAccuracy:true
+			});
+			$('body').addClass("gps-active");
+			gpsIsActive = true;
+		}
+	}
+
+	// ************************************************************
 	function addDisplayValue(val){
 		var target = ".value-" + mode + "-" + subMode;
 		var oldVal = $(target).html();
