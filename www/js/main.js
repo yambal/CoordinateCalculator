@@ -1,9 +1,6 @@
 (function($) {
     $(document).ready(function() {
         console.log("ready");
-
-        
-
         $('.key').click(function(event) {
             var key = $(this).data("key");
             if(key){
@@ -39,7 +36,8 @@ var CoordinateCalculator = function(){
 			[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'map', subMode:[
-			'map-map'
+			'map-std',
+			'map-photo'
 		], keys:[
 			[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
 			[{name:"zoom<br />in", value:"zoomIn"},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
@@ -106,7 +104,12 @@ var CoordinateCalculator = function(){
 				break;
 			case modes[2].name:
 				var preMode = mode;
-				var preSububMode = modes[2].subMode[0];
+				var preSububMode = subMode;
+				if(preMode == val && preSububMode == modes[2].subMode[0]){
+					preSububMode = modes[2].subMode[1];
+				}else{
+					preSububMode = modes[2].subMode[0];
+				}
 				preMode = val;
 				_changeMode(preMode, preSububMode);
 				break;
@@ -155,7 +158,7 @@ var CoordinateCalculator = function(){
 			$('body').addClass("submode-" + subMode);
 		}
 		if(mode == "map"){
-			_mapSetup();
+			_mapSetup(subMode);
 		}
 	}
 	function _isActive(elem, bool){
@@ -196,21 +199,43 @@ var CoordinateCalculator = function(){
 		}
 	}
 
-	function _mapSetup(){
-		var std = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			maxNativeZoom:18,
-			minZoom:2,
-			minNativeZoom:2,
-			errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
-			attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
-		});
+	var std = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+		maxNativeZoom:18,
+		minZoom:2,
+		minNativeZoom:2,
+		errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
+		attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
+	});
 
-		map = L.map('map', {
-			center: [35, 135],
-	    	zoom: 5,
-			layers: [std]
-		});
+	var seamlessphoto = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+		maxZoom: 18,
+		maxNativeZoom:18,
+		minZoom:14,
+		minNativeZoom:14 ,
+		errorTileUrl:"http://placehold.jp/256x256.png?text=no%20tile",
+		attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
+	});
+
+	function _mapSetup(subMode){
+		if(!map){
+
+			var baseLayers = {
+				"標準": std
+			};
+
+			var overlayMaps = {
+			    "写真": seamlessphoto
+			};
+
+			map = L.map('map', {
+				center: [35, 135],
+		    	zoom: 5,
+		    	layers: [std, seamlessphoto]
+			});
+
+			L.control.layers(baseLayers, overlayMaps).addTo(map);
+		}
 	}
 
 	function addDisplayValue(val){
