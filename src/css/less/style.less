@@ -9,6 +9,18 @@
   box-sizing: border-box;
 }
 
+@colorWgs84:#4CAF50;
+@colorWgs84BG:darken(@colorWgs84, 20%);
+
+@colorTokyo:#03A9F4;
+@colorTokyoBG:darken(@colorTokyo, 20%);
+
+@colorMap:#9C27B0;
+@colorMapBG:darken(@colorMap, 20%);
+
+@colorN:#E91E63;
+@colorNBG:darken(@colorN, 20%);
+
 .focusedDisplayGroup(){
     background-color: rgba(0,0,0,0.125);
 }
@@ -35,6 +47,18 @@ body {
                 height: 100%;
                 flex-grow: 1;
                 flex-shrink: 1;
+                position: relative;
+                .display-body-group-fitter{
+                    position: absolute;
+                    top:0;
+                    bottom:0;
+                    left:0;
+                    right:0;
+                    .display-body-group-inner{
+                        .flex(row);
+                        padding: 1px;
+                    }
+                }
             }
         }
     }
@@ -42,8 +66,11 @@ body {
 
 
 body{
+    transition: all  0.5s ease;
     &.mode-{
         &ll-wgs84{
+            background-color: @colorWgs84BG;
+            color: white;
             .mode-{
                 &ll-wgs84-show{
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -67,6 +94,8 @@ body{
             }
         }
         &ll-tokyo {
+            background-color: @colorTokyoBG;
+            color: white;
             .mode-{
                 &ll-tokyo-show{
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -88,6 +117,8 @@ body{
             }
         }
         &map{
+            background-color: @colorMapBG;
+            color: white;
             .mode-{
                 &map-show{
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -109,6 +140,8 @@ body{
             }
         }
         &n{
+            background-color: @colorNBG;
+            color: white;
             .mode-{
                 &n-show {
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -230,28 +263,32 @@ body.mode-map.gps-active.gps-setview #key-30 {
   height: 20vmin;
   box-sizing: border-box;
 }
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  box-sizing: border-box;
-}
+
 .keyboad .keyboad-row .keyboad-col {
   width: 20%;
   box-sizing: border-box;
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 1px;
+  //padding: 1px;
 }
 .keyboad .keyboad-row .keyboad-col .key {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  box-sizing: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    //border: 1px solid rgba(0, 0, 0, 0.125);
+    &.key-ll-wgs84{
+        background-color:@colorWgs84BG
+    }
+    &.key-ll-tokyo{
+        background-color:@colorTokyoBG
+    }
+    &.key-map{
+        background-color:@colorMapBG
+    }
+    &.key-n{
+        background-color:@colorNBG
+    }
 }
 .keyboad .keyboad-row .keyboad-col .key.key-desable {
   border: none;
@@ -262,13 +299,15 @@ body.mode-map.gps-active.gps-setview #key-30 {
   display: table;
   height: 100%;
   width: 100%;
+    .teble-cell {
+        display: table-cell;
+        &.vm {
+            vertical-align: middle;
+        }
+    }
 }
-.layout-teble .teble-cell {
-  display: table-cell;
-}
-.layout-teble .teble-cell.vm {
-  vertical-align: middle;
-}
+
+
 .display-input-groups {
   display: flex;
   flex-direction: column;

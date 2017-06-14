@@ -158,12 +158,14 @@ var CoordinateCalculator = function(){
 		if(subMode != _subMode){
 			$('body').removeClass("submode-" + subMode);
 			subMode = _subMode;
+			/*
 			// サブモードのクラスに .active を付けたり消したり
 			for (var i = modes.length - 1; i >= 0; i--) {
 				for (var j = modes[i].subMode.length - 1; j >= 0; j--) {
 					_isActive("." + modes[i].subMode[j], subMode == modes[i].subMode[j]);
 				}
 			}
+			*/
 			_updateKey();
 			$('body').addClass("submode-" + subMode);
 		}
@@ -175,6 +177,7 @@ var CoordinateCalculator = function(){
 			}
 		}
 	}
+	/*
 	function _isActive(elem, bool){
 		if(bool){
 			$(elem).addClass('active');
@@ -182,6 +185,7 @@ var CoordinateCalculator = function(){
 		}
 		$(elem).removeClass('active');
 	}
+	*/
 
 	function _updateKey(){
 		var filtered = modes.filter(function(element, index, array){
@@ -192,6 +196,14 @@ var CoordinateCalculator = function(){
 		if(keys[subMode]){
 			keys = keys[subMode];
 		}
+
+		for (var i = modes.length - 1; i >= 0; i--) {
+			for (var j = modes[i].subMode.length - 1; j >= 0; j--) {
+				var m = modes[i].subMode[j];
+				$(".key").removeClass('key-' + m);
+			}
+		}
+
 		for (var col = 0; col < keys.length; col++) {
 			var keyCol = keys[col];
 			for (var row = 0; row < keyCol.length; row++) {
@@ -203,6 +215,7 @@ var CoordinateCalculator = function(){
 				if(keyCol[row].value !== null){
 					$("#key-" + col + row)
 						.data("key", keyCol[row].value)
+						.addClass('key-' + keyCol[row].value)
 						.removeClass('key-desable');
 				}else{
 					$("#key-" + col + row)

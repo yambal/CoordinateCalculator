@@ -27,6 +27,31 @@ body {
   height: 100%;
   flex-grow: 1;
   flex-shrink: 1;
+  position: relative;
+}
+#display .display-container .display-body .display-body-group .display-body-group-fitter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  box-sizing: border-box;
+  padding: 1px;
+}
+body {
+  transition: all  0.5s ease;
+}
+body.mode-ll-wgs84 {
+  background-color: #2d682f;
+  color: white;
 }
 body.mode-ll-wgs84 .mode-ll-wgs84-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
@@ -49,6 +74,10 @@ body.mode-ll-wgs84 .display-container.mode-ll-wgs84-show {
   align-content: stretch;
   box-sizing: border-box;
 }
+body.mode-ll-tokyo {
+  background-color: #02638f;
+  color: white;
+}
 body.mode-ll-tokyo .mode-ll-tokyo-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
   display: block;
@@ -70,6 +99,10 @@ body.mode-ll-tokyo .display-container.mode-ll-tokyo-show {
   align-content: stretch;
   box-sizing: border-box;
 }
+body.mode-map {
+  background-color: #52145d;
+  color: white;
+}
 body.mode-map .mode-map-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
   display: block;
@@ -90,6 +123,10 @@ body.mode-map .display-container.mode-map-show {
   align-items: stretch;
   align-content: stretch;
   box-sizing: border-box;
+}
+body.mode-n {
+  background-color: #930e3b;
+  color: white;
 }
 body.mode-n .mode-n-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
@@ -166,28 +203,29 @@ body.mode-map.gps-active.gps-setview #key-30 {
   height: 20vmin;
   box-sizing: border-box;
 }
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  box-sizing: border-box;
-}
 .keyboad .keyboad-row .keyboad-col {
   width: 20%;
   box-sizing: border-box;
   flex-grow: 1;
   flex-shrink: 1;
-  padding: 1px;
 }
 .keyboad .keyboad-row .keyboad-col .key {
   width: 100%;
   height: 100%;
   text-align: center;
   box-sizing: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84 {
+  background-color: #2d682f;
+}
+.keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo {
+  background-color: #02638f;
+}
+.keyboad .keyboad-row .keyboad-col .key.key-map {
+  background-color: #52145d;
+}
+.keyboad .keyboad-row .keyboad-col .key.key-n {
+  background-color: #930e3b;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-desable {
   border: none;
