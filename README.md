@@ -1,4 +1,2 @@
 # CoordinateCalculator
-CoordinateCalculator
-
-test2
+MONACAアプリ
