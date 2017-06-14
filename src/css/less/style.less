@@ -9,17 +9,20 @@
   box-sizing: border-box;
 }
 
+@colorGray:#9E9E9E;
+@colorGrayBG:darken(@colorGray, 40%);
+
 @colorWgs84:#4CAF50;
-@colorWgs84BG:darken(@colorWgs84, 20%);
+@colorWgs84BG:darken(@colorWgs84, 30%);
 
 @colorTokyo:#03A9F4;
-@colorTokyoBG:darken(@colorTokyo, 20%);
+@colorTokyoBG:darken(@colorTokyo, 30%);
 
 @colorMap:#9C27B0;
-@colorMapBG:darken(@colorMap, 20%);
+@colorMapBG:darken(@colorMap, 30%);
 
 @colorN:#E91E63;
-@colorNBG:darken(@colorN, 20%);
+@colorNBG:darken(@colorN, 30%);
 
 .focusedDisplayGroup(){
     background-color: rgba(0,0,0,0.125);
@@ -66,11 +69,12 @@ body {
 
 
 body{
+    color: white;
+    background-color: @colorGrayBG;
     transition: all  0.5s ease;
     &.mode-{
         &ll-wgs84{
             background-color: @colorWgs84BG;
-            color: white;
             .mode-{
                 &ll-wgs84-show{
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -95,7 +99,6 @@ body{
         }
         &ll-tokyo {
             background-color: @colorTokyoBG;
-            color: white;
             .mode-{
                 &ll-tokyo-show{
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -118,7 +121,6 @@ body{
         }
         &map{
             background-color: @colorMapBG;
-            color: white;
             .mode-{
                 &map-show{
                     /** body.[mode] 配下の .[mode]-show を可視 */
@@ -141,7 +143,6 @@ body{
         }
         &n{
             background-color: @colorNBG;
-            color: white;
             .mode-{
                 &n-show {
                     /** body.[mode] 配下の .[mode]-show を可視 */

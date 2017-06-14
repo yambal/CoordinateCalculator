@@ -47,11 +47,12 @@ body {
   padding: 1px;
 }
 body {
+  color: white;
+  background-color: #383838;
   transition: all  0.5s ease;
 }
 body.mode-ll-wgs84 {
-  background-color: #2d682f;
-  color: white;
+  background-color: #1e441f;
 }
 body.mode-ll-wgs84 .mode-ll-wgs84-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
@@ -75,8 +76,7 @@ body.mode-ll-wgs84 .display-container.mode-ll-wgs84-show {
   box-sizing: border-box;
 }
 body.mode-ll-tokyo {
-  background-color: #02638f;
-  color: white;
+  background-color: #01405d;
 }
 body.mode-ll-tokyo .mode-ll-tokyo-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
@@ -100,8 +100,7 @@ body.mode-ll-tokyo .display-container.mode-ll-tokyo-show {
   box-sizing: border-box;
 }
 body.mode-map {
-  background-color: #52145d;
-  color: white;
+  background-color: #2d0b33;
 }
 body.mode-map .mode-map-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
@@ -125,8 +124,7 @@ body.mode-map .display-container.mode-map-show {
   box-sizing: border-box;
 }
 body.mode-n {
-  background-color: #930e3b;
-  color: white;
+  background-color: #640a29;
 }
 body.mode-n .mode-n-show {
   /** body.[mode] 配下の .[mode]-show を可視 */
@@ -216,16 +214,16 @@ body.mode-map.gps-active.gps-setview #key-30 {
   box-sizing: border-box;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84 {
-  background-color: #2d682f;
+  background-color: #1e441f;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo {
-  background-color: #02638f;
+  background-color: #01405d;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-map {
-  background-color: #52145d;
+  background-color: #2d0b33;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-n {
-  background-color: #930e3b;
+  background-color: #640a29;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-desable {
   border: none;
