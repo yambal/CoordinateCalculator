@@ -1,0 +1,23 @@
+{
+  "name": "coordinate-calculator",
+  "version": "0.0.1",
+  "description": "CoordinateCalculator",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yambal/CoordinateCalculator.git"
+  },
+  "author": "June YAMAMOTO",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yambal/CoordinateCalculator/issues"
+  },
+  "homepage": "https://github.com/yambal/CoordinateCalculator#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-less": "^1.4.1"
+  }
+}
