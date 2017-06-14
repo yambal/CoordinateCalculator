@@ -6,48 +6,9 @@ body {
   width: 100%;
   height: 100%;
 }
-body.mode-ll-wgs84 .mode-ll-wgs84-show,
-body.mode-ll-tokyo .mode-ll-tokyo-show,
-body.mode-map .mode-map-show,
-body.mode-n .mode-n-show {
-  display: block;
-}
-body.mode-ll-wgs84 .display-container.mode-ll-wgs84-show,
-body.mode-ll-tokyo .display-container.mode-ll-tokyo-show,
-body.mode-map .display-container.mode-map-show,
-body.mode-n .display-container.mode-n-show {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  box-sizing: border-box;
-}
-body.mode-ll-wgs84 .mode-ll-tokyo-show,
-body.mode-ll-wgs84 .mode-map-show,
-body.mode-ll-wgs84 .mode-n-show,
-body.mode-ll-tokyo .mode-ll-wgs84-show,
-body.mode-ll-tokyo .mode-map-show,
-body.mode-ll-tokyo .mode-n-show,
-body.mode-map .mode-ll-wgs84-show,
-body.mode-map .mode-ll-tokyo-show,
-body.mode-map .mode-n-show,
-body.mode-n .mode-ll-wgs84-show,
-body.mode-n .mode-ll-tokyo-show,
-body.mode-n .mode-map-show {
-  display: none ;
-}
-body.mode-map.gps-active #key-30 {
-  background-color: rgba(0, 0, 0, 0.125);
-}
-body.mode-map.gps-active.gps-setview #key-30 {
-  background-color: rgba(0, 0, 0, 0.25);
-}
 #display {
   width: 100vmin;
-  height: calc(0vmax);
+  height: calc(100vmax - 100vmin);
 }
 #display .display-container .display-header {
   flex-shrink: 1;
@@ -66,10 +27,129 @@ body.mode-map.gps-active.gps-setview #key-30 {
   height: 100%;
   flex-grow: 1;
   flex-shrink: 1;
-  position: relative;
 }
-#display .display-container .display-body .display-body-group.active {
+body.mode-ll-wgs84 .mode-ll-wgs84-show {
+  /** body.[mode] 配下の .[mode]-show を可視 */
+  display: block;
+}
+body.mode-ll-wgs84 .mode-ll-tokyo-show,
+body.mode-ll-wgs84 .mode-map-show,
+body.mode-ll-wgs84 .mode-n-show {
+  /** body.[mode] 配下の .[<>mode]-show を不可視 */
+  display: none;
+}
+body.mode-ll-wgs84 .display-container.mode-ll-wgs84-show {
+  /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  box-sizing: border-box;
+}
+body.mode-ll-tokyo .mode-ll-tokyo-show {
+  /** body.[mode] 配下の .[mode]-show を可視 */
+  display: block;
+}
+body.mode-ll-tokyo .mode-ll-wgs84-show,
+body.mode-ll-tokyo .mode-map-show,
+body.mode-ll-tokyo .mode-n-show {
+  /** body.[mode] 配下の .[<>mode]-show を不可視 */
+  display: none;
+}
+body.mode-ll-tokyo .display-container.mode-ll-tokyo-show {
+  /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  box-sizing: border-box;
+}
+body.mode-map .mode-map-show {
+  /** body.[mode] 配下の .[mode]-show を可視 */
+  display: block;
+}
+body.mode-map .mode-ll-wgs84-show,
+body.mode-map .mode-ll-tokyo-show,
+body.mode-map .mode-n-show {
+  /** body.[mode] 配下の .[<>mode]-show を不可視 */
+  display: none;
+}
+body.mode-map .display-container.mode-map-show {
+  /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  box-sizing: border-box;
+}
+body.mode-n .mode-n-show {
+  /** body.[mode] 配下の .[mode]-show を可視 */
+  display: block;
+}
+body.mode-n .mode-ll-wgs84-show,
+body.mode-n .mode-ll-tokyo-show,
+body.mode-n .mode-map-show {
+  /** body.[mode] 配下の .[<>mode]-show を不可視 */
+  display: none;
+}
+body.mode-n .display-container.mode-n-show {
+  /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  box-sizing: border-box;
+}
+body.submode-ll-wgs84-lat .display-body-group.ll-wgs84-lat {
+  /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-ll-wgs84-lng .display-body-group.ll-wgs84-lng {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-ll-tokyo-lat .display-body-group.ll-tokyo-lat {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-ll-tokyo-lng .display-body-group.ll-tokyo-lng {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-map-std .display-body-group.map-map,
+body.submode-map-photo .display-body-group.map-map {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-n-block .display-body-group.n-block {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-n-unit .display-body-group.n-unit {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-n-mesh .display-body-group.n-mesh {
+  /** サブモード（入力対象）でスタイルを変更 **/
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.mode-map.gps-active #key-30 {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+body.mode-map.gps-active.gps-setview #key-30 {
+  background-color: rgba(0, 0, 0, 0.25);
 }
 .keyboad {
   width: 100vmin;
