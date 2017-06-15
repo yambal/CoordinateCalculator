@@ -9,13 +9,25 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  font-size: 5vmin;
 }
 #display {
   width: 100vmin;
   height: calc(100vmax - 100vmin);
+  padding-bottom: 2px;
 }
 #display .display-container .display-header {
   flex-shrink: 1;
+  padding: 0 2px;
+  display: table;
+  width: 100%;
+}
+#display .display-container .display-header .display-header-left,
+#display .display-container .display-header .display-header-right {
+  display: table-cell;
+}
+#display .display-container .display-header .display-header-right {
+  text-align: right;
 }
 #display .display-container .display-body {
   height: 100%;
@@ -48,7 +60,7 @@ body {
   align-items: stretch;
   align-content: stretch;
   box-sizing: border-box;
-  padding: 1px;
+  padding: 2px;
 }
 body {
   color: white;
@@ -201,11 +213,20 @@ body.submode-n-mesh .display-body-group.n-mesh {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
 }
-body.mode-map.gps-active #key-30 {
-  background-color: rgba(0, 0, 0, 0.125);
+body.mode-map .display-header .icon-cc-room,
+body.mode-map .display-header .icon-cc-location_disabled,
+body.mode-map .display-header .icon-cc-my_location,
+body.mode-map.gps-active .display-header .icon-cc-location_off {
+  display: none;
 }
-body.mode-map.gps-active.gps-setview #key-30 {
-  background-color: rgba(0, 0, 0, 0.25);
+body.mode-map .display-header .icon-cc-location_off,
+body.mode-map.gps-active .display-header .icon-cc-room,
+body.mode-map.gps-active .display-header .icon-cc-location_disabled,
+body.mode-map.gps-setview .display-header .icon-cc-my_location {
+  display: inline-block;
+}
+body.mode-map.gps-setview .display-header .icon-cc-location_disabled {
+  display: none;
 }
 .keyboad {
   width: 100vmin;

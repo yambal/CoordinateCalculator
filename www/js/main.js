@@ -19,30 +19,30 @@ var CoordinateCalculator = function(){
 			'll-wgs84-lat',
 			'll-wgs84-lng'
 		], keys:[
-			[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
-			[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
-			[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+			[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
+			[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
+			[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
+			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
 			[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'ll-tokyo', subMode:[
 			'll-tokyo-lat',
 			'll-tokyo-lng'
 		], keys:[
-			[{name:"T", value:"t"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
-			[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
-			[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+			[{name:"T", value:"t"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
+			[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
+			[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
+			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
 			[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'map', subMode:[
 			'map-std',
 			'map-photo'
 		], keys:[
-			[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
-			[{name:"zoom<br />in", value:"zoomIn"},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
-			[{name:"zoom<br />out", value:"zoomOut"},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-			[{name:"GPS", value:"gps"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+			[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
+			[{name:"zoom<br />in", value:"zoomIn", icon:"icon-cc-zoom_in"},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
+			[{name:"zoom<br />out", value:"zoomOut", icon:"icon-cc-zoom_out"},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
+			[{name:"GPS", value:"gps", icon:"icon-cc-my_location"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
 			[{name:null, value:null},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'n', subMode:[
@@ -51,24 +51,24 @@ var CoordinateCalculator = function(){
 			'n-mesh'
 		], keys:{
 			"n-block":[
-				[{name:"X", value:"X"},{name:"A", value:"A"},{name:"B", value:"B"},{name:"C", value:"C"},{name:'WGS84', value:'ll-wgs84'}],
-				[{name:"Y", value:"Y"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'Tokyo', value:'ll-tokyo'}],
-				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+				[{name:"X", value:"X"},{name:"A", value:"A"},{name:"B", value:"B"},{name:"C", value:"C"},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
+				[{name:"Y", value:"Y"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
+				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
+				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
 				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 			],
 			"n-unit":[
-				[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
-				[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
-				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+				[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
+				[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
+				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
+				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
 				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 			],
 			"n-mesh":[
-				[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84'}],
-				[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo'}],
-				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
-				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
+				[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
+				[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
+				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
+				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
 				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 			]
 		}},
@@ -158,14 +158,6 @@ var CoordinateCalculator = function(){
 		if(subMode != _subMode){
 			$('body').removeClass("submode-" + subMode);
 			subMode = _subMode;
-			/*
-			// サブモードのクラスに .active を付けたり消したり
-			for (var i = modes.length - 1; i >= 0; i--) {
-				for (var j = modes[i].subMode.length - 1; j >= 0; j--) {
-					_isActive("." + modes[i].subMode[j], subMode == modes[i].subMode[j]);
-				}
-			}
-			*/
 			_updateKey();
 			$('body').addClass("submode-" + subMode);
 		}
@@ -177,15 +169,6 @@ var CoordinateCalculator = function(){
 			}
 		}
 	}
-	/*
-	function _isActive(elem, bool){
-		if(bool){
-			$(elem).addClass('active');
-			return;
-		}
-		$(elem).removeClass('active');
-	}
-	*/
 
 	function _updateKey(){
 		var filtered = modes.filter(function(element, index, array){
@@ -208,7 +191,11 @@ var CoordinateCalculator = function(){
 			var keyCol = keys[col];
 			for (var row = 0; row < keyCol.length; row++) {
 				if(keyCol[row].name){
-					$("#key-" + col + row).find(".key-label").html(keyCol[row].name);
+					if(keyCol[row].icon){
+						$("#key-" + col + row).find(".key-label").html('<i class="' + keyCol[row].icon + '"></i>');
+					}else{
+						$("#key-" + col + row).find(".key-label").html(keyCol[row].name);
+					}
 				}else{
 					$("#key-" + col + row).find(".key-label").html("");
 				}
