@@ -274,7 +274,7 @@ body.mode-map.gps-active.gps-setview #key-30 {
 }
 @font-face {
   font-family: 'Coordinate-Calculator';
-  src: url('../fonts/Coordinate-Calculator.ttf?lczmwq') format('truetype');
+  src: url('../fonts/Coordinate-Calculator.ttf?3i6bdv') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -290,6 +290,30 @@ i {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-cc-lng:before {
+  content: "\e907";
+}
+.icon-cc-lat:before {
+  content: "\e908";
+}
+.icon-cc-error2:before {
+  content: "\e901";
+}
+.icon-cc-n:before {
+  content: "\e902";
+}
+.icon-cc-dms:before {
+  content: "\e903";
+}
+.icon-cc-d:before {
+  content: "\e904";
+}
+.icon-cc-Tokyo:before {
+  content: "\e905";
+}
+.icon-cc-WGS84:before {
+  content: "\e906";
 }
 .icon-cc-schedule:before {
   content: "\e8b5";
@@ -962,22 +986,4 @@ i {
 }
 .icon-cc-zoom_out_map:before {
   content: "\e56b";
-}
-.icon-cc-error2:before {
-  content: "\e901";
-}
-.icon-cc-n:before {
-  content: "\e902";
-}
-.icon-cc-dms:before {
-  content: "\e903";
-}
-.icon-cc-d:before {
-  content: "\e904";
-}
-.icon-cc-Tokyo:before {
-  content: "\e905";
-}
-.icon-cc-WGS84:before {
-  content: "\e906";
 }

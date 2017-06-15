@@ -51,8 +51,8 @@ var CoordinateCalculator = function(){
 			'n-mesh'
 		], keys:{
 			"n-block":[
-				[{name:"X", value:"x"},{name:"A", value:"a"},{name:"B", value:"b"},{name:"C", value:"c"},{name:'WGS84', value:'ll-wgs84'}],
-				[{name:"Y", value:"y"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'Tokyo', value:'ll-tokyo'}],
+				[{name:"X", value:"X"},{name:"A", value:"A"},{name:"B", value:"B"},{name:"C", value:"C"},{name:'WGS84', value:'ll-wgs84'}],
+				[{name:"Y", value:"Y"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'Tokyo', value:'ll-tokyo'}],
 				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map'}],
 				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n'}],
 				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
