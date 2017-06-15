@@ -13,15 +13,19 @@
 @colorGrayBG:darken(@colorGray, 40%);
 
 @colorWgs84:#4CAF50;
+@colorWgs84Mid:darken(@colorWgs84, 15%);
 @colorWgs84BG:darken(@colorWgs84, 30%);
 
 @colorTokyo:#03A9F4;
+@colorTokyoMid:darken(@colorTokyo, 15%);
 @colorTokyoBG:darken(@colorTokyo, 30%);
 
 @colorMap:#9C27B0;
+@colorMapMid:darken(@colorMap, 15%);
 @colorMapBG:darken(@colorMap, 30%);
 
 @colorN:#E91E63;
+@colorNMid:darken(@colorN, 15%);
 @colorNBG:darken(@colorN, 30%);
 
 .focusedDisplayGroup(){
@@ -94,6 +98,10 @@ body{
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
+                    background-color: @colorWgs84Mid;
+                    .display-header{
+                        background-color: @colorWgs84BG;
+                    }
                 }
             }
         }
@@ -116,6 +124,10 @@ body{
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
+                    background-color: @colorTokyoMid;
+                    .display-header{
+                        background-color: @colorTokyoBG;
+                    }
                 }
             }
         }
@@ -138,6 +150,10 @@ body{
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
+                    background-color: @colorMapMid;
+                    .display-header{
+                        background-color: @colorMapBG;
+                    }
                 }
             }
         }
@@ -160,6 +176,10 @@ body{
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
+                    background-color: @colorNMid;
+                    .display-header{
+                        background-color: @colorNBG;
+                    }
                 }
             }
         }

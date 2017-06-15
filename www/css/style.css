@@ -74,6 +74,10 @@ body.mode-ll-wgs84 .display-container.mode-ll-wgs84-show {
   align-items: stretch;
   align-content: stretch;
   box-sizing: border-box;
+  background-color: #357a38;
+}
+body.mode-ll-wgs84 .display-container.mode-ll-wgs84-show .display-header {
+  background-color: #1e441f;
 }
 body.mode-ll-tokyo {
   background-color: #01405d;
@@ -98,6 +102,10 @@ body.mode-ll-tokyo .display-container.mode-ll-tokyo-show {
   align-items: stretch;
   align-content: stretch;
   box-sizing: border-box;
+  background-color: #0275a8;
+}
+body.mode-ll-tokyo .display-container.mode-ll-tokyo-show .display-header {
+  background-color: #01405d;
 }
 body.mode-map {
   background-color: #2d0b33;
@@ -122,6 +130,10 @@ body.mode-map .display-container.mode-map-show {
   align-items: stretch;
   align-content: stretch;
   box-sizing: border-box;
+  background-color: #641971;
+}
+body.mode-map .display-container.mode-map-show .display-header {
+  background-color: #2d0b33;
 }
 body.mode-n {
   background-color: #640a29;
@@ -146,6 +158,10 @@ body.mode-n .display-container.mode-n-show {
   align-items: stretch;
   align-content: stretch;
   box-sizing: border-box;
+  background-color: #aa1145;
+}
+body.mode-n .display-container.mode-n-show .display-header {
+  background-color: #640a29;
 }
 body.submode-ll-wgs84-lat .display-body-group.ll-wgs84-lat {
   /** サブモード（入力対象）でスタイルを変更 **/
