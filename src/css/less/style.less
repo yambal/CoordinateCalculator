@@ -82,6 +82,13 @@ body {
                     .display-body-group-inner{
                         .flex(row);
                         padding: 2px;
+                        .value{
+                            flex-grow: 1;
+                            width: 100%;
+                            &.value-num{
+                                text-align: right;
+                            }
+                        }
                     }
                 }
             }
@@ -284,7 +291,7 @@ body{
     &.mode-map .display-header .icon-cc-GPS,
     &.mode-map .display-header .icon-cc-location_disabled,
     &.mode-map .display-header .icon-cc-my_location{
-        display: none;
+        color: rgba(256,256,256,0.3);
     }
 
     //&.mode-map.gps-active .display-header .icon-cc-room,
@@ -296,9 +303,16 @@ body{
     }
 
     &.mode-map.gps-setview .display-header .icon-cc-location_disabled{
-        display: none;
+        color: rgba(256,256,256,0.3);
     }
 
+    .display-container .icon-cc-error2{
+        color: rgba(256,256,256,0.3);
+    }
+
+    &.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2{
+        color: rgba(256,256,256,1);
+    }
 }
 
 

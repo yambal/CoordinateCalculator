@@ -351,6 +351,11 @@ var CoordinateCalculator = function(){
 		var oldVal = $(target).html();
 
 		var validation = validationLatLng(oldVal, val, subMode == "ll-wgs84-lat" || subMode == "ll-tokyo-lat");
+		if(validation.error){
+			$("body").addClass(subMode + "-" + "error");
+		}else{
+			$("body").removeClass(subMode + "-" + "error");
+		}
 
 		$(target).html(validation.value);
 	};

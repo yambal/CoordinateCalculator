@@ -62,6 +62,13 @@ body {
   box-sizing: border-box;
   padding: 2px;
 }
+#display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value {
+  flex-grow: 1;
+  width: 100%;
+}
+#display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-num {
+  text-align: right;
+}
 body {
   color: white;
   font-family: 'LexiaReadable';
@@ -216,7 +223,7 @@ body.submode-n-mesh .display-body-group.n-mesh {
 body.mode-map .display-header .icon-cc-GPS,
 body.mode-map .display-header .icon-cc-location_disabled,
 body.mode-map .display-header .icon-cc-my_location {
-  display: none;
+  color: rgba(255, 255, 255, 0.3);
 }
 body.mode-map.gps-active .display-header .icon-cc-GPS,
 body.mode-map.gps-active .display-header .icon-cc-location_disabled,
@@ -224,7 +231,13 @@ body.mode-map.gps-setview .display-header .icon-cc-my_location {
   display: inline-block;
 }
 body.mode-map.gps-setview .display-header .icon-cc-location_disabled {
-  display: none;
+  color: rgba(255, 255, 255, 0.3);
+}
+body .display-container .icon-cc-error2 {
+  color: rgba(255, 255, 255, 0.3);
+}
+body.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2 {
+  color: #ffffff;
 }
 .keyboad {
   width: 100vmin;
