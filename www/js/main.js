@@ -23,7 +23,7 @@ var CoordinateCalculator = function(){
 			[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
 			[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
 			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
-			[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+			[{name:"Del", value:"del"},{name:"0", value:0},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'ll-tokyo', subMode:[
 			'll-tokyo-lat',
@@ -33,7 +33,7 @@ var CoordinateCalculator = function(){
 			[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
 			[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
 			[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
-			[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+			[{name:"AC", value:"ac"},{name:"0", value:0},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'map', subMode:[
 			'map-std',
@@ -43,7 +43,7 @@ var CoordinateCalculator = function(){
 			[{name:"zoom<br />in", value:"zoomIn", icon:"icon-cc-zoom_in"},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
 			[{name:"zoom<br />out", value:"zoomOut", icon:"icon-cc-zoom_out"},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
 			[{name:"GPS", value:"gps", icon:"icon-cc-my_location"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
-			[{name:null, value:null},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+			[{name:null, value:null},{name:"0", value:0},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 		]},
 		{name:'n', subMode:[
 			'n-block',
@@ -55,21 +55,21 @@ var CoordinateCalculator = function(){
 				[{name:"Y", value:"Y"},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
 				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
 				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
-				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+				[{name:"AC", value:"ac"},{name:"0", value:0},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 			],
 			"n-unit":[
 				[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
 				[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
 				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
 				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
-				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+				[{name:"AC", value:"ac"},{name:"0", value:0},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 			],
 			"n-mesh":[
 				[{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:null, value:null},{name:'WGS84', value:'ll-wgs84', icon:'icon-cc-WGS84'}],
 				[{name:null, value:null},{name:"7", value:7},{name:"8", value:8},{name:"9", value:9},{name:'Tokyo', value:'ll-tokyo', icon:'icon-cc-Tokyo'}],
 				[{name:null, value:null},{name:"4", value:4},{name:"5", value:5},{name:"6", value:6},{name:'Map', value:'map', icon:'icon-cc-map'}],
 				[{name:"C", value:"c"},{name:"1", value:1},{name:"2", value:2},{name:"3", value:3},{name:'n', value:'n', icon:'icon-cc-n'}],
-				[{name:"AC", value:"ac"},{name:"0", value:1},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
+				[{name:"AC", value:"ac"},{name:"0", value:0},{name:".", value:"."},{name:"=", value:"="},{name:null, value:null}]
 			]
 		}},
 	];
@@ -140,6 +140,9 @@ var CoordinateCalculator = function(){
 				break;
 			case "gps":
 				_gpsToggle();
+				break;
+			case "del":
+				delDisplayValue();
 				break;
 			default:
 				addDisplayValue(val);
@@ -296,7 +299,6 @@ var CoordinateCalculator = function(){
 	}
 
 	function _gpsToggle(){
-
 		if(!gpsIsActive){
 			// GPSが無効の時 > GPSを有効
 			map.locate({
@@ -334,12 +336,162 @@ var CoordinateCalculator = function(){
 
 	// ************************************************************
 	function addDisplayValue(val){
-		var target = ".value-" + mode + "-" + subMode;
-		var oldVal = $(target).html();
-		var newVal = oldVal + val;
-		$(target).html(newVal);
+		addDisplayValueToTarget(val);
 	};
 
+	function delDisplayValue(){
+		var target = ".value-" + mode + "-" + subMode;
+		var oldVal = $(target).html();
+		var validation = deleteLatLang(oldVal);
+		$(target).html(validation);
+	}
+
+	function addDisplayValueToTarget(val){
+		var target = ".value-" + mode + "-" + subMode;
+		var oldVal = $(target).html();
+
+		var validation = validationLatLng(oldVal, val, subMode == "ll-wgs84-lat" || subMode == "ll-tokyo-lat");
+
+		$(target).html(validation.value);
+	};
+
+	function deleteLatLang(val){
+		var chack_s = val.split(/[\.°'"]/);
+		if(chack_s.length == 1){
+			return val.substr( 0, val.length - 1);
+		}
+		if(chack_s.length >= 2){
+			if(chack_s[1].length == 0){
+				return chack_s[0];
+			}
+			return chack_s[0] + "." + _deleteRight(chack_s[1]); 
+		}
+		if(chack_s.length >= 4){
+			if(chack_s[3].length == 0){
+				var pre = _deleteRight(chack_s[2]);
+				if(pre.length > 0){
+					return chack_s[0] + "°" + chack_s[1] + "'" + pre + '"';
+				}
+				return chack_s[0] + "." + chack_s[1];
+			}
+
+			var pre = _deleteRight(chack_s[3]);
+			return chack_s[0] + "°" + chack_s[1] + "'" + chack_s[2] + '.' + pre + '"'; 
+		}
+
+	}
+
+	function validationLatLng(now, add, isLat){
+		var check = now + add;
+		var chack_s = check.split(/[\.°'"]/);
+		var hasError = false;
+
+		if(chack_s[0]){
+			// 1桁目
+			var d = parseInt(chack_s[0],10);
+			if(isLat && (d < -90 || d > 90)){
+				return {
+					error:true,
+					value:parseInt(now, 10)
+				}
+			}else if(d < - 180 || d > 180){
+				return {
+					error:true,
+					value:parseInt(now, 10)
+				}
+			}
+		}
+
+		if(chack_s.length >= 3){
+			// dms として評価
+			if(chack_s.length > 5){
+				console.log(375);
+				return {
+					error:true,
+					value:chack_s[0] + "°"
+					+ _zPad2(chack_s[1]) + "'"
+					+ _zPad2(chack_s[2]) + '.'
+					+ chack_s[3] + '"'
+				}
+			}
+
+			var m = parseInt(chack_s[1],10);
+			if(m >= 60){
+				return {
+					error:true,
+					value:chack_s[0] + "°" + chack_s[1] + '"'
+				}
+			}
+
+			var s = parseInt(chack_s[2],10);
+			if(s >= 60){
+				return {
+					error:true,
+					value:chack_s[0] + "°" + chack_s[1] + "'" + chack_s[2] + '"'
+				}
+			}
+
+			if(chack_s.length == 3){
+				if(chack_s[2].length > 0){
+					return {
+						error:false,
+						value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
+					}
+				}
+				return {
+					error:false,
+					value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'"
+				}
+			}
+			if(chack_s.length == 4){
+				if(chack_s[3].length > 0){
+					console.log(411);
+					return {
+						error:false,
+						value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
+					}
+				}
+				return {
+					error:false,
+					value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '"'
+				}
+			}
+
+			
+			if(chack_s.length == 5){
+				return {
+					error:false,
+					value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '.' + chack_s[3] + chack_s[4] + '"'
+				}
+			}
+
+		}else{
+			// d として評価
+			if(chack_s.length == 1){
+				return {
+					error:false,
+					value:chack_s[0]
+				}
+			}
+			return {
+				error:false,
+				value:chack_s[0] + "." + chack_s[1]
+			}
+		}
+	}
+
+	function _zPad2(str){
+		return ("0" + parseInt(str, 10)).slice(-2);
+	}
+
+	function _deleteRight(str){
+		if(str.length <= 1){
+			return "";
+		}
+		return str.substr(0, str.length - 1)
+	}
+
+	// ************************************************************
 	_changeMode(modes[0].name, modes[0].subMode[0]);
 	
 
