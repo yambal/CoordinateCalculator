@@ -213,14 +213,12 @@ body.submode-n-mesh .display-body-group.n-mesh {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
 }
-body.mode-map .display-header .icon-cc-room,
+body.mode-map .display-header .icon-cc-GPS,
 body.mode-map .display-header .icon-cc-location_disabled,
-body.mode-map .display-header .icon-cc-my_location,
-body.mode-map.gps-active .display-header .icon-cc-location_off {
+body.mode-map .display-header .icon-cc-my_location {
   display: none;
 }
-body.mode-map .display-header .icon-cc-location_off,
-body.mode-map.gps-active .display-header .icon-cc-room,
+body.mode-map.gps-active .display-header .icon-cc-GPS,
 body.mode-map.gps-active .display-header .icon-cc-location_disabled,
 body.mode-map.gps-setview .display-header .icon-cc-my_location {
   display: inline-block;
@@ -295,7 +293,7 @@ body.mode-map.gps-setview .display-header .icon-cc-location_disabled {
 }
 @font-face {
   font-family: 'Coordinate-Calculator';
-  src: url('../fonts/Coordinate-Calculator.ttf?3i6bdv') format('truetype');
+  src: url('../fonts/Coordinate-Calculator.ttf?hxru2b') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -311,6 +309,27 @@ i {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-cc-altitude:before {
+  content: "\e909";
+}
+.icon-cc-longitude:before {
+  content: "\e90a";
+}
+.icon-cc-Latitude:before {
+  content: "\e90b";
+}
+.icon-cc-NMesh:before {
+  content: "\e90c";
+}
+.icon-cc-NUnit:before {
+  content: "\e90d";
+}
+.icon-cc-NBlock:before {
+  content: "\e90e";
+}
+.icon-cc-GPS:before {
+  content: "\e90f";
 }
 .icon-cc-lng:before {
   content: "\e907";

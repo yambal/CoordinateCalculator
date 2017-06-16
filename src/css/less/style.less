@@ -279,15 +279,17 @@ body{
         }
     }
 
-    &.mode-map .display-header .icon-cc-room,
+    //&.mode-map .display-header .icon-cc-room,
+    //&.mode-map.gps-active .display-header .icon-cc-location_off
+    &.mode-map .display-header .icon-cc-GPS,
     &.mode-map .display-header .icon-cc-location_disabled,
-    &.mode-map .display-header .icon-cc-my_location,
-    &.mode-map.gps-active .display-header .icon-cc-location_off{
+    &.mode-map .display-header .icon-cc-my_location{
         display: none;
     }
 
-    &.mode-map .display-header .icon-cc-location_off,
-    &.mode-map.gps-active .display-header .icon-cc-room,
+    //&.mode-map.gps-active .display-header .icon-cc-room,
+    //&.mode-map .display-header .icon-cc-location_off,
+    &.mode-map.gps-active .display-header .icon-cc-GPS,
     &.mode-map.gps-active .display-header .icon-cc-location_disabled,
     &.mode-map.gps-setview .display-header .icon-cc-my_location{
         display: inline-block;

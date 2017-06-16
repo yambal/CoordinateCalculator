@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Coordinate-Calculator';
   src:
-    url('../Coordinate-Calculator.ttf?3i6bdv') format('truetype');
+    url('../Coordinate-Calculator.ttf?hxru2b');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,6 +21,27 @@ i {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-cc-altitude:before {
+  content: "\e909";
+}
+.icon-cc-longitude:before {
+  content: "\e90a";
+}
+.icon-cc-Latitude:before {
+  content: "\e90b";
+}
+.icon-cc-NMesh:before {
+  content: "\e90c";
+}
+.icon-cc-NUnit:before {
+  content: "\e90d";
+}
+.icon-cc-NBlock:before {
+  content: "\e90e";
+}
+.icon-cc-GPS:before {
+  content: "\e90f";
+}
 .icon-cc-lng:before {
   content: "\e907";
 }
