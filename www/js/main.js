@@ -3,15 +3,13 @@
         console.log("ready");
         $('.key').click(function(event) {
             var key = $(this).data("key");
-            if(key){
+            if(typeof key !== "undefined"){
 				c.onKeyPress(key);
             }
         });
 
     });
 })(window.jQuery);
-
-
 
 var CoordinateCalculator = function(){
 	var modes = [
@@ -85,6 +83,7 @@ var CoordinateCalculator = function(){
 	var gpsMaker = false;
 
 	function _onKeyPress(val){
+		console.log("_onKeyPress(" + val + ")");
 		switch(val){
 			case modes[0].name:
 				var preMode = mode;
@@ -336,6 +335,7 @@ var CoordinateCalculator = function(){
 
 	// ************************************************************
 	function addDisplayValue(val){
+		//console.log("addDisplayValue(" + val + ")");
 		addDisplayValueToTarget(val);
 	};
 
@@ -349,15 +349,23 @@ var CoordinateCalculator = function(){
 	function addDisplayValueToTarget(val){
 		var target = ".value-" + mode + "-" + subMode;
 		var oldVal = $(target).html();
+		var validation;
 
-		var validation = validationLatLng(oldVal, val, subMode == "ll-wgs84-lat" || subMode == "ll-tokyo-lat");
-		if(validation.error){
-			$("body").addClass(subMode + "-" + "error");
-		}else{
-			$("body").removeClass(subMode + "-" + "error");
+		if(subMode == "ll-wgs84-lat" || subMode == "ll-wgs84-lng" || subMode == "ll-tokyo-lat" || subMode == "ll-tokyo-lng"){
+			validation = validationLatLng(oldVal, val, subMode == "ll-wgs84-lat" || subMode == "ll-tokyo-lat");
+			if(validation.error){
+				$("body").addClass(subMode + "-" + "error");
+			}else{
+				$("body").removeClass(subMode + "-" + "error");
+			}
+			$(target).html(validation.value);
+		}else if(subMode == "n-block"){
+
+		}else if(subMode == "n-unit"){
+
+		}else if(subMode == "n-mesh"){
+
 		}
-
-		$(target).html(validation.value);
 	};
 
 	function deleteLatLang(val){
@@ -365,13 +373,14 @@ var CoordinateCalculator = function(){
 		if(chack_s.length == 1){
 			return val.substr( 0, val.length - 1);
 		}
-		if(chack_s.length >= 2){
+		if(chack_s.length >= 2 && chack_s.length < 4){
 			if(chack_s[1].length == 0){
 				return chack_s[0];
 			}
 			return chack_s[0] + "." + _deleteRight(chack_s[1]); 
 		}
 		if(chack_s.length >= 4){
+			console.log(chack_s);
 			if(chack_s[3].length == 0){
 				var pre = _deleteRight(chack_s[2]);
 				if(pre.length > 0){
