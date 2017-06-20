@@ -347,18 +347,45 @@ var CoordinateCalculator = function(){
 	}
 
 	function addDisplayValueToTarget(val){
-		var target = ".value-" + mode + "-" + subMode;
-		var oldVal = $(target).html();
-		var validation;
+		if(mode == "ll-wgs84" || mode == "ll-tokyo"){
+			var pareSubMode;
 
-		if(subMode == "ll-wgs84-lat" || subMode == "ll-wgs84-lng" || subMode == "ll-tokyo-lat" || subMode == "ll-tokyo-lng"){
-			validation = validationLatLng(oldVal, val, subMode == "ll-wgs84-lat" || subMode == "ll-tokyo-lat");
+			var filtered = modes.filter(function(element, index, array){
+				return element.name == mode;
+			});
+			var modeObj = filtered[0];
+
+			var isLat;
+			if(subMode == modeObj.subMode[0]){
+				pairSubMode = modeObj.subMode[1];
+				isLat = true;
+			}else{
+				pairSubMode = modeObj.subMode[0];
+				isLat = false;
+			}
+
+			var target = ".value-" + mode + "-" + subMode;
+			var oldVal = $(target).html();
+			var validation = validationLatLng(oldVal, val, isLat, pairVal);
+
+			var pairTarget = ".value-" + mode + "-" + pairSubMode;
+			var pairVal = $(pairTarget).html();
+			if(pairVal.length > 0 && validation.value.length > 0){
+				var inputNotationIsDms = notationIsDms(validation.value);
+				var pairNotationIsDms = notationIsDms(pairVal);
+				if(inputNotationIsDms != pairNotationIsDms){
+					console.log("notation error", inputNotationIsDms, pairNotationIsDms);
+				}
+			}
+
 			if(validation.error){
 				$("body").addClass(subMode + "-" + "error");
 			}else{
 				$("body").removeClass(subMode + "-" + "error");
 			}
+
 			$(target).html(validation.value);
+
 		}else if(subMode == "n-block"){
 
 		}else if(subMode == "n-unit"){
@@ -395,23 +422,53 @@ var CoordinateCalculator = function(){
 
 	}
 
+	function notationIsDms(str){
+		var chack_s = str.split(/[\.°'"]/);
+		if(!str || chack_s.length <= 2){
+			return false;
+		}
+		return true;
+		
+	};
+
+	// LatLang の validation
 	function validationLatLng(now, add, isLat){
 		var check = now + add;
-		var chack_s = check.split(/[\.°'"]/);
 		var hasError = false;
+		var message = [];
+		var retVal;
+		
+		// D, DMS モードのチェック
+		/*
+		var inputNotationIsDms = notationIsDms(check);
+		var pairNotationIsDms = notationIsDms(pairVal);
+		if(pairNotationIsDms && !inputNotationIsDms){
+			hasError = true;
+			message.push("d <> dms");
+		}
+		*/
 
+		var chack_s = check.split(/[\.°'"]/);
 		if(chack_s[0]){
-			// 1桁目
 			var d = parseInt(chack_s[0],10);
 			if(isLat && (d < -90 || d > 90)){
+				hasError = true;
+				message.push("lat -90 90");
+				retVal = parseInt(now, 10);
 				return {
-					error:true,
-					value:parseInt(now, 10)
+					error:hasError,
+					message:message,
+					value:retVal
 				}
+
 			}else if(d < - 180 || d > 180){
+				hasError = true;
+				message.push("lng -180 180");
+				retVal = parseInt(now, 10);
 				return {
-					error:true,
-					value:parseInt(now, 10)
+					error:hasError,
+					message:message,
+					value:retVal
 				}
 			}
 		}
@@ -419,9 +476,11 @@ var CoordinateCalculator = function(){
 		if(chack_s.length >= 3){
 			// dms として評価
 			if(chack_s.length > 5){
-				console.log(375);
+				hasError = true;
+				message.push("to many .");
 				return {
-					error:true,
+					error:hasError,
+					message:message,
 					value:chack_s[0] + "°"
 					+ _zPad2(chack_s[1]) + "'"
 					+ _zPad2(chack_s[2]) + '.'
@@ -431,16 +490,22 @@ var CoordinateCalculator = function(){
 
 			var m = parseInt(chack_s[1],10);
 			if(m >= 60){
+				hasError = true;
+				message.push("m > 60");
 				return {
-					error:true,
+					error:hasError,
+					message:message,
 					value:chack_s[0] + "°" + chack_s[1] + '"'
 				}
 			}
 
 			var s = parseInt(chack_s[2],10);
 			if(s >= 60){
+				hasError = true;
+				message.push("s > 60");
 				return {
-					error:true,
+					error:hasError,
+					message:message,
 					value:chack_s[0] + "°" + chack_s[1] + "'" + chack_s[2] + '"'
 				}
 			}
@@ -448,25 +513,29 @@ var CoordinateCalculator = function(){
 			if(chack_s.length == 3){
 				if(chack_s[2].length > 0){
 					return {
-						error:false,
+						error:hasError,
+						message:message,
 						value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
 					}
 				}
 				return {
-					error:false,
+					error:hasError,
+					message:message,
 					value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'"
 				}
 			}
+
 			if(chack_s.length == 4){
 				if(chack_s[3].length > 0){
-					console.log(411);
 					return {
-						error:false,
+						error:hasError,
+						message:message,
 						value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
 					}
 				}
 				return {
-					error:false,
+					error:hasError,
+					message:message,
 					value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '"'
 				}
 			}
@@ -474,7 +543,8 @@ var CoordinateCalculator = function(){
 			
 			if(chack_s.length == 5){
 				return {
-					error:false,
+					error:hasError,
+					message:message,
 					value:chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '.' + chack_s[3] + chack_s[4] + '"'
 				}
 			}
@@ -483,12 +553,14 @@ var CoordinateCalculator = function(){
 			// d として評価
 			if(chack_s.length == 1){
 				return {
-					error:false,
+					error:hasError,
+					message:message,
 					value:chack_s[0]
 				}
 			}
 			return {
-				error:false,
+				error:hasError,
+				message:message,
 				value:chack_s[0] + "." + chack_s[1]
 			}
 		}
