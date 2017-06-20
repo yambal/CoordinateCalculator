@@ -233,10 +233,16 @@ body.mode-map.gps-setview .display-header .icon-cc-my_location {
 body.mode-map.gps-setview .display-header .icon-cc-location_disabled {
   color: rgba(255, 255, 255, 0.3);
 }
-body .display-container .icon-cc-error2 {
+body .display-container .icon-cc-error2,
+body .display-container .icon-cc-dms {
   color: rgba(255, 255, 255, 0.3);
 }
-body.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2 {
+body.ll-wgs84-lat-notation-dms .display-container .ll-wgs84-lat .icon-cc-dms,
+body.ll-wgs84-lng-notation-dms .display-container .ll-wgs84-lng .icon-cc-dms {
+  color: #ffffff;
+}
+body.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2,
+body.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2 {
   color: #ffffff;
 }
 .keyboad {

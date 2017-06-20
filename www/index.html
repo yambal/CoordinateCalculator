@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -10,8 +11,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/ripple.min.css">
     <link rel="stylesheet" href="css/style.css">
-
 </head>
+
 <body>
     <div id="display" class="mode-input-target">
         <div class="display-container mode-ll-wgs84-show">
@@ -29,7 +30,7 @@
                         <div class="layout-teble">
                             <div class="teble-cell vm">
                                 <div class="display-body-group-inner">
-                                    <div><i class="icon-cc-lat"></i><i class="icon-cc-Latitude"></i><i class="icon-cc-error2"></i></div>
+                                    <div><i class="icon-cc-lat"></i><i class="icon-cc-Latitude"></i><i class="icon-cc-dms"></i><i class="icon-cc-error2"></i></div>
                                     <div class="value value-num value-ll-wgs84-ll-wgs84-lat"></div>
                                 </div>
                             </div>
@@ -41,7 +42,7 @@
                         <div class="layout-teble">
                             <div class="teble-cell vm">
                                 <div class="display-body-group-inner">
-                                    <div><i class="icon-cc-lng"></i><i class="icon-cc-longitude"></i><i class="icon-cc-error2"></i></div>
+                                    <div><i class="icon-cc-lng"></i><i class="icon-cc-longitude"></i><i class="icon-cc-dms"></i><i class="icon-cc-error2"></i></div>
                                     <div class="value value-num value-ll-wgs84-ll-wgs84-lng"></div>
                                 </div>
                             </div>
@@ -144,39 +145,189 @@
     </div>
     <div class="keyboad">
         <div class="keyboad-row">
-            <div class="keyboad-col"><div id="key-00" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-01" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-02" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-03" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-04" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
+            <div class="keyboad-col">
+                <div id="key-00" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-01" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-02" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-03" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-04" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div id="key-10" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-11" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-12" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-13" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-14" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
+            <div class="keyboad-col">
+                <div id="key-10" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-11" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-12" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-13" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-14" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div id="key-20" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-21" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-22" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-23" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-24" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div> 
+            <div class="keyboad-col">
+                <div id="key-20" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-21" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-22" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-23" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-24" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div id="key-30" class="key material-ripple" data-key="c"><div class="layout-teble"><div class="teble-cell vm key-label">c</div></div></div></div>
-            <div class="keyboad-col"><div id="key-31" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-32" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-33" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-34" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
+            <div class="keyboad-col">
+                <div id="key-30" class="key material-ripple" data-key="c">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">c</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-31" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-32" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-33" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-34" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="keyboad-row">
-            <div class="keyboad-col"><div id="key-40" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-41" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-42" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-43" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
-            <div class="keyboad-col"><div id="key-44" class="key material-ripple"><div class="layout-teble"><div class="teble-cell vm key-label">x</div></div></div></div>
+            <div class="keyboad-col">
+                <div id="key-40" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-41" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-42" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-43" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboad-col">
+                <div id="key-44" class="key material-ripple">
+                    <div class="layout-teble">
+                        <div class="teble-cell vm key-label">x</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="js/jquery-3.2.1.min.js"></script>
@@ -186,4 +337,5 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

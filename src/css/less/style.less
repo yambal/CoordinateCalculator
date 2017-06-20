@@ -306,11 +306,20 @@ body{
         color: rgba(256,256,256,0.3);
     }
 
-    .display-container .icon-cc-error2{
-        color: rgba(256,256,256,0.3);
+    .display-container{
+        .icon-cc-error2,
+        .icon-cc-dms{
+            color: rgba(256,256,256,0.3);
+        }
     }
 
-    &.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2{
+    &.ll-wgs84-lat-notation-dms .display-container .ll-wgs84-lat .icon-cc-dms,
+    &.ll-wgs84-lng-notation-dms .display-container .ll-wgs84-lng .icon-cc-dms{
+        color: rgba(256,256,256,1);
+    }
+
+    &.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2,
+    &.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2{
         color: rgba(256,256,256,1);
     }
 }
