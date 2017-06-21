@@ -152,7 +152,7 @@ var CoordinateCalculator = function() {
                 _gpsToggle();
                 break;
             case "del":
-                delDisplayValue();
+                deleteDisplayValue();
                 break;
             default:
                 addDisplayValue(val);
@@ -343,17 +343,6 @@ var CoordinateCalculator = function() {
 
     // ************************************************************
     function addDisplayValue(val) {
-        //console.log("addDisplayValue(" + val + ")");
-        addDisplayValueToTarget(val);
-    };
-
-    function delDisplayValue() {
-        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
-            deleteDisplayValueToTargetLatLng();
-        }
-    }
-
-    function addDisplayValueToTarget(val) {
         if (mode == "ll-wgs84" || mode == "ll-tokyo") {
             addDisplayValueToTargetLatLng(val);
 
@@ -365,6 +354,32 @@ var CoordinateCalculator = function() {
 
         }
     };
+
+    function deleteDisplayValue() {
+        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
+            deleteDisplayValueToTargetLatLng();
+        }
+    }
+
+    // =============================================================
+    // Lat/Lang
+
+    // mode/subMode の値から一文字削除
+    function deleteDisplayValueToTargetLatLng() {
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var noS = oldVal.replace(/"/, "");
+        var newVal = noS.substr(0, noS.length - 1);
+
+        setDisplayValueToCurrentLatLng(newVal);
+    }
+
+    // mode/subMode の値から一文字追加
+    function addDisplayValueToTargetLatLng(val) {
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var newVal = oldVal + val;
+
+        setDisplayValueToCurrentLatLng(newVal);
+    }
 
     // 文字列がDMS表記かを返す
     function notationIsDms(_str) {
@@ -383,7 +398,7 @@ var CoordinateCalculator = function() {
     };
 
     // 現在の入力のペアを返す
-    function getPairMode() {
+    function getPairSubMode() {
         var pairSubMode;
         var filtered = modes.filter(function(element, index, array) {
             return element.name == mode;
@@ -401,13 +416,13 @@ var CoordinateCalculator = function() {
     }
 
     // 指定した mode subMode の値を返す
-    function getModeSubmodeValue(_mode, _subMode) {
+    function getModeSubModeValue(_mode, _subMode) {
         var target = ".value-" + _mode + "-" + _subMode;
         return $(target).html();
     }
 
     // 指定した mode subMode に値をセットする
-    function setModeSubmodeValue(_mode, _subMode, value) {
+    function setModeSubModeValue(_mode, _subMode, value) {
         var target = ".value-" + _mode + "-" + _subMode;
         $(target).html(value);
     }
@@ -421,111 +436,61 @@ var CoordinateCalculator = function() {
         }
     }
 
-    function deleteDisplayValueToTargetLatLng() {
-        var oldVal = getModeSubmodeValue(mode, subMode);
-        var newVal;
+    // 入力中の値とペアの値を検証し、D/DMS のエラーを判断
+    // エラーがあれば BODY にクラスを追加
+    // 返り値はエラーの有無
+    function setPairErrorClass(currentVal, pairVal, pairMode){
+        if (currentVal.length > 0 && pairVal.length > 0) {
+            var inputNotationIsDms = notationIsDms(currentVal);
+            var pairNotationIsDms = notationIsDms(pairVal);
 
-        var isLat = false;
-        if (subMode == modes[0].subMode[0] && subMode == modes[1].subMode[0]) {
-            isLat = true;
-        }
+            if(!inputNotationIsDms && pairNotationIsDms){
+                // 入力中がDでペアがDMS
+                $("body").addClass(pairMode + "-" + "error");
+                return true;
 
-        var chack_s = oldVal.split(/[\.°'"]/);
-        if (chack_s.length == 1) {
-            newVal = oldVal.substr(0, oldVal.length - 1);
+            }else if(inputNotationIsDms && !pairNotationIsDms){
+                // 入力中がDMSでペアがD
+                $("body").addClass(pairMode + "-" + "error");
+                return true;
 
-        } else if (chack_s.length >= 2 && chack_s.length < 4) {
-            if (chack_s[1].length == 0) {
-                newVal = chack_s[0];
-            } else {
-                newVal = chack_s[0] + "." + _deleteRight(chack_s[1]);
-            }
-        } else if (chack_s.length >= 4) {
-            if (chack_s[3].length == 0) {
-                var pre = _deleteRight(chack_s[2]);
-                if (pre.length > 0) {
-                    newVal = chack_s[0] + "°" + chack_s[1] + "'" + pre + '"';
-                } else {
-                    newVal = chack_s[0] + "." + chack_s[1];
-                }
-            } else {
-                var pre = _deleteRight(chack_s[3]);
-                newVal = chack_s[0] + "°" + chack_s[1] + "'" + chack_s[2] + '.' + pre + '"';
             }
         }
-
-        var validation = validationLatLng(newVal, '', isLat);
-        var hasError = validation.error;
-        //console.log(hasError);
-        var inputNotationIsDms = notationIsDms(newVal);
-
-        setModeSubmodeValue(mode, subMode, newVal);
-        setNotationClass(subMode, inputNotationIsDms);
-
-        var pairMode = getPairMode();
-        var pairVal = getModeSubmodeValue(mode, pairMode);
-        var pairNotationIsDms = notationIsDms(pairVal);
-
-        if (pairVal.length > 0 && newVal.length > 0) {
-        	if(!inputNotationIsDms && pairNotationIsDms){
-        		console.log(463);
-        		hasError = true;
-        		$("body").removeClass(pairMode + "-" + "error");
-
-        	}else if(inputNotationIsDms && !pairNotationIsDms){
-        		console.log(468);
-        		$("body").addClass(pairMode + "-" + "error");
-
-        	}else{
-        		console.log(472);
-        		$("body").removeClass(pairMode + "-" + "error");
-        	}
-        }
-
-        if (hasError) {
-            $("body").addClass(subMode + "-" + "error");
-        } else {
-            $("body").removeClass(subMode + "-" + "error");
-        }
+        $("body").removeClass(pairMode + "-" + "error");
+        return false;
     }
 
-    function addDisplayValueToTargetLatLng(val) {
+    // mode/submode に値をセットする
+    // バリデーション/エラー判断/Class設定を含む
+    function setDisplayValueToCurrentLatLng(val){
         var isLat = false;
         if (subMode == modes[0].subMode[0] && subMode == modes[1].subMode[0]) {
             isLat = true;
         }
 
-        var pairMode = getPairMode();
-
-        var oldVal = getModeSubmodeValue(mode, subMode);
-        var validation = validationLatLng(oldVal, val, isLat);
-        var newVal = validation.value;
-        var hasError = validation.error;
+        var validated = validationLatLng(val, isLat);
+        var newVal = validated.value;
+        var hasError = validated.error;
         var inputNotationIsDms = notationIsDms(newVal);
         setNotationClass(subMode, inputNotationIsDms);
 
-        var pairVal = getModeSubmodeValue(mode, pairMode);
-        var pairNotationIsDms = notationIsDms(pairVal);
+        var pairMode = getPairSubMode();
+        var pairVal = getModeSubModeValue(mode, pairMode);
 
-        if (pairVal.length > 0 && newVal.length > 0) {
-            if (inputNotationIsDms != pairNotationIsDms) {
-                //console.log("notation error", inputNotationIsDms, pairNotationIsDms);
-                hasError = true;
-            }
-        }
+        var hasDmsError = setPairErrorClass(newVal, pairVal, pairMode);
 
-        if (hasError) {
+        if (hasError || hasDmsError) {
             $("body").addClass(subMode + "-" + "error");
         } else {
             $("body").removeClass(subMode + "-" + "error");
         }
 
-        setModeSubmodeValue(mode, subMode, newVal);
+        setModeSubModeValue(mode, subMode, newVal);
     }
 
     // LatLang の validation
-    function validationLatLng(now, add, isLat) {
-        var check = now + add;
+    function validationLatLng(check, isLat) {
+        //var check = now + add;
         var hasError = false;
         var retVal;
 
@@ -573,9 +538,15 @@ var CoordinateCalculator = function() {
             }
 
             if (chack_s.length == 3) {
+                if (chack_s[2].length > 0) {
+                    return {
+                        error: false,
+                        value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
+                    }
+                }
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'"
                 }
             }
 
@@ -585,6 +556,7 @@ var CoordinateCalculator = function() {
                     value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
                 }
             }
+
 
             if (chack_s.length >= 5) {
                 var _sS = "";
