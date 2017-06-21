@@ -12,6 +12,7 @@
 })(window.jQuery);
 
 var CoordinateCalculator = function() {
+    var values = {};
     var modes = [{
         name: 'll-wgs84',
         subMode: [
@@ -19,7 +20,7 @@ var CoordinateCalculator = function() {
             'll-wgs84-lng'
         ],
         keys: [
-            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "cmv", value: "cmv" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -32,7 +33,7 @@ var CoordinateCalculator = function() {
             'll-tokyo-lng'
         ],
         keys: [
-            [{ name: "T", value: "t" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "cmv", value: "cmv" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -153,6 +154,9 @@ var CoordinateCalculator = function() {
                 break;
             case "del":
                 deleteDisplayValue();
+                break;
+            case "cmv":
+                comvertDisplayValue();
                 break;
             default:
                 addDisplayValue(val);
@@ -344,7 +348,7 @@ var CoordinateCalculator = function() {
     // ************************************************************
     function addDisplayValue(val) {
         if (mode == "ll-wgs84" || mode == "ll-tokyo") {
-            addDisplayValueToTargetLatLng(val);
+            addDisplayValueToTargetLatLng(val, 'user');
 
         } else if (subMode == "n-block") {
 
@@ -357,7 +361,7 @@ var CoordinateCalculator = function() {
 
     function deleteDisplayValue() {
         if (mode == "ll-wgs84" || mode == "ll-tokyo") {
-            deleteDisplayValueToTargetLatLng();
+            deleteDisplayValueToTargetLatLng('user');
         }
     }
 
@@ -365,20 +369,20 @@ var CoordinateCalculator = function() {
     // Lat/Lang
 
     // mode/subMode の値から一文字削除
-    function deleteDisplayValueToTargetLatLng() {
+    function deleteDisplayValueToTargetLatLng(source) {
         var oldVal = getModeSubModeValue(mode, subMode);
         var noS = oldVal.replace(/"/, "");
         var newVal = noS.substr(0, noS.length - 1);
 
-        setDisplayValueToCurrentLatLng(newVal);
+        setDisplayValueToCurrentLatLng(newVal, source);
     }
 
     // mode/subMode の値から一文字追加
-    function addDisplayValueToTargetLatLng(val) {
+    function addDisplayValueToTargetLatLng(val, source) {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal + val;
 
-        setDisplayValueToCurrentLatLng(newVal);
+        setDisplayValueToCurrentLatLng(newVal, source);
     }
 
     // 文字列がDMS表記かを返す
@@ -407,10 +411,8 @@ var CoordinateCalculator = function() {
 
         if (subMode == modeObj.subMode[0]) {
             pairSubMode = modeObj.subMode[1];
-            isLat = true;
         } else {
             pairSubMode = modeObj.subMode[0];
-            isLat = false;
         }
         return pairSubMode;
     }
@@ -424,6 +426,7 @@ var CoordinateCalculator = function() {
     // 指定した mode subMode に値をセットする
     function setModeSubModeValue(_mode, _subMode, value) {
         var target = ".value-" + _mode + "-" + _subMode;
+        //console.log(target, value);
         $(target).html(value);
     }
 
@@ -462,7 +465,7 @@ var CoordinateCalculator = function() {
 
     // mode/submode に値をセットする
     // バリデーション/エラー判断/Class設定を含む
-    function setDisplayValueToCurrentLatLng(val){
+    function setDisplayValueToCurrentLatLng(val, source){
         var isLat = false;
         if (subMode == modes[0].subMode[0] && subMode == modes[1].subMode[0]) {
             isLat = true;
@@ -476,6 +479,7 @@ var CoordinateCalculator = function() {
 
         var pairMode = getPairSubMode();
         var pairVal = getModeSubModeValue(mode, pairMode);
+        var pairNotationIsDms = notationIsDms(pairVal);
 
         var hasDmsError = setPairErrorClass(newVal, pairVal, pairMode);
 
@@ -486,6 +490,25 @@ var CoordinateCalculator = function() {
         }
 
         setModeSubModeValue(mode, subMode, newVal);
+
+        var lat, lng;
+        if(isLat){
+            lat = newVal;
+            lng = pairVal;
+        }else{
+            lat = pairVal;
+            lng = newVal;
+        }
+
+        values[mode] = {
+            lat:lat,
+            lng:lng,
+            hasError:hasError || hasDmsError,
+            source:source,
+            notationIsDMS:inputNotationIsDms && pairNotationIsDms
+        }
+
+        console.log(values);
     }
 
     // LatLang の validation
@@ -593,6 +616,79 @@ var CoordinateCalculator = function() {
             return "";
         }
         return str.substr(0, str.length - 1)
+    }
+
+    function comvertDisplayValue(){
+        var value = values[mode];
+        if(value){
+
+            if(value.hasError){
+                console.log("hasError");
+            }else {
+                var validLat = validationLatLng(value.lat, true);
+                var validLng = validationLatLng(value.lng, false);
+                var lat = validLat.value;
+                var lng = validLng.value;
+                var latIsDms = notationIsDms(lat);
+                var lngIsDms = notationIsDms(lng);
+
+                var filtered = modes.filter(function(element, index, array) {
+                    return element.name == mode;
+                });
+                var modeObj = filtered[0];
+
+                if(latIsDms && lngIsDms){
+                    var newLat = dmsToD(lat);
+                    var newLng = dmsToD(lng);
+
+                    setModeSubModeValue(mode, modeObj.subMode[0], newLat);
+                    setModeSubModeValue(mode, modeObj.subMode[1], newLng);
+
+                }else if(!latIsDms && !lngIsDms){
+                    var newLat = dToDms(lat);
+                    var newLng = dToDms(lng);
+
+                    setModeSubModeValue(mode, modeObj.subMode[0], newLat);
+                    setModeSubModeValue(mode, modeObj.subMode[1], newLng);
+                }
+
+            }
+        }
+    }
+
+    function dmsToD(str){
+        var noS = str.replace(/"/, "");
+        var chack_s = noS.split(/[\.°'"]/);
+
+        var res = parseInt(chack_s[0], 10);// +  + parseInt(chack_s[3] + "." + chack_s[4], 10) / 3600;
+
+        //console.log(chack_s.length);
+        if(chack_s.length >= 2){
+            res += parseInt(chack_s[1], 10)/60;
+            //console.log(res);
+        }
+        if(chack_s.length == 3){
+            res += parseInt(chack_s[2],10)/3600;
+            //console.log(res);
+        }
+        if(chack_s.length == 4){
+            res += parseInt(chack_s[2] + "." + chack_s[3], 10) / 3600;
+            //console.log(res);
+        }
+        return res;
+    }
+
+    function dToDms(str){
+        var num = parseFloat(str, 10);
+        var d = Math.floor(num);
+
+        var a = (num - d) * 60;
+        var m = Math.floor(a);
+
+        var b = a - m;
+        var s = b * 60;
+
+        return d + "." + m + "'" + s + '"';
     }
 
     // ************************************************************
