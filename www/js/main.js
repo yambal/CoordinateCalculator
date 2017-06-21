@@ -529,7 +529,8 @@ var CoordinateCalculator = function() {
         var hasError = false;
         var retVal;
 
-        var chack_s = check.split(/[\.°'"]/);
+        var noS = check.replace(/"/, "");
+        var chack_s = noS.split(/[\.°'"]/);
         if (chack_s[0]) {
             var d = parseInt(chack_s[0], 10);
             if (isLat && (d < -90 || d > 90)) {
