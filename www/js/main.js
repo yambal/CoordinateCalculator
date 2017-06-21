@@ -369,7 +369,10 @@ var CoordinateCalculator = function() {
     // 文字列がDMS表記かを返す
     function notationIsDms(_str) {
         if(_str){
-            var str = str.toString(_str);
+            var str = _str;
+            if(typeof _str === "number"){
+                var str = _str.toString();
+            };
             var chack_s = str.split(/[\.°'"]/);
             if (chack_s.length <= 2) {
                 return false;
