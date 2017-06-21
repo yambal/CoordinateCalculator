@@ -573,38 +573,27 @@ var CoordinateCalculator = function() {
             }
 
             if (chack_s.length == 3) {
-                if (chack_s[2].length > 0) {
-                    return {
-                        error: false,
-                        value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
-                    }
-                }
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'"
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
                 }
             }
 
             if (chack_s.length == 4) {
-                //if (chack_s[3].length > 0) {
-                    return {
-                        error: false,
-                        value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
-                    }
-                //}
-                /*
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
                 }
-                */
             }
 
-
-            if (chack_s.length == 5) {
+            if (chack_s.length >= 5) {
+                var _sS = "";
+                for (var i = 3; i < chack_s.length; i++) {
+                    _sS += chack_s[i];
+                }
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '.' + chack_s[3] + chack_s[4] + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '.' + _sS + '"'
                 }
             }
 
