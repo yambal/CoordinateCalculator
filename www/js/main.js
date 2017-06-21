@@ -586,16 +586,18 @@ var CoordinateCalculator = function() {
             }
 
             if (chack_s.length == 4) {
-                if (chack_s[3].length > 0) {
+                //if (chack_s[3].length > 0) {
                     return {
                         error: false,
                         value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
                     }
-                }
+                //}
+                /*
                 return {
                     error: false,
                     value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '"'
                 }
+                */
             }
 
 
