@@ -368,6 +368,7 @@ var CoordinateCalculator = function() {
 
     // 文字列がDMS表記かを返す
     function notationIsDms(str) {
+        console.log(str);
         var chack_s = str.split(/[\.°'"]/);
         if (!str || chack_s.length <= 2) {
             return false;
@@ -449,6 +450,7 @@ var CoordinateCalculator = function() {
 
         var validation = validationLatLng(newVal, '', isLat);
         var hasError = validation.error;
+        console.log(hasError);
         var inputNotationIsDms = notationIsDms(newVal);
 
         setModeSubmodeValue(mode, subMode, newVal);
