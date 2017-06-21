@@ -367,13 +367,16 @@ var CoordinateCalculator = function() {
     };
 
     // 文字列がDMS表記かを返す
-    function notationIsDms(str) {
-        console.log(str);
-        var chack_s = str.split(/[\.°'"]/);
-        if (!str || chack_s.length <= 2) {
-            return false;
+    function notationIsDms(_str) {
+        if(_str){
+            var str = str.toString(_str);
+            var chack_s = str.split(/[\.°'"]/);
+            if (chack_s.length <= 2) {
+                return false;
+            }
+            return true;
         }
-        return true;
+        return false;
     };
 
     // 現在の入力のペアを返す
@@ -450,7 +453,7 @@ var CoordinateCalculator = function() {
 
         var validation = validationLatLng(newVal, '', isLat);
         var hasError = validation.error;
-        console.log(hasError);
+        //console.log(hasError);
         var inputNotationIsDms = notationIsDms(newVal);
 
         setModeSubmodeValue(mode, subMode, newVal);
