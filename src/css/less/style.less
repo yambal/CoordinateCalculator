@@ -286,40 +286,41 @@ body{
         }
     }
 
-    //&.mode-map .display-header .icon-cc-room,
-    //&.mode-map.gps-active .display-header .icon-cc-location_off
     &.mode-map .display-header .icon-cc-GPS,
-    &.mode-map .display-header .icon-cc-location_disabled,
     &.mode-map .display-header .icon-cc-my_location{
+        /** デフォルトでOffにするアイコン **/
         color: rgba(256,256,256,0.3);
+    }; 
+    &.gps-active .display-header .icon-cc-GPS,
+    &.gps-setview .display-header .icon-cc-my_location{
+        color: rgba(256,256,256,1);
     }
 
-    //&.mode-map.gps-active .display-header .icon-cc-room,
-    //&.mode-map .display-header .icon-cc-location_off,
-    &.mode-map.gps-active .display-header .icon-cc-GPS,
-    &.mode-map.gps-active .display-header .icon-cc-location_disabled,
-    &.mode-map.gps-setview .display-header .icon-cc-my_location{
-        display: inline-block;
+    .display-container{
+        .icon-cc-error2,
+        .icon-cc-dms{
+            /** デフォルトでOffにするアイコン **/
+            color: rgba(256,256,256,0.3);
+        }
     }
 
     &.mode-map.gps-setview .display-header .icon-cc-location_disabled{
         color: rgba(256,256,256,0.3);
     }
 
-    .display-container{
-        .icon-cc-error2,
-        .icon-cc-dms{
-            color: rgba(256,256,256,0.3);
-        }
-    }
-
     &.ll-wgs84-lat-notation-dms .display-container .ll-wgs84-lat .icon-cc-dms,
-    &.ll-wgs84-lng-notation-dms .display-container .ll-wgs84-lng .icon-cc-dms{
+    &.ll-wgs84-lng-notation-dms .display-container .ll-wgs84-lng .icon-cc-dms,
+    &.ll-tokyo-lat-notation-dms .display-container .ll-tokyo-lat .icon-cc-dms,
+    &.ll-tokyo-lng-notation-dms .display-container .ll-tokyo-lng .icon-cc-dms{
+        /**　DMSモードアイコンを表示する **/
         color: rgba(256,256,256,1);
     }
 
     &.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2,
-    &.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2{
+    &.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2,
+    &.ll-tokyo-lat-error .display-container .ll-tokyo-lat .icon-cc-error2,
+    &.ll-tokyo-lng-error .display-container .ll-tokyo-lng .icon-cc-error2{
+        /**　DMSモードエラーアイコンを表示する **/
         color: rgba(256,256,256,1);
     }
 }
