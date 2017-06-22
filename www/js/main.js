@@ -519,7 +519,8 @@ var CoordinateCalculator = function() {
         }
 
         var result = setDisplayValueToLatLng(mode, subMode, val, isLat);
-        var hasError = result.error;
+        var hasError = result.hasError;
+        //console.log("hasError", hasError);
         var newVal = result.value;
         var inputNotationIsDms = result.isDms;
 
@@ -598,15 +599,16 @@ var CoordinateCalculator = function() {
             if (chack_s.length > 5) {
                 return {
                     error: true,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + '.' + chack_s[3] + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + '.' + chack_s[3].substr(0, 3) + '"'
                 }
             }
 
             var m = parseInt(chack_s[1], 10);
+            console.log("m", m);
             if (m >= 60) {
                 return {
                     error: true,
-                    value: chack_s[0] + "°" + chack_s[1] + '"'
+                    value: chack_s[0] + "°" + chack_s[1] + "'"
                 }
             }
 
@@ -634,7 +636,7 @@ var CoordinateCalculator = function() {
             if (chack_s.length == 4) {
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + "." + chack_s[3] + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + "." + chack_s[3].substr(0, 3) + '"'
                 }
             }
 
