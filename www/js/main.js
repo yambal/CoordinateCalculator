@@ -660,7 +660,7 @@ var CoordinateCalculator = function() {
             }
             return {
                 error: false,
-                value: chack_s[0] + "." + chack_s[1]
+                value: chack_s[0] + "." + chack_s[1].substr(0, 7)
             }
         }
     }
@@ -754,11 +754,14 @@ var CoordinateCalculator = function() {
             res += parseFloat(resA) / 3600;
             //console.log(34, res);
         }
+        res = Math.round(res * 10000000)/10000000;
         return res;
     }
 
     function dToDms(str){
-        var num = parseFloat(str, 10);
+        var num = parseFloat(str);
+        console.log("num", num);
+
         var d = Math.floor(num);
 
         var a = (num - d) * 60;
@@ -767,7 +770,13 @@ var CoordinateCalculator = function() {
         var b = a - m;
         var s = b * 60;
 
-        return d + "." + m + "'" + s + '"';
+        s = Math.round(s * 1000) / 1000;
+
+        //console.log(s);
+        //s = Math.round(s * 100) / 100;
+        //console.log(s);
+
+        return d + "°" + _zPad2(m,"00") + "'" + s + '"';
     }
 
 
