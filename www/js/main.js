@@ -540,7 +540,7 @@ var CoordinateCalculator = function() {
             if (chack_s.length > 5) {
                 return {
                     error: true,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '.' + chack_s[3] + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + '.' + chack_s[3] + '"'
                 }
             }
 
@@ -564,7 +564,7 @@ var CoordinateCalculator = function() {
                 if (chack_s[2].length > 0) {
                     return {
                         error: false,
-                        value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + chack_s[2] + '"'
+                        value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + chack_s[2] + '"'
                     }
                 }
                 return {
@@ -576,7 +576,7 @@ var CoordinateCalculator = function() {
             if (chack_s.length == 4) {
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + "." + chack_s[3] + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + "." + chack_s[3] + '"'
                 }
             }
 
@@ -588,7 +588,7 @@ var CoordinateCalculator = function() {
                 }
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'" + _zPad2(chack_s[2]) + '.' + _sS + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + '.' + _sS + '"'
                 }
             }
 
@@ -607,7 +607,13 @@ var CoordinateCalculator = function() {
         }
     }
 
-    function _zPad2(str) {
+    function _zPad2(str, _default) {
+        if(!str || (typeof str === "string" && str.length == 0) || (typeof str === "number" && isNaN(str))){
+            if(typeof _default === "string"){
+                return _default
+            }
+            return "";
+        }
         return ("0" + parseInt(str, 10)).slice(-2);
     }
 
@@ -660,20 +666,16 @@ var CoordinateCalculator = function() {
         var noS = str.replace(/"/, "");
         var chack_s = noS.split(/[\.°'"]/);
 
-        var res = parseInt(chack_s[0], 10);// +  + parseInt(chack_s[3] + "." + chack_s[4], 10) / 3600;
+        var res = parseInt(chack_s[0], 10);
 
-        //console.log(chack_s.length);
         if(chack_s.length >= 2){
             res += parseInt(chack_s[1], 10)/60;
-            //console.log(res);
         }
         if(chack_s.length == 3){
             res += parseInt(chack_s[2],10)/3600;
-            //console.log(res);
         }
         if(chack_s.length == 4){
             res += parseInt(chack_s[2] + "." + chack_s[3], 10) / 3600;
-            //console.log(res);
         }
         return res;
     }
