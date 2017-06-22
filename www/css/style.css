@@ -318,7 +318,7 @@ body.ll-tokyo-lng-error .display-container .ll-tokyo-lng .icon-cc-error2 {
 }
 @font-face {
   font-family: 'Coordinate-Calculator';
-  src: url('../fonts/Coordinate-Calculator.ttf?hxru2b') format('truetype');
+  src: url('../fonts/Coordinate-Calculator.ttf?nm1sb9') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -334,6 +334,15 @@ i {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-cc-d-dms:before {
+  content: "\e910";
+}
+.icon-cc-lon-a:before {
+  content: "\e911";
+}
+.icon-cc-lat-a:before {
+  content: "\e912";
 }
 .icon-cc-altitude:before {
   content: "\e909";

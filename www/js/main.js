@@ -20,7 +20,7 @@ var CoordinateCalculator = function() {
             'll-wgs84-lng'
         ],
         keys: [
-            [{ name: "cmv", value: "cmv" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "cmv", value: "cmv", icon:"icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -33,7 +33,7 @@ var CoordinateCalculator = function() {
             'll-tokyo-lng'
         ],
         keys: [
-            [{ name: "cmv", value: "cmv" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "cmv", value: "cmv", icon:"icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -604,7 +604,6 @@ var CoordinateCalculator = function() {
             }
 
             var m = parseInt(chack_s[1], 10);
-            console.log("m", m);
             if (m >= 60) {
                 return {
                     error: true,
@@ -773,10 +772,6 @@ var CoordinateCalculator = function() {
         var s = b * 60;
 
         s = Math.round(s * 1000) / 1000;
-
-        //console.log(s);
-        //s = Math.round(s * 100) / 100;
-        //console.log(s);
 
         return d + "°" + _zPad2(m,"00") + "'" + s + '"';
     }
