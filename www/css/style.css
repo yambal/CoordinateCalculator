@@ -69,6 +69,15 @@ body {
 #display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-num {
   text-align: right;
 }
+#display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-block {
+  text-align: right;
+}
+#display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-unit {
+  text-align: right;
+}
+#display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-mesh {
+  text-align: right;
+}
 body {
   color: white;
   font-family: 'LexiaReadable';
@@ -247,7 +256,8 @@ body.ll-tokyo-lng-notation-dms .display-container .ll-tokyo-lng .icon-cc-dms {
 body.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2,
 body.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2,
 body.ll-tokyo-lat-error .display-container .ll-tokyo-lat .icon-cc-error2,
-body.ll-tokyo-lng-error .display-container .ll-tokyo-lng .icon-cc-error2 {
+body.ll-tokyo-lng-error .display-container .ll-tokyo-lng .icon-cc-error2,
+body.n-mesh-error .display-container .n-mesh .icon-cc-error2 {
   /**　DMSモードエラーアイコンを表示する **/
   color: #ffffff;
 }

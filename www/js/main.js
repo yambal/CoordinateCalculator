@@ -65,21 +65,21 @@ var CoordinateCalculator = function() {
                 [{ name: "Y", value: "Y" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "AC", value: "ac" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "=", value: "=" }, { name: null, value: null }]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "=", value: "=" }, { name: null, value: null }]
             ],
             "n-unit": [
                 [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "AC", value: "ac" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "=", value: "=" }, { name: null, value: null }]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: "=", value: "=" }, { name: null, value: null }]
             ],
             "n-mesh": [
                 [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "AC", value: "ac" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "=", value: "=" }, { name: null, value: null }]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: "=", value: "=" }, { name: null, value: null }]
             ]
         }
     }, ];
@@ -93,6 +93,7 @@ var CoordinateCalculator = function() {
     var mapActiveLayer;
     var mapActiveLayerName;
     var gpsMaker = false;
+    var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
 
     // ************************************************************
     // トリガー
@@ -173,23 +174,38 @@ var CoordinateCalculator = function() {
             addDisplayValueToTargetLatLng(val);
 
         } else if (subMode == "n-block") {
+            addDisplayValueToTargetNBlock(val);
 
         } else if (subMode == "n-unit") {
+            addDisplayValueToTargetNUnit(val);
 
         } else if (subMode == "n-mesh") {
-
+            addDisplayValueToTargetNMesh(val);
         }
     };
 
     function deleteDisplayValue() {
         if (mode == "ll-wgs84" || mode == "ll-tokyo") {
             deleteDisplayValueToTargetLatLng();
+
+        } else if (subMode == "n-block") {
+            deleteDisplayValueToTargetNBlock();
+
+        } else if (subMode == "n-unit") {
+            deleteDisplayValueToTargetNUnit();
+
+        } else if (subMode == "n-mesh") {
+            deleteDisplayValueToTargetNMesh();
         }
     }
 
     function clearDisplayValue(){
         if (mode == "ll-wgs84" || mode == "ll-tokyo") {
             clearDisplayValueTargetLatLng();
+
+        } else if (subMode == "n-block" || subMode == "n-unit" || subMode == "n-mesh") {
+            clearDisplayValueTargetN();
+
         }
     }
 
@@ -735,6 +751,138 @@ var CoordinateCalculator = function() {
         }
     }
 
+    // N-code
+    function addDisplayValueToTargetNBlock(val){
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var newVal = (oldVal + val).substr(0,2);
+
+        if(NBlockHasError(newVal)){
+
+        }else{
+            setModeSubModeValue(mode, subMode, newVal);
+        }
+    };
+
+    function NBlockHasError(val){
+        var header;
+        var body;
+        var hasError = false;
+        if(val.length >= 1 ){
+            header = parseInt(val.substr(0,1), 10);
+
+            if(!header){
+                hasError = true;
+            }
+        }
+        if(val.length >= 2 ){
+            body = val.substr(1,1);
+            if(body != "X" && body != "A" && body != "B" && body != "C" && body != "Y"){
+                hasError = true;
+            }
+        }
+        return hasError;
+    }
+
+    function addDisplayValueToTargetNUnit(val){
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var newVal = (oldVal + val).substr(0,4);
+        if(nUnitHasError(newVal)){
+
+        }else{
+            setModeSubModeValue(mode, subMode, newVal);
+        }
+    }
+
+    function nUnitHasError(val){
+        if(!parseInt(val, 10) || !val.length == 4){
+            return true;
+        }
+        return false;
+    }
+
+    function addDisplayValueToTargetNMesh(val){
+        if(parseInt(val, 10) || val == '-'){
+            var oldVal = getModeSubModeValue(mode, subMode);
+            var newVal = (oldVal + val).substr(0,9);
+
+            if(nMeshHasError(newVal)){
+
+            }else{
+
+            }
+            setModeSubModeValue(mode, subMode, newVal);
+        }
+    }
+
+    function nMeshHasError(val){
+        var hasError = false;
+
+        if(val.length > 0){
+            var a = val.split('-');
+            var meshEW = a[0];
+            if(meshEW.length == 0 || meshEW.length > 4){
+                hasError = true;
+            }
+
+            var meshSN = '';
+            if(a.length >= 2){
+                meshSN = a[1];
+                
+                if(meshSN.length == 0 || meshSN.length > 4){
+                    hasError = true;
+                }
+            }
+        }
+        setSubmodeIsErrorView('n-mesh', hasError);
+        //console.log(meshEW, hasError);
+        return hasError
+    }
+
+    function deleteDisplayValueToTargetNBlock(){
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var newVal = oldVal.substr(0, oldVal.length - 1);
+        setModeSubModeValue(mode, subMode, newVal);
+    }
+    function deleteDisplayValueToTargetNUnit(){
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var newVal = oldVal.substr(0, oldVal.length - 1);
+        setModeSubModeValue(mode, subMode, newVal);
+    }
+    function deleteDisplayValueToTargetNMesh(){
+        var oldVal = getModeSubModeValue(mode, subMode);
+        var newVal = oldVal.substr(0, oldVal.length - 1);
+        setModeSubModeValue(mode, subMode, newVal);
+        nMeshHasError(newVal);
+    }
+    function clearDisplayValueTargetN(){
+        setModeSubModeValue('n', 'n-block', '');
+        setModeSubModeValue('n', 'n-unit', '');
+        setModeSubModeValue('n', 'n-mesh', '');
+    }
+
+    function convertNToS(){
+        NBlockHasError(getModeSubModeValue('n', 'n-block'));
+        nUnitHasError(getModeSubModeValue('n', 'n-unit'));
+        nMeshHasError(getModeSubModeValue('n', 'n-mesh'));
+
+        
+    }
+
+    //
+
+    function getDistance(lat1, lng1, lat2, lng2) {
+
+       function radians(deg){
+          return deg * Math.PI / 180;
+       }
+
+       return 6378.14 * Math.acos(Math.cos(radians(lat1))* 
+        Math.cos(radians(lat2))*
+        Math.cos(radians(lng2)-radians(lng1))+
+        Math.sin(radians(lat1))*
+        Math.sin(radians(lat2)));
+    }
+
     function dmsToD(str){
         //console.log("dmsToD(" + str + ")");
         var noS = str.replace(/"/, "");
@@ -791,8 +939,6 @@ var CoordinateCalculator = function() {
 
         return d + "°" + _zPad2(m,"00") + "'" + s + '"';
     }
-
-
 
     // ************************************************************
     _changeMode(modes[0].name, modes[0].subMode[0]);
