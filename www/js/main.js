@@ -296,8 +296,8 @@ var CoordinateCalculator = function() {
     }
 
     function subModeIsLat(_subMode){
-        var isLat = false;
-        if (_subMode == modes[0].subMode[0] && _subMode == modes[1].subMode[0]) {
+        console.log("subModeIsLat(" + _subMode + ")");
+        if (_subMode == modes[0].subMode[0] || _subMode == modes[1].subMode[0]) {
             return true;
         }
         return false;
@@ -338,7 +338,9 @@ var CoordinateCalculator = function() {
 
     // mode/submode に値を、検証を行い、表示を変更、結果を返す
     function setDisplayValueToLatLng(_mode, _subMode, val){
-        var validated = validationLatLng(val, subModeIsLat(_subMode));
+        var a = subModeIsLat(_subMode);
+        console.log(a);
+        var validated = validationLatLng(val, a);
         var newVal = validated.value;
         var hasError = validated.error;
         var inputNotationIsDms = notationIsDms(newVal);
@@ -584,13 +586,13 @@ var CoordinateCalculator = function() {
             if (isLat && (d < -90 || d > 90)) {
                 return {
                     error: true,
-                    value: parseInt(now, 10)
+                    value: parseInt(d, 10)
                 }
 
             } else if (d < -180 || d > 180) {
                 return {
                     error: true,
-                    value: parseInt(now, 10)
+                    value: parseInt(d, 10)
                 }
             }
         }
