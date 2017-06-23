@@ -773,6 +773,13 @@ var CoordinateCalculator = function() {
 
         s = Math.round(s * 1000) / 1000;
 
+        // 秒の0埋め
+        var sA = Math.floor(s);
+        if(sA < 10){
+            s = "0" + s;
+        }
+
+
         return d + "°" + _zPad2(m,"00") + "'" + s + '"';
     }
 
