@@ -94,31 +94,30 @@ var CoordinateCalculator = function() {
     var mapActiveLayerName;
     var gpsMaker = false;
 
+    // ************************************************************
+    // トリガー
     function _onKeyPress(val) {
         console.log("_onKeyPress(" + val + ")");
         switch (val) {
             case modes[0].name:
-                var preMode = mode;
-                var preSububMode = subMode;
-                if (preMode == val && preSububMode == modes[0].subMode[0]) {
-                    preSububMode = modes[0].subMode[1];
-                } else {
-                    preSububMode = modes[0].subMode[0];
+                // ll-wgs84-lat
+                var toSubMode = modes[0].subMode[0];
+                if (mode == val){
+                    // 同じモードの場合は SubMode を変更する
+                    toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
-                preMode = val;
-                _changeMode(preMode, preSububMode);
+                _changeMode(val, toSubMode);
                 break;
+
             case modes[1].name:
-                var preMode = mode;
-                var preSububMode = subMode;
-                if (preMode == val && preSububMode == modes[1].subMode[0]) {
-                    preSububMode = modes[1].subMode[1];
-                } else {
-                    preSububMode = modes[1].subMode[0];
+                var toSubMode = modes[1].subMode[0];
+                if (mode == val){
+                    // 同じモードの場合は SubMode を変更する
+                    toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
-                preMode = val;
-                _changeMode(preMode, preSububMode);
+                _changeMode(val, toSubMode);
                 break;
+
             case modes[2].name:
                 var preMode = mode;
                 var preSububMode = subMode;
@@ -168,33 +167,63 @@ var CoordinateCalculator = function() {
     }
 
     // ************************************************************
-    function _changeMode(_mode, _subMode) {
-        if (mode != _mode) {
-            $('body').removeClass("mode-" + mode);
-            mode = _mode;
-            _updateKey();
+    // 入力処理
+    function addDisplayValue(val) {
+        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
+            addDisplayValueToTargetLatLng(val);
+
+        } else if (subMode == "n-block") {
+
+        } else if (subMode == "n-unit") {
+
+        } else if (subMode == "n-mesh") {
+
+        }
+    };
+
+    function deleteDisplayValue() {
+        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
+            deleteDisplayValueToTargetLatLng();
+        }
+    }
+
+    function clearDisplayValue(){
+        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
+            clearDisplayValueTargetLatLng();
+        }
+    }
+
+    // ************************************************************
+    // 表示
+    // モード（入力モード）/サブモード（入力欄）を変更する
+    function _changeMode(_toMode, _toSubMode) {
+        var nowMod = mode;
+        if(nowMod != _toMode){
+            for (var i = 0; i < modes.length; i++) {
+                $('body').removeClass("mode-" + modes[i].name);
+            }
+            mode = _toMode;
+            _updateKeyTo(mode);
             $('body').addClass("mode-" + mode);
         }
-        if (subMode != _subMode) {
+
+        if (subMode != _toSubMode) {
             $('body').removeClass("submode-" + subMode);
-            subMode = _subMode;
-            _updateKey();
+            subMode = _toSubMode;
+            _updateKeyTo(mode);
             $('body').addClass("submode-" + subMode);
         }
         if (mode == "map") {
             _mapSetup();
-            if (mapActiveLayerName != _subMode) {
-                console.log(mapActiveLayerName, _subMode);
-                setActiveLayer(_subMode);
+            if (mapActiveLayerName != _toSubMode) {
+                setActiveLayer(_toSubMode);
             }
         }
     }
 
-    function _updateKey() {
-        var filtered = modes.filter(function(element, index, array) {
-            return element.name == mode;
-        });
-        var modeObj = filtered[0];
+    // Keyを更新する
+    function _updateKeyTo(toMode) {
+        var modeObj = getModeObj(toMode);
         var keys = modeObj.keys;
         if (keys[subMode]) {
             keys = keys[subMode];
@@ -230,6 +259,98 @@ var CoordinateCalculator = function() {
                         .addClass('key-desable')
                 }
             }
+        }
+    }
+
+    // 指定した mode subMode にあわせてクラスをセットする
+    function setNotationView(_subMode, isDms) {
+        if (isDms) {
+            $('body').addClass(_subMode + "-notation-dms");
+        } else {
+            $('body').removeClass(_subMode + "-notation-dms");
+        }
+    }
+
+    // 指定した SubMode にエラーの有無についてのクラスをセットする
+    function setSubmodeIsErrorView(_subMode, bool){
+        if (bool) {
+            $("body").addClass(_subMode + "-" + "error");
+        } else {
+            $("body").removeClass(_subMode + "-" + "error");
+        }
+    }
+
+    // ************************************************************
+    // 入力値
+    // 指定した mode subMode の値を返す
+    function getModeSubModeValue(_mode, _subMode) {
+        var target = ".value-" + _mode + "-" + _subMode;
+        return $(target).html();
+    }
+
+    function getCurrentModeSubModeValue(clearS) {
+        if(clearS){
+            return getModeSubModeValue(mode, subMode).replace(/"/, "");
+        }
+        return getModeSubModeValue(mode, subMode);
+    }
+
+    function subModeIsLat(_subMode){
+        var isLat = false;
+        if (_subMode == modes[0].subMode[0] && _subMode == modes[1].subMode[0]) {
+            return true;
+        }
+        return false;
+    }
+
+    // Lat/Lang
+    // ---------------------------------------------------------------
+    // 入力操作
+    // mode/subMode の値から一文字削除
+    // バリデーション/エラー判断/Class設定を含む
+    function deleteDisplayValueToTargetLatLng() {
+        var oldVal = getCurrentModeSubModeValue(true);
+        var newVal = oldVal.substr(0, oldVal.length - 1);
+        setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
+    }
+
+    // mode/subMode の値から一文字追加
+    // バリデーション/エラー判断/Class設定を含む
+    function addDisplayValueToTargetLatLng(val) {
+        var oldVal = getCurrentModeSubModeValue(false);
+        var newVal = oldVal + val;
+        setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
+    }
+
+    function clearDisplayValueTargetLatLng(){
+        setDisplayValueToLatLng(mode, subMode, '');
+        var pairSubMode = getPairCurrentSubMode();
+        setDisplayValueToLatLng(mode, pairSubMode, '');
+        setValue(mode, null, null, false, false, 'user', null, null);
+    }
+
+    // 指定した mode subMode に値をセットする
+    // バリデーションは含まない
+    function setModeSubModeValue(_mode, _subMode, value) {
+        var target = ".value-" + _mode + "-" + _subMode;
+        $(target).html(value);
+    }
+
+    // mode/submode に値を、検証を行い、表示を変更、結果を返す
+    function setDisplayValueToLatLng(_mode, _subMode, val){
+        var validated = validationLatLng(val, subModeIsLat(_subMode));
+        var newVal = validated.value;
+        var hasError = validated.error;
+        var inputNotationIsDms = notationIsDms(newVal);
+
+        setNotationView(_subMode, inputNotationIsDms);
+        setSubmodeIsErrorView(_subMode, hasError);
+
+        setModeSubModeValue(_mode, _subMode, newVal);
+        return {
+            hasError:hasError,
+            value:newVal,
+            isDms:inputNotationIsDms
         }
     }
 
@@ -348,68 +469,31 @@ var CoordinateCalculator = function() {
         }
     }
 
-    // ************************************************************
-    function addDisplayValue(val) {
-        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
-            addDisplayValueToTargetLatLng(val);
-
-        } else if (subMode == "n-block") {
-
-        } else if (subMode == "n-unit") {
-
-        } else if (subMode == "n-mesh") {
-
-        }
-    };
-
-    function deleteDisplayValue() {
-        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
-            deleteDisplayValueToTargetLatLng();
-        }
+    // =============================================================
+    // 指定した mode のオジェを返す
+    function getModeObj(_mode){
+        var filtered = modes.filter(function(element, index, array) {
+            return element.name == _mode;
+        });
+        return filtered[0];
     }
 
-    function clearDisplayValue(){
-        if (mode == "ll-wgs84" || mode == "ll-tokyo") {
-            clearDisplayValueTargetLatLng();
+    // 指定した SubMode のペア SubMode を返す（LatLon）
+    function getLatLonPairSubMode(_mode, _subMode){
+        var modeObj = getModeObj(_mode);
+        if (_subMode == modeObj.subMode[0]) {
+            return modeObj.subMode[1];
         }
+        return modeObj.subMode[0];
+    }
+
+    // 現在の SubMode のペア SubMode を返す（LatLon）
+    function getPairCurrentSubMode() {
+        return getLatLonPairSubMode(mode, subMode);
     }
 
     // =============================================================
     // Lat/Lang
-
-    // mode/subMode の値から一文字削除
-    // バリデーション/エラー判断/Class設定を含む
-    function deleteDisplayValueToTargetLatLng() {
-        var oldVal = getModeSubModeValue(mode, subMode);
-        var noS = oldVal.replace(/"/, "");
-        var newVal = noS.substr(0, noS.length - 1);
-
-        setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
-    }
-
-    // mode/subMode の値から一文字追加
-    // バリデーション/エラー判断/Class設定を含む
-    function addDisplayValueToTargetLatLng(val) {
-        var oldVal = getModeSubModeValue(mode, subMode);
-        var newVal = oldVal + val;
-
-        setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
-    }
-
-    function clearDisplayValueTargetLatLng(){
-        var isLat = false;
-        if (subMode == modes[0].subMode[0] && subMode == modes[1].subMode[0]) {
-            isLat = true;
-        }
-        setDisplayValueToLatLng(mode, subMode, '', isLat);
-        var pairSubMode = getPairCurrentSubMode();
-        setDisplayValueToLatLng(mode, pairSubMode, '', !isLat);
-
-        setValue(mode, null, null, false, false, 'user', null, null);
-
-        console.log(values);
-    }
-
     // 文字列がDMS表記かを返す
     function notationIsDms(_str) {
         if(_str){
@@ -426,118 +510,36 @@ var CoordinateCalculator = function() {
         return false;
     };
 
-    function getModeObj(_mode){
-        var filtered = modes.filter(function(element, index, array) {
-            return element.name == _mode;
-        });
-        return filtered[0];
-    }
+    // 二つの座標表記を比較し、同じ表記かを返す
+    function isSameNotation(coordinaryA, ccordinatyB, _default){
+        if (coordinaryA.length > 0 && ccordinatyB.length > 0) {
+            var aIsDms = notationIsDms(coordinaryA);
+            var bIsDms = notationIsDms(ccordinatyB);
 
-    function getPairSubMode(_mode, _subMode){
-        var modeObj = getModeObj(_mode);
-        if (_subMode == modeObj.subMode[0]) {
-            return modeObj.subMode[1];
+            return aIsDms == bIsDms;
         }
-        return modeObj.subMode[0];
+        return _default;
     }
 
-    // 現在の入力のペアSubModeを返す
-    function getPairCurrentSubMode() {
-        return getPairSubMode(mode, subMode);
-    }
-
-    // 指定した mode subMode の値を返す
-    function getModeSubModeValue(_mode, _subMode) {
-        var target = ".value-" + _mode + "-" + _subMode;
-        return $(target).html();
-    }
-
-    // 指定した mode subMode に値をセットする
-    // バリデーションは含まない
-    function setModeSubModeValue(_mode, _subMode, value) {
-        var target = ".value-" + _mode + "-" + _subMode;
-        //console.log(target, value);
-        $(target).html(value);
-    }
-
-    // 指定した mode subMode にあわせてクラスをセットする
-    function setNotationClass(_subMode, isDms) {
-        if (isDms) {
-            $('body').addClass(_subMode + "-notation-dms");
-        } else {
-            $('body').removeClass(_subMode + "-notation-dms");
-        }
-    }
-
-    // 入力中の値とペアの値を検証し、D/DMS のエラーを判断
-    // エラーがあれば BODY にクラスを追加
-    // 返り値はエラーの有無
-    function setPairErrorClass(currentVal, pairVal, pairMode){
-        if (currentVal.length > 0 && pairVal.length > 0) {
-            var inputNotationIsDms = notationIsDms(currentVal);
-            var pairNotationIsDms = notationIsDms(pairVal);
-
-            if(!inputNotationIsDms && pairNotationIsDms){
-                // 入力中がDでペアがDMS
-                $("body").addClass(pairMode + "-" + "error");
-                return true;
-
-            }else if(inputNotationIsDms && !pairNotationIsDms){
-                // 入力中がDMSでペアがD
-                $("body").addClass(pairMode + "-" + "error");
-                return true;
-
-            }
-        }
-        $("body").removeClass(pairMode + "-" + "error");
-        return false;
-    }
-
-    // mode/submode に値をセットする
-    function setDisplayValueToLatLng(mode, subMode, val, isLat){
-        var validated = validationLatLng(val, isLat);
-        var newVal = validated.value;
-        var hasError = validated.error;
-        var inputNotationIsDms = notationIsDms(newVal);
-        setNotationClass(subMode, inputNotationIsDms);
-        setModeSubModeValue(mode, subMode, newVal);
-        return {
-            hasError:hasError,
-            value:newVal,
-            isDms:inputNotationIsDms
-        }
-
-
-    }
 
     // mode/submode に値をセットする
     // バリデーション/エラー判断/Class設定を含む
     function setDisplayValueToCurrentLatLng(val, surceType, sourceLat, sourceLng){
-        var isLat = false;
-        if (subMode == modes[0].subMode[0] && subMode == modes[1].subMode[0]) {
-            isLat = true;
-        }
-
-        var result = setDisplayValueToLatLng(mode, subMode, val, isLat);
+        var result = setDisplayValueToLatLng(mode, subMode, val);
         var hasError = result.hasError;
-        //console.log("hasError", hasError);
         var newVal = result.value;
         var inputNotationIsDms = result.isDms;
 
         var pairMode = getPairCurrentSubMode();
         var pairVal = getModeSubModeValue(mode, pairMode);
-        var pairNotationIsDms = notationIsDms(pairVal);
 
-        var hasDmsError = setPairErrorClass(newVal, pairVal, pairMode);
+        var isSameN = isSameNotation(newVal, pairVal, true);
 
-        if (hasError || hasDmsError) {
-            $("body").addClass(subMode + "-" + "error");
-        } else {
-            $("body").removeClass(subMode + "-" + "error");
-        }
+        setSubmodeIsErrorView(subMode, hasError || !isSameN);
+        setSubmodeIsErrorView(pairMode, !isSameN);
 
         var lat, lng;
-        if(isLat){
+        if(subModeIsLat(subMode)){
             lat = newVal;
             lng = pairVal;
         }else{
@@ -545,8 +547,7 @@ var CoordinateCalculator = function() {
             lng = newVal;
         }
 
-        setValue(mode, lat, lng, hasError || hasDmsError, inputNotationIsDms && pairNotationIsDms, surceType, sourceLat, sourceLng)
-
+        setValue(mode, lat, lng, hasError || !isSameN, 'toDo', surceType, sourceLat, sourceLng)
     }
 
     function setValue(mode, lat, lng, hasError, isDms, sourceType, sourceLat, sourceLng){
@@ -683,10 +684,10 @@ var CoordinateCalculator = function() {
         return str.substr(0, str.length - 1)
     }
 
+    // 現在の Value を D <> DMS 変換する
     function comvertDisplayValue(){
         var value = values[mode];
         if(value){
-            //console.log("comvertDisplayValue()", value);
             if(value.hasError){
                 console.log("hasError");
             }else {
@@ -710,6 +711,10 @@ var CoordinateCalculator = function() {
 
                     setValue(mode, newLat, newLng, false, false, mode, lat, lng);
 
+                    // D モード表示に更新
+                    setNotationView(subMode, false);
+                    setNotationView(getPairCurrentSubMode(), false);
+
                 }else if(!latIsDms && !lngIsDms){
                     //console.log(lat,lng);
                     var newLat = dToDms(lat);
@@ -719,8 +724,11 @@ var CoordinateCalculator = function() {
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
 
                     setValue(mode, newLat, newLng, false, false, mode, lat, lng);
+
+                    // D モード表示に更新
+                    setNotationView(subMode, true);
+                    setNotationView(getPairCurrentSubMode(), true);
                 }
-                console.log(values);
             }
         }
     }
@@ -778,7 +786,6 @@ var CoordinateCalculator = function() {
         if(sA < 10){
             s = "0" + s;
         }
-
 
         return d + "°" + _zPad2(m,"00") + "'" + s + '"';
     }
