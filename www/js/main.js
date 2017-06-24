@@ -20,7 +20,7 @@ var CoordinateCalculator = function() {
             'll-wgs84-lng'
         ],
         keys: [
-            [{ name: "cmv", value: "cmv", icon:"icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -33,7 +33,7 @@ var CoordinateCalculator = function() {
             'll-tokyo-lng'
         ],
         keys: [
-            [{ name: "cmv", value: "cmv", icon:"icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -103,7 +103,7 @@ var CoordinateCalculator = function() {
             case modes[0].name:
                 // ll-wgs84-lat
                 var toSubMode = modes[0].subMode[0];
-                if (mode == val){
+                if (mode == val) {
                     // 同じモードの場合は SubMode を変更する
                     toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
@@ -112,7 +112,7 @@ var CoordinateCalculator = function() {
 
             case modes[1].name:
                 var toSubMode = modes[1].subMode[0];
-                if (mode == val){
+                if (mode == val) {
                     // 同じモードの場合は SubMode を変更する
                     toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
@@ -199,7 +199,7 @@ var CoordinateCalculator = function() {
         }
     }
 
-    function clearDisplayValue(){
+    function clearDisplayValue() {
         if (mode == "ll-wgs84" || mode == "ll-tokyo") {
             clearDisplayValueTargetLatLng();
 
@@ -214,7 +214,7 @@ var CoordinateCalculator = function() {
     // モード（入力モード）/サブモード（入力欄）を変更する
     function _changeMode(_toMode, _toSubMode) {
         var nowMod = mode;
-        if(nowMod != _toMode){
+        if (nowMod != _toMode) {
             for (var i = 0; i < modes.length; i++) {
                 $('body').removeClass("mode-" + modes[i].name);
             }
@@ -288,7 +288,7 @@ var CoordinateCalculator = function() {
     }
 
     // 指定した SubMode にエラーの有無についてのクラスをセットする
-    function setSubmodeIsErrorView(_subMode, bool){
+    function setSubmodeIsErrorView(_subMode, bool) {
         if (bool) {
             $("body").addClass(_subMode + "-" + "error");
         } else {
@@ -305,13 +305,13 @@ var CoordinateCalculator = function() {
     }
 
     function getCurrentModeSubModeValue(clearS) {
-        if(clearS){
+        if (clearS) {
             return getModeSubModeValue(mode, subMode).replace(/"/, "");
         }
         return getModeSubModeValue(mode, subMode);
     }
 
-    function subModeIsLat(_subMode){
+    function subModeIsLat(_subMode) {
         console.log("subModeIsLat(" + _subMode + ")");
         if (_subMode == modes[0].subMode[0] || _subMode == modes[1].subMode[0]) {
             return true;
@@ -338,7 +338,7 @@ var CoordinateCalculator = function() {
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
     }
 
-    function clearDisplayValueTargetLatLng(){
+    function clearDisplayValueTargetLatLng() {
         setDisplayValueToLatLng(mode, subMode, '');
         var pairSubMode = getPairCurrentSubMode();
         setDisplayValueToLatLng(mode, pairSubMode, '');
@@ -353,7 +353,7 @@ var CoordinateCalculator = function() {
     }
 
     // mode/submode に値を、検証を行い、表示を変更、結果を返す
-    function setDisplayValueToLatLng(_mode, _subMode, val){
+    function setDisplayValueToLatLng(_mode, _subMode, val) {
         var a = subModeIsLat(_subMode);
         console.log(a);
         var validated = validationLatLng(val, a);
@@ -366,9 +366,9 @@ var CoordinateCalculator = function() {
 
         setModeSubModeValue(_mode, _subMode, newVal);
         return {
-            hasError:hasError,
-            value:newVal,
-            isDms:inputNotationIsDms
+            hasError: hasError,
+            value: newVal,
+            isDms: inputNotationIsDms
         }
     }
 
@@ -489,7 +489,7 @@ var CoordinateCalculator = function() {
 
     // =============================================================
     // 指定した mode のオジェを返す
-    function getModeObj(_mode){
+    function getModeObj(_mode) {
         var filtered = modes.filter(function(element, index, array) {
             return element.name == _mode;
         });
@@ -497,7 +497,7 @@ var CoordinateCalculator = function() {
     }
 
     // 指定した SubMode のペア SubMode を返す（LatLon）
-    function getLatLonPairSubMode(_mode, _subMode){
+    function getLatLonPairSubMode(_mode, _subMode) {
         var modeObj = getModeObj(_mode);
         if (_subMode == modeObj.subMode[0]) {
             return modeObj.subMode[1];
@@ -514,9 +514,9 @@ var CoordinateCalculator = function() {
     // Lat/Lang
     // 文字列がDMS表記かを返す
     function notationIsDms(_str) {
-        if(_str){
+        if (_str) {
             var str = _str;
-            if(typeof _str === "number"){
+            if (typeof _str === "number") {
                 var str = _str.toString();
             };
             var chack_s = str.split(/[\.°'"]/);
@@ -529,7 +529,7 @@ var CoordinateCalculator = function() {
     };
 
     // 二つの座標表記を比較し、同じ表記かを返す
-    function isSameNotation(coordinaryA, ccordinatyB, _default){
+    function isSameNotation(coordinaryA, ccordinatyB, _default) {
         if (coordinaryA.length > 0 && ccordinatyB.length > 0) {
             var aIsDms = notationIsDms(coordinaryA);
             var bIsDms = notationIsDms(ccordinatyB);
@@ -542,7 +542,7 @@ var CoordinateCalculator = function() {
 
     // mode/submode に値をセットする
     // バリデーション/エラー判断/Class設定を含む
-    function setDisplayValueToCurrentLatLng(val, surceType, sourceLat, sourceLng){
+    function setDisplayValueToCurrentLatLng(val, surceType, sourceLat, sourceLng) {
         var result = setDisplayValueToLatLng(mode, subMode, val);
         var hasError = result.hasError;
         var newVal = result.value;
@@ -557,10 +557,10 @@ var CoordinateCalculator = function() {
         setSubmodeIsErrorView(pairMode, !isSameN);
 
         var lat, lng;
-        if(subModeIsLat(subMode)){
+        if (subModeIsLat(subMode)) {
             lat = newVal;
             lng = pairVal;
-        }else{
+        } else {
             lat = pairVal;
             lng = newVal;
         }
@@ -568,16 +568,16 @@ var CoordinateCalculator = function() {
         setValue(mode, lat, lng, hasError || !isSameN, 'toDo', surceType, sourceLat, sourceLng)
     }
 
-    function setValue(mode, lat, lng, hasError, isDms, sourceType, sourceLat, sourceLng){
+    function setValue(mode, lat, lng, hasError, isDms, sourceType, sourceLat, sourceLng) {
         values[mode] = {
-            lat:lat,
-            lng:lng,
+            lat: lat,
+            lng: lng,
             hasError: hasError,
-            notationIsDMS : isDms,
-            source:{
-                source : sourceType,
-                lat : sourceLat,
-                lng : sourceLng
+            notationIsDMS: isDms,
+            source: {
+                source: sourceType,
+                lat: sourceLat,
+                lng: sourceLng
             }
         }
     }
@@ -589,7 +589,7 @@ var CoordinateCalculator = function() {
 
         //console.log("check", check);
 
-        if(typeof check === "number"){
+        if (typeof check === "number") {
             check = check.toString();
         }
 
@@ -618,7 +618,7 @@ var CoordinateCalculator = function() {
             if (chack_s.length > 5) {
                 return {
                     error: true,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + '.' + chack_s[3].substr(0, 3) + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + _zPad2(chack_s[2], "00") + '.' + chack_s[3].substr(0, 3) + '"'
                 }
             }
 
@@ -642,7 +642,7 @@ var CoordinateCalculator = function() {
                 if (chack_s[2].length > 0) {
                     return {
                         error: false,
-                        value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + chack_s[2] + '"'
+                        value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + chack_s[2] + '"'
                     }
                 }
                 return {
@@ -654,7 +654,7 @@ var CoordinateCalculator = function() {
             if (chack_s.length == 4) {
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + "." + chack_s[3].substr(0, 3) + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + _zPad2(chack_s[2], "00") + "." + chack_s[3].substr(0, 3) + '"'
                 }
             }
 
@@ -666,7 +666,7 @@ var CoordinateCalculator = function() {
                 }
                 return {
                     error: false,
-                    value: chack_s[0] + "°" + _zPad2(chack_s[1],"00") + "'" + _zPad2(chack_s[2],"00") + '.' + _sS + '"'
+                    value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + _zPad2(chack_s[2], "00") + '.' + _sS + '"'
                 }
             }
 
@@ -686,8 +686,8 @@ var CoordinateCalculator = function() {
     }
 
     function _zPad2(str, _default) {
-        if(!str || (typeof str === "string" && str.length == 0) || (typeof str === "number" && isNaN(str))){
-            if(typeof _default === "string"){
+        if (!str || (typeof str === "string" && str.length == 0) || (typeof str === "number" && isNaN(str))) {
+            if (typeof _default === "string") {
                 return _default
             }
             return "";
@@ -703,12 +703,12 @@ var CoordinateCalculator = function() {
     }
 
     // 現在の Value を D <> DMS 変換する
-    function comvertDisplayValue(){
+    function comvertDisplayValue() {
         var value = values[mode];
-        if(value){
-            if(value.hasError){
+        if (value) {
+            if (value.hasError) {
                 console.log("hasError");
-            }else {
+            } else {
 
                 var validLat = validationLatLng(value.lat, true);
                 var validLng = validationLatLng(value.lng, false);
@@ -719,7 +719,7 @@ var CoordinateCalculator = function() {
 
                 var modeObj = getModeObj(mode);
 
-                if(latIsDms && lngIsDms){
+                if (latIsDms && lngIsDms) {
                     //console.log(lat,lng);
                     var newLat = dmsToD(lat);
                     var newLng = dmsToD(lng);
@@ -733,7 +733,7 @@ var CoordinateCalculator = function() {
                     setNotationView(subMode, false);
                     setNotationView(getPairCurrentSubMode(), false);
 
-                }else if(!latIsDms && !lngIsDms){
+                } else if (!latIsDms && !lngIsDms) {
                     //console.log(lat,lng);
                     var newLat = dToDms(lat);
                     var newLng = dToDms(lng);
@@ -752,83 +752,91 @@ var CoordinateCalculator = function() {
     }
 
     // N-code
-    function addDisplayValueToTargetNBlock(val){
+    function addDisplayValueToTargetNBlock(val) {
         var oldVal = getModeSubModeValue(mode, subMode);
-        var newVal = (oldVal + val).substr(0,2);
+        var newVal = (oldVal + val).substr(0, 2);
 
-        if(NBlockHasError(newVal)){
+        if (NBlockHasError(newVal)) {
 
-        }else{
+        } else {
             setModeSubModeValue(mode, subMode, newVal);
         }
+        onNCodeDisplayChange();
     };
 
-    function NBlockHasError(val){
+    function NBlockHasError(val) {
         var header;
         var body;
         var hasError = false;
-        if(val.length >= 1 ){
-            header = parseInt(val.substr(0,1), 10);
+        if (val.length >= 1) {
+            header = parseInt(val.substr(0, 1), 10);
 
-            if(!header){
+            if (!header) {
                 hasError = true;
             }
         }
-        if(val.length >= 2 ){
-            body = val.substr(1,1);
-            if(body != "X" && body != "A" && body != "B" && body != "C" && body != "Y"){
+        if (val.length >= 2) {
+            body = val.substr(1, 1);
+            if (body != "X" && body != "A" && body != "B" && body != "C" && body != "Y") {
                 hasError = true;
             }
         }
         return hasError;
     }
 
-    function addDisplayValueToTargetNUnit(val){
+    function addDisplayValueToTargetNUnit(val) {
         var oldVal = getModeSubModeValue(mode, subMode);
-        var newVal = (oldVal + val).substr(0,4);
-        if(nUnitHasError(newVal)){
+        var newVal = (oldVal + val).substr(0, 4);
+        /*
+        if (nUnitHasError(newVal)) {
 
-        }else{
+        } else {
             setModeSubModeValue(mode, subMode, newVal);
         }
+        */
+        setModeSubModeValue(mode, subMode, newVal);
+        onNCodeDisplayChange();
     }
 
-    function nUnitHasError(val){
-        if(!parseInt(val, 10) || !val.length == 4){
+    function nUnitHasError(val) {
+    	console.log(val, parseInt(val, 10), val.length);
+        if (val.length != 4) {
+console.log(804);
             return true;
         }
         return false;
     }
 
-    function addDisplayValueToTargetNMesh(val){
-        if(parseInt(val, 10) || val == '-'){
+    function addDisplayValueToTargetNMesh(val) {
+        if (parseInt(val, 10) || val == '-') {
             var oldVal = getModeSubModeValue(mode, subMode);
-            var newVal = (oldVal + val).substr(0,9);
+            var newVal = (oldVal + val).substr(0, 9);
 
-            if(nMeshHasError(newVal)){
+            if (nMeshHasError(newVal)) {
 
-            }else{
+            } else {
 
             }
             setModeSubModeValue(mode, subMode, newVal);
         }
+        onNCodeDisplayChange();
     }
 
-    function nMeshHasError(val){
+    function nMeshHasError(val) {
         var hasError = false;
 
-        if(val.length > 0){
+        if (val.length > 0) {
             var a = val.split('-');
             var meshEW = a[0];
-            if(meshEW.length == 0 || meshEW.length > 4){
+            if (meshEW.length == 0 || meshEW.length > 4) {
                 hasError = true;
             }
 
             var meshSN = '';
-            if(a.length >= 2){
+            if (a.length >= 2) {
                 meshSN = a[1];
-                
-                if(meshSN.length == 0 || meshSN.length > 4){
+
+                if (meshSN.length == 0 || meshSN.length > 4) {
                     hasError = true;
                 }
             }
@@ -838,52 +846,85 @@ var CoordinateCalculator = function() {
         return hasError
     }
 
-    function deleteDisplayValueToTargetNBlock(){
+    function deleteDisplayValueToTargetNBlock() {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setModeSubModeValue(mode, subMode, newVal);
+        onNCodeDisplayChange();
     }
-    function deleteDisplayValueToTargetNUnit(){
+
+    function deleteDisplayValueToTargetNUnit() {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setModeSubModeValue(mode, subMode, newVal);
+        onNCodeDisplayChange();
     }
-    function deleteDisplayValueToTargetNMesh(){
+
+    function deleteDisplayValueToTargetNMesh() {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setModeSubModeValue(mode, subMode, newVal);
         nMeshHasError(newVal);
+        onNCodeDisplayChange();
     }
-    function clearDisplayValueTargetN(){
+
+    function clearDisplayValueTargetN() {
         setModeSubModeValue('n', 'n-block', '');
         setModeSubModeValue('n', 'n-unit', '');
         setModeSubModeValue('n', 'n-mesh', '');
+        onNCodeDisplayChange();
     }
 
-    function convertNToS(){
-        NBlockHasError(getModeSubModeValue('n', 'n-block'));
-        nUnitHasError(getModeSubModeValue('n', 'n-unit'));
-        nMeshHasError(getModeSubModeValue('n', 'n-mesh'));
+    function onNCodeDisplayChange() {
+        $('.bound').html("?");
+        var b = getModeSubModeValue('n', 'n-block');
+        var u = getModeSubModeValue('n', 'n-unit');
+        var m = getModeSubModeValue('n', 'n-mesh');
 
-        
+        var bError = NBlockHasError(b);
+        var uError = nUnitHasError(u);
+        var mError = nMeshHasError(m);
+
+        console.log(bError, uError, mError);
+
+        if (!bError && !uError && !mError) {
+            var ms = m.split('-');
+            var code = n.nCode(b, u, ms[0], ms[1]);
+            var bound = n.nCodeToBound(code);
+            
+            var sw = bound.getSouthWest();
+            var ne = bound.getNorthEast();
+            var center = bound.getCenterLatLng();
+
+            var latDis = getDistance(sw.lat, center.lng, ne.lat, center.lng);
+            var lngDis = getDistance(center.lat, sw.lng, center.lat, ne.lng);
+
+            $('.bound').html(distanceUnitAdjust(latDis) + " x " + distanceUnitAdjust(lngDis));
+
+        }
     }
 
-    //
+    function distanceUnitAdjust(m){
+    	if(m > 500){
+    		return Math.round(m / 100) / 10 + "km";
+    	}
+    	return Math.round(m * 10)/10 + "m";
+    }
 
+    // 距離をを求める
     function getDistance(lat1, lng1, lat2, lng2) {
+        function radians(deg) {
+            return deg * Math.PI / 180;
+        }
 
-       function radians(deg){
-          return deg * Math.PI / 180;
-       }
-
-       return 6378.14 * Math.acos(Math.cos(radians(lat1))* 
-        Math.cos(radians(lat2))*
-        Math.cos(radians(lng2)-radians(lng1))+
-        Math.sin(radians(lat1))*
-        Math.sin(radians(lat2)));
+        return 6378.14 * Math.acos(Math.cos(radians(lat1)) *
+            Math.cos(radians(lat2)) *
+            Math.cos(radians(lng2) - radians(lng1)) +
+            Math.sin(radians(lat1)) *
+            Math.sin(radians(lat2))) * 1000;
     }
 
-    function dmsToD(str){
+    function dmsToD(str) {
         //console.log("dmsToD(" + str + ")");
         var noS = str.replace(/"/, "");
         var chack_s = noS.split(/[\.°'"]/);
@@ -891,33 +932,33 @@ var CoordinateCalculator = function() {
         var res = parseInt(chack_s[0], 10);
         //console.log(0, res);
 
-        if(chack_s.length >= 2){
+        if (chack_s.length >= 2) {
             res += parseInt(chack_s[1], 10) / 60;
             //console.log(1, res);
         }
-        if(chack_s.length == 3 && chack_s[2].length > 0){
-            res += parseInt(chack_s[2],10) / 3600;
+        if (chack_s.length == 3 && chack_s[2].length > 0) {
+            res += parseInt(chack_s[2], 10) / 3600;
             //console.log(2, res);
         }
-        if(chack_s.length == 4){
+        if (chack_s.length == 4) {
             var resA = 0;
-            if(chack_s[2].length > 0){
-                resA = parseInt(chack_s[2],10);
+            if (chack_s[2].length > 0) {
+                resA = parseInt(chack_s[2], 10);
             }
-            if(chack_s[3].length > 0){
+            if (chack_s[3].length > 0) {
                 resA += "." + chack_s[3];
-            }else{
+            } else {
                 resA += ".0";
             }
             console.log(34, resA);
             res += parseFloat(resA) / 3600;
             //console.log(34, res);
         }
-        res = Math.round(res * 10000000)/10000000;
+        res = Math.round(res * 10000000) / 10000000;
         return res;
     }
 
-    function dToDms(str){
+    function dToDms(str) {
         var num = parseFloat(str);
         console.log("num", num);
 
@@ -933,11 +974,11 @@ var CoordinateCalculator = function() {
 
         // 秒の0埋め
         var sA = Math.floor(s);
-        if(sA < 10){
+        if (sA < 10) {
             s = "0" + s;
         }
 
-        return d + "°" + _zPad2(m,"00") + "'" + s + '"';
+        return d + "°" + _zPad2(m, "00") + "'" + s + '"';
     }
 
     // ************************************************************
