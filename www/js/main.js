@@ -24,7 +24,7 @@ var CoordinateCalculator = function() {
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null}, { name: "share", value: "shareToMode"}]
+            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: "share", value: "shareToMode" }]
         ]
     }, {
         name: 'll-tokyo',
@@ -50,7 +50,7 @@ var CoordinateCalculator = function() {
             [{ name: "zoom<br />in", value: "zoomIn", icon: "icon-cc-zoom_in" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: "zoom<br />out", value: "zoomOut", icon: "icon-cc-zoom_out" }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "GPS", value: "gps", icon: "icon-cc-my_location" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: null, value: null }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "=", value: "=" }, { name: null, value: null }]
+            [{ name: null, value: null }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "Anc", value: "anc" }, { name: "share", value: "shareToMode" }]
         ]
     }, {
         name: 'n',
@@ -93,6 +93,7 @@ var CoordinateCalculator = function() {
     var mapActiveLayer;
     var mapActiveLayerName;
     var gpsMaker = false;
+    var anchorMarker = false;
     var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
     var util = latlng_util();
     //_mapSetup();
@@ -150,6 +151,9 @@ var CoordinateCalculator = function() {
                 break;
             case "zoomOut":
                 map.zoomOut();
+                break;
+            case "anc":
+                setAnchor();
                 break;
             case "gps":
                 _gpsToggle();
@@ -354,7 +358,7 @@ var CoordinateCalculator = function() {
     // mapの場合は　第二引数 = lat, 第三引数 = lng とする
     // バリデーションは含まない
     function setModeSubModeValue(_mode, _subMode, value) {
-        if(_mode === modes[2].name){
+        if (_mode === modes[2].name) {
             // maのとき
             var lat = _subMode;
             var lng = value;
@@ -389,6 +393,12 @@ var CoordinateCalculator = function() {
     // ************************************************************
     var maker = L.icon({
         iconUrl: 'images/marker-icon.png',
+        iconSize: [25, 40],
+        iconAnchor: [12, 40],
+        popupAnchor: [12 - 2]
+    });
+    var anchorIcon = L.icon({
+        iconUrl: 'images/anchor-icon.png',
         iconSize: [25, 40],
         iconAnchor: [12, 40],
         popupAnchor: [12 - 2]
@@ -459,6 +469,24 @@ var CoordinateCalculator = function() {
                 noMoveStart: true
             });
         }
+    }
+
+    function setAnchor(lat, lng) {
+        console.log("setAnchor(" + lat + ", " + lng + ")");
+
+        var latlang = map.getCenter();
+
+        if (typeof lat !== "undefined" && typeof lng !== "undefined") {
+            latlang = L.latLng(lat, lng);
+        }
+
+        if (!anchorMarker) {
+            anchorMarker = L.marker(latlang, { icon: anchorIcon }).addTo(map);
+        } else {
+            anchorMarker.setLatLng(latlang);
+        }
+
+        setValue('map', latlang.lat, latlang.lng, false, false, "user", null, null);
     }
 
     function onLocationError(e) {
@@ -740,7 +768,7 @@ var CoordinateCalculator = function() {
                 console.log(latIsDms, lngIsDms);
                 if (latIsDms && lngIsDms) {
                     var newLat = util.dmsToD(lat, 6);
-                    var newLng = util.dmsToD(lng,　6);
+                    var newLng = util.dmsToD(lng, 　6);
 
                     console.log(newLat, newLng);
 
@@ -755,8 +783,8 @@ var CoordinateCalculator = function() {
 
                 } else if (!latIsDms && !lngIsDms) {
                     //console.log(lat,lng);
-                    var newLat = util.dToDmsString(lat, 4);//dToDms(lat);
-                    var newLng = util.dToDmsString(lng, 4);//.dToDms(lng);
+                    var newLat = util.dToDmsString(lat, 4); //dToDms(lat);
+                    var newLng = util.dToDmsString(lng, 4); //.dToDms(lng);
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -766,6 +794,8 @@ var CoordinateCalculator = function() {
                     // D モード表示に更新
                     setNotationView(subMode, true);
                     setNotationView(getPairCurrentSubMode(), true);
+
+
                 }
             }
         }
@@ -813,7 +843,7 @@ var CoordinateCalculator = function() {
     }
 
     function nUnitHasError(val) {
-    	console.log(val, parseInt(val, 10), val.length);
+        console.log(val, parseInt(val, 10), val.length);
         if (val.length != 4) {
             return true;
         }
@@ -904,7 +934,7 @@ var CoordinateCalculator = function() {
             var ms = m.split('-');
             var code = n.nCode(b, u, ms[0], ms[1]);
             var bound = n.nCodeToBound(code);
-            
+
             var sw = bound.getSouthWest();
             var ne = bound.getNorthEast();
             var center = bound.getCenterLatLng();
@@ -917,13 +947,13 @@ var CoordinateCalculator = function() {
         }
     }
 
-    function shareToMode(){
+    function shareToMode() {
         var value = values[mode];
-        if(!value.hasError){
+        if (value && !value.hasError) {
             var lat = value.lat;
             var lng = value.lng;
 
-            if(notationIsDms(lat) && notationIsDms(lng)){
+            if (notationIsDms(lat) && notationIsDms(lng)) {
                 // DMS
                 lat = util.dmsToD(lat, 6);
                 lng = util.dmsToD(lng, 6);
@@ -931,7 +961,7 @@ var CoordinateCalculator = function() {
 
             console.log(lat, lng);
 
-            if(mode == modes[0].name){
+            if (mode == modes[0].name) {
                 // WGS
 
                 // Tokyo
@@ -951,6 +981,19 @@ var CoordinateCalculator = function() {
 
                 // map
                 setModeSubModeValue(modes[2].name, lat, lng);
+                setAnchor(lat, lng);
+
+            } else if (mode == modes[2].name) {
+            		console.log(values);
+            		setModeSubModeValue(modes[0].name, modes[0].subMode[0], lat);
+               	setModeSubModeValue(modes[0].name, modes[0].subMode[1], lng);
+
+               	var latlng = n.latlng(lat, lng);
+                var nCode = n.latlngToNCode(latlng);
+                setModeSubModeValue(modes[3].name, modes[3].subMode[0], nCode.blockName);
+                setModeSubModeValue(modes[3].name, modes[3].subMode[1], nCode.unitName);
+                setModeSubModeValue(modes[3].name, modes[3].subMode[2], nCode.ewMeshName + "-" + nCode.nsMeshName);
+                console.log(nCode);
             }
         }
     }
