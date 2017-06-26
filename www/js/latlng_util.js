@@ -1,27 +1,40 @@
 function latlng_util(){
 
     function _dmsToD(d, m, s, digit){
+    	console.group();
+    	console.log("_dmsToD(" + d + ", " + m + ", " + s + ", " + digit + ")");
+
     	var res = parseInt(d, 10);
     	res += parseInt(m, 10) / 60;
-    	res += parseFloat(m, 10) / 3600;
+    	res += parseFloat(s, 10) / 3600;
+
+    	console.log(res);
 
     	if(typeof digit === "number"){
+    		console.log("do round");
     		var p = Math.pow(10, digit);
-    		console.log(digit, p);
     		res = Math.round(res * p) / p;
+    		console.log(res)
     	}
 
+    	console.groupEnd();
     	return res;
     }
 
     function _dmsStringToD(str, digit){
+    	console.group();
+    	console.log("_dmsStringToD(" + str + ", " + digit + ")");
+
     	var noS = str.replace(/"/, "");
         var chack_s = noS.split(/[\°'"]/);
         var d = parseInt(chack_s[0],10);
         var m = parseInt(chack_s[1],10);
         var s = parseFloat(chack_s[2]);
-
-        return _dmsToD(d, m, s, digit);
+        console.log(d, m, s);
+        
+        var res =  _dmsToD(d, m, s, digit);
+        console.groupEnd();
+        return res;
     }
 
     function _dToDms(float, digit) {
@@ -48,13 +61,39 @@ function latlng_util(){
         }
     }
 
-/*
-    y = lat - lat * 0.00010695 + lon * 0.000017464 + 0.0046017
-  	x = lon - lat * 0.000046038 - lon * 0.000083043 + 0.01004
+    
+    //日本測地系から世界測地系
+    function _tokyoToWgs(lat, lng){
+		var wgsLat = lat - lat * 0.00010695 + lng * 0.000017464 + 0.0046017;
+  		var wgsLng = lng - lat * 0.000046038 - lng * 0.000083043 + 0.01004;
+  		return {
+  			lat:wgsLat,
+  			lng:wgsLng
+  		}
+    }
 
-    wgs2tky_linear = lat + 0.000106961 * lat - 0.000017467 * lon - 0.004602017
-  wgs2tky_linear = lon + 0.000046047 * lat + 0.000083049 * lon - 0.010041046
-*/
+    //世界測地系から日本測地系
+    function _wgsToTokyo(_lat, _lng, digit){
+    	var lat = parseFloat(_lat);
+    	var lng = parseFloat(_lng);
+
+    	var tokyoLat = lat + 0.000106961 * lat - 0.000017467 * lng - 0.004602017;
+		var tokyoLng = lng + 0.000046047 * lat + 0.000083049 * lng - 0.010041046;
+
+		console.log(lat, lng, digit, tokyoLat, tokyoLng);
+
+        if(typeof digit === "number"){
+        	var p = Math.pow(10, digit);
+        	tokyoLat = Math.round(tokyoLat * p) / p;
+        	tokyoLng = Math.round(tokyoLng * p) / p;
+        }
+
+		return {
+  			lat:tokyoLat,
+  			lng:tokyoLng
+  		}
+    }
+
 
     // 距離をを求める
     function _getDistance(lat1, lng1, lat2, lng2, format, digit) {
@@ -108,6 +147,9 @@ function latlng_util(){
     }
 
 	return {
+		wgsToTokyo:function(lat, lng, digit){
+			return _wgsToTokyo(lat, lng, digit);
+		},
 		dmsToD:function(d, m, s, digit){
 			//console.log("dmsTo", d, m, s, digit);
 			if(typeof d === "string" && typeof s === "undefined"){

@@ -95,6 +95,7 @@ var CoordinateCalculator = function() {
     var gpsMaker = false;
     var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
     var util = latlng_util();
+    //_mapSetup();
 
     // ************************************************************
     // トリガー
@@ -352,6 +353,18 @@ var CoordinateCalculator = function() {
     // 指定した mode subMode に値をセットする
     // バリデーションは含まない
     function setModeSubModeValue(_mode, _subMode, value) {
+        if(_mode === modes[2].name){
+            // maのとき
+            var lat = _subMode;
+            var lng = value;
+            console.log(lat, lng);
+
+            _mapSetup();
+
+            map.panTo(new L.LatLng(lat, lng));
+
+            return;
+        };
         var target = ".value-" + _mode + "-" + _subMode;
         $(target).html(value);
     }
@@ -718,14 +731,21 @@ var CoordinateCalculator = function() {
                 var validLng = validationLatLng(value.lng, false);
                 var lat = validLat.value;
                 var lng = validLng.value;
+
+
+                console.log(lat, lng);
+
                 var latIsDms = notationIsDms(lat);
                 var lngIsDms = notationIsDms(lng);
 
                 var modeObj = getModeObj(mode);
 
+                console.log(latIsDms, lngIsDms);
                 if (latIsDms && lngIsDms) {
                     var newLat = util.dmsToD(lat, 6);
                     var newLng = util.dmsToD(lng,　6);
+
+                    console.log(newLat, newLng);
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -739,7 +759,7 @@ var CoordinateCalculator = function() {
                 } else if (!latIsDms && !lngIsDms) {
                     //console.log(lat,lng);
                     var newLat = util.dToDmsString(lat, 4);//dToDms(lat);
-                    var newLng = util.dToDmsString(lat, 4);//.dToDms(lng);
+                    var newLng = util.dToDmsString(lng, 4);//.dToDms(lng);
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -901,8 +921,41 @@ var CoordinateCalculator = function() {
     }
 
     function shareToMode(){
-        console.log(values[mode]);
+        var value = values[mode];
+        if(!value.hasError){
+            var lat = value.lat;
+            var lng = value.lng;
 
+            if(notationIsDms(lat) && notationIsDms(lng)){
+                // DMS
+                lat = util.dmsToD(lat, 6);
+                lng = util.dmsToD(lng, 6);
+            }
+
+            console.log(lat, lng);
+
+            if(mode == modes[0].name){
+                // WGS
+
+                // Tokyo
+                var tokyo = util.wgsToTokyo(lat, lng, 6);
+                setModeSubModeValue(modes[1].name, modes[1].subMode[0], tokyo.lat);
+                setModeSubModeValue(modes[1].name, modes[1].subMode[1], tokyo.lng);
+                setValue(modes[1].name, tokyo.lat, tokyo.lng, false, false, mode, lat, lng);
+                setNotationView(subMode, false);
+                setNotationView(getPairCurrentSubMode(), false);
+
+                var latlng = n.latlng(lat, lng);
+                var nCode = n.latlngToNCode(latlng);
+                setModeSubModeValue(modes[3].name, modes[3].subMode[0], nCode.blockName);
+                setModeSubModeValue(modes[3].name, modes[3].subMode[1], nCode.unitName);
+                setModeSubModeValue(modes[3].name, modes[3].subMode[2], nCode.ewMeshName + "-" + nCode.nsMeshName);
+                console.log(nCode);
+
+                // map
+                setModeSubModeValue(modes[2].name, lat, lng);
+            }
+        }
     }
 
     // ************************************************************
