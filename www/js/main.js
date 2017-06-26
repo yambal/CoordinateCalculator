@@ -24,7 +24,7 @@ var CoordinateCalculator = function() {
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "=", value: "=" }, { name: null, value: null }]
+            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null}, { name: "share", value: "shareToMode"}]
         ]
     }, {
         name: 'll-tokyo',
@@ -161,6 +161,9 @@ var CoordinateCalculator = function() {
                 break;
             case "cmv":
                 comvertDisplayValue();
+                break;
+            case "shareToMode":
+                shareToMode();
                 break;
             default:
                 addDisplayValue(val);
@@ -895,6 +898,11 @@ var CoordinateCalculator = function() {
             $('.bound').html(latDis + " x " + lngDis);
 
         }
+    }
+
+    function shareToMode(){
+        console.log(values[mode]);
+
     }
 
     // ************************************************************
