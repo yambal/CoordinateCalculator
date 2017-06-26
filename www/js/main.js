@@ -788,13 +788,6 @@ var CoordinateCalculator = function() {
     function addDisplayValueToTargetNUnit(val) {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = (oldVal + val).substr(0, 4);
-        /*
-        if (nUnitHasError(newVal)) {
-
-        } else {
-            setModeSubModeValue(mode, subMode, newVal);
-        }
-        */
         setModeSubModeValue(mode, subMode, newVal);
         onNCodeDisplayChange();
     }
@@ -802,7 +795,6 @@ var CoordinateCalculator = function() {
     function nUnitHasError(val) {
     	console.log(val, parseInt(val, 10), val.length);
         if (val.length != 4) {
-console.log(804);
             return true;
         }
         return false;
@@ -886,7 +878,7 @@ console.log(804);
         var uError = nUnitHasError(u);
         var mError = nMeshHasError(m);
 
-        console.log(bError, uError, mError);
+        //console.log(bError, uError, mError);
 
         if (!bError && !uError && !mError) {
             var ms = m.split('-');
@@ -897,93 +889,13 @@ console.log(804);
             var ne = bound.getNorthEast();
             var center = bound.getCenterLatLng();
 
-            var latDis = getDistance(sw.lat, center.lng, ne.lat, center.lng);
-            var lngDis = getDistance(center.lat, sw.lng, center.lat, ne.lng);
+            var latDis = util.getDistance(sw.lat, center.lng, ne.lat, center.lng, true, 1);
+            var lngDis = util.getDistance(center.lat, sw.lng, center.lat, ne.lng, true, 1);
 
-            $('.bound').html(distanceUnitAdjust(latDis) + " x " + distanceUnitAdjust(lngDis));
+            $('.bound').html(latDis + " x " + lngDis);
 
         }
     }
-
-    function distanceUnitAdjust(m){
-    	if(m > 500){
-    		return Math.round(m / 100) / 10 + "km";
-    	}
-    	return Math.round(m * 10)/10 + "m";
-    }
-
-    // 距離をを求める
-    function getDistance(lat1, lng1, lat2, lng2) {
-        function radians(deg) {
-            return deg * Math.PI / 180;
-        }
-
-        return 6378.14 * Math.acos(Math.cos(radians(lat1)) *
-            Math.cos(radians(lat2)) *
-            Math.cos(radians(lng2) - radians(lng1)) +
-            Math.sin(radians(lat1)) *
-            Math.sin(radians(lat2))) * 1000;
-    }
-
-    /*
-    function dmsToD(str) {
-        //console.log("dmsToD(" + str + ")");
-        var noS = str.replace(/"/, "");
-        var chack_s = noS.split(/[\.°'"]/);
-
-        var res = parseInt(chack_s[0], 10);
-        //console.log(0, res);
-
-        if (chack_s.length >= 2) {
-            res += parseInt(chack_s[1], 10) / 60;
-            //console.log(1, res);
-        }
-        if (chack_s.length == 3 && chack_s[2].length > 0) {
-            res += parseInt(chack_s[2], 10) / 3600;
-            //console.log(2, res);
-        }
-        if (chack_s.length == 4) {
-            var resA = 0;
-            if (chack_s[2].length > 0) {
-                resA = parseInt(chack_s[2], 10);
-            }
-            if (chack_s[3].length > 0) {
-                resA += "." + chack_s[3];
-            } else {
-                resA += ".0";
-            }
-            console.log(34, resA);
-            res += parseFloat(resA) / 3600;
-            //console.log(34, res);
-        }
-        res = Math.round(res * 10000000) / 10000000;
-        return res;
-    }
-    
-
-    function dToDms(str) {
-        var num = parseFloat(str);
-        console.log("num", num);
-
-        var d = Math.floor(num);
-
-        var a = (num - d) * 60;
-        var m = Math.floor(a);
-
-        var b = a - m;
-        var s = b * 60;
-
-        s = Math.round(s * 1000) / 1000;
-
-        // 秒の0埋め
-        var sA = Math.floor(s);
-        if (sA < 10) {
-            s = "0" + s;
-        }
-
-        return d + "°" + _zPad2(m, "00") + "'" + s + '"';
-    }
-    */
 
     // ************************************************************
     _changeMode(modes[0].name, modes[0].subMode[0]);

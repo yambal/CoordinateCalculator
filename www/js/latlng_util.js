@@ -48,6 +48,46 @@ function latlng_util(){
         }
     }
 
+    // 距離をを求める
+    function _getDistance(lat1, lng1, lat2, lng2, format, digit) {
+        var m = 6378.14 * Math.acos(Math.cos(_degToRad(lat1)) *
+            Math.cos(_degToRad(lat2)) *
+            Math.cos(_degToRad(lng2) - _degToRad(lng1)) +
+            Math.sin(_degToRad(lat1)) *
+            Math.sin(_degToRad(lat2))) * 1000;
+
+        if(format){
+			return _distanceUnitAdjust(m, digit);
+        }
+
+        if(typeof digit === "number"){
+        	var p = Math.pow(10, digit);
+        	return Math.round(m * p) / p;
+        }
+
+        return m;
+    }
+
+    function _degToRad(deg){
+    	return deg * Math.PI / 180;
+    }
+
+    function _distanceUnitAdjust(m, _digit){
+    	var digit = _digit | 1;
+
+    	var f = m;
+    	var unit = "m";
+    	if(m >= 1000){
+    		var unit = "km";
+    		var f = m / 1000;
+    	}
+
+    	var p = Math.pow(10, digit);
+
+    	return Math.round(f * p)/p + unit;
+    }
+
+
     // 0埋め
     function _zPad2(str, _default) {
         if (!str || (typeof str === "string" && str.length == 0) || (typeof str === "number" && isNaN(str))) {
@@ -79,6 +119,9 @@ function latlng_util(){
 	        }
 
 	        return dms.d + "°" + _zPad2(dms.m, "00") + "'" + dms.s + '"';
+		},
+		getDistance(lat1, lng1, lat2, lng2, format, digit){
+			return _getDistance(lat1, lng1, lat2, lng2, format, digit);
 		}
 	}
 }
