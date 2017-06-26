@@ -94,6 +94,7 @@ var CoordinateCalculator = function() {
     var mapActiveLayerName;
     var gpsMaker = false;
     var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
+    var util = latlng_util();
 
     // ************************************************************
     // トリガー
@@ -720,9 +721,8 @@ var CoordinateCalculator = function() {
                 var modeObj = getModeObj(mode);
 
                 if (latIsDms && lngIsDms) {
-                    //console.log(lat,lng);
-                    var newLat = dmsToD(lat);
-                    var newLng = dmsToD(lng);
+                    var newLat = util.dmsToD(lat);
+                    var newLng = util.dmsToD(lng);
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -751,6 +751,7 @@ var CoordinateCalculator = function() {
         }
     }
 
+    // =============================================================
     // N-code
     function addDisplayValueToTargetNBlock(val) {
         var oldVal = getModeSubModeValue(mode, subMode);
@@ -924,6 +925,7 @@ console.log(804);
             Math.sin(radians(lat2))) * 1000;
     }
 
+    /*
     function dmsToD(str) {
         //console.log("dmsToD(" + str + ")");
         var noS = str.replace(/"/, "");
@@ -957,6 +959,7 @@ console.log(804);
         res = Math.round(res * 10000000) / 10000000;
         return res;
     }
+    */
 
     function dToDms(str) {
         var num = parseFloat(str);
