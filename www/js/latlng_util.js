@@ -48,6 +48,14 @@ function latlng_util(){
         }
     }
 
+/*
+    y = lat - lat * 0.00010695 + lon * 0.000017464 + 0.0046017
+  	x = lon - lat * 0.000046038 - lon * 0.000083043 + 0.01004
+
+    wgs2tky_linear = lat + 0.000106961 * lat - 0.000017467 * lon - 0.004602017
+  wgs2tky_linear = lon + 0.000046047 * lat + 0.000083049 * lon - 0.010041046
+*/
+
     // 距離をを求める
     function _getDistance(lat1, lng1, lat2, lng2, format, digit) {
         var m = 6378.14 * Math.acos(Math.cos(_degToRad(lat1)) *
