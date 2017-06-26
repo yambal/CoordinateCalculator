@@ -721,8 +721,8 @@ var CoordinateCalculator = function() {
                 var modeObj = getModeObj(mode);
 
                 if (latIsDms && lngIsDms) {
-                    var newLat = util.dmsToD(lat);
-                    var newLng = util.dmsToD(lng);
+                    var newLat = util.dmsToD(lat, 6);
+                    var newLng = util.dmsToD(lng,　6);
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -735,8 +735,8 @@ var CoordinateCalculator = function() {
 
                 } else if (!latIsDms && !lngIsDms) {
                     //console.log(lat,lng);
-                    var newLat = dToDms(lat);
-                    var newLng = dToDms(lng);
+                    var newLat = util.dToDmsString(lat, 4);//dToDms(lat);
+                    var newLng = util.dToDmsString(lat, 4);//.dToDms(lng);
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -959,7 +959,7 @@ console.log(804);
         res = Math.round(res * 10000000) / 10000000;
         return res;
     }
-    */
+    
 
     function dToDms(str) {
         var num = parseFloat(str);
@@ -983,6 +983,7 @@ console.log(804);
 
         return d + "°" + _zPad2(m, "00") + "'" + s + '"';
     }
+    */
 
     // ************************************************************
     _changeMode(modes[0].name, modes[0].subMode[0]);
