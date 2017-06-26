@@ -351,16 +351,13 @@ var CoordinateCalculator = function() {
     }
 
     // 指定した mode subMode に値をセットする
+    // mapの場合は　第二引数 = lat, 第三引数 = lng とする
     // バリデーションは含まない
     function setModeSubModeValue(_mode, _subMode, value) {
         if(_mode === modes[2].name){
             // maのとき
             var lat = _subMode;
             var lng = value;
-            console.log(lat, lng);
-
-            _mapSetup();
-
             map.panTo(new L.LatLng(lat, lng));
 
             return;
@@ -959,7 +956,7 @@ var CoordinateCalculator = function() {
     }
 
     // ************************************************************
-    _changeMode(modes[0].name, modes[0].subMode[0]);
+    _changeMode(modes[2].name, modes[2].subMode[0]);
 
 
     return {
