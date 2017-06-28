@@ -856,7 +856,7 @@ var CoordinateCalculator = function() {
     }
 
     function addDisplayValueToTargetNMesh(val) {
-        if (parseInt(val, 10) || val == '-') {
+        if (!isNaN(parseInt(val, 10)) || val == '-') {
             var oldVal = getModeSubModeValue(mode, subMode);
             var newVal = (oldVal + val).substr(0, 9);
 
