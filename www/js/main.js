@@ -169,10 +169,10 @@ var CoordinateCalculator = function() {
                 map.panBy([0, mh * 0.5]);
                 break;
             case "gps":
-                _gpsToggle();
+                gpsToggle();
                 break;
             case "my_location":
-                _myLocationToggle();
+                myLocationToggle();
                 break;
             case "del":
                 deleteDisplayValue();
@@ -509,6 +509,7 @@ var CoordinateCalculator = function() {
         console.groupEnd();
     }
 
+    // GPS を受信したとき
     function onLocationFound(e) {
         lastGPSLatLng = e.latlng;
 
@@ -523,6 +524,10 @@ var CoordinateCalculator = function() {
                 noMoveStart: true
             });
         }
+    }
+
+    function onLocationError(e) {
+        alert(e.message);
     }
 
     function setAnchor(lat, lng) {
@@ -549,42 +554,29 @@ var CoordinateCalculator = function() {
         }
     }
 
-    function onLocationError(e) {
-        alert(e.message);
-    }
-
-    function _gpsToggle() {
+    // GPSの on off をトグル
+    function gpsToggle() {
         if (!gpsIsActive) {
             // GPSが無効の時 > GPSを有効
             activeGps();
 
-            $('body').removeClass("gps-setview");
-            gpsSetView = false;
-
         } else {
             // GPSが有効でセンター化も有効 > GPSをOff
             deActiveGps();
+            disableMyLocation();
         }
     }
 
-    function _myLocationToggle() {
+    // GPS 追従 をトグル
+    function myLocationToggle() {
         if (!gpsSetView) {
-            $('body').addClass("gps-setview");
-            gpsSetView = true;
-            if (lastGPSLatLng) {
-                map.panTo(lastGPSLatLng, {
-                    noMoveStart: true
-                });
-            }
-            if (!gpsIsActive) {
-                activeGps();
-            }
+            enableMyLocation();
         } else {
-            $('body').removeClass("gps-setview");
-            gpsSetView = false;
+            disableMyLocation();
         }
     }
 
+    // GPS をアクティブにする
     function activeGps() {
         map.locate({
             watch: true,
@@ -592,21 +584,38 @@ var CoordinateCalculator = function() {
             enableHighAccuracy: true
         });
         $('body').addClass("gps-active");
-        //$('body').removeClass("gps-setview");
         gpsIsActive = true;
-        //gpsSetView = false
     }
 
+    // GPS を停止する
     function deActiveGps() {
         map.stopLocate();
         $('body').removeClass("gps-active");
-        //$('body').removeClass("gps-setview");
         if (gpsMaker) {
             map.removeLayer(gpsMaker);
             gpsMaker = null;
         }
         gpsIsActive = false;
-        //gpsSetView = false;
+    }
+
+    // GPS 追従をOn
+    function enableMyLocation() {
+        $('body').addClass("gps-setview");
+        gpsSetView = true;
+        if (lastGPSLatLng) {
+            map.panTo(lastGPSLatLng, {
+                noMoveStart: true
+            });
+        }
+        if (!gpsIsActive) {
+            activeGps();
+        }
+    }
+
+    // GPS 追従をOff
+    function disableMyLocation() {
+        $('body').removeClass("gps-setview");
+        gpsSetView = false;
     }
 
     // =============================================================
