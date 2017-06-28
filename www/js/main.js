@@ -387,7 +387,7 @@ var CoordinateCalculator = function() {
         var validated = validationLatLng(val, a);
         var newVal = validated.value;
         var hasError = validated.error;
-        var inputNotationIsDms = notationIsDms(newVal);
+        var inputNotationIsDms = util.notationIsDms(newVal);
 
         setNotationView(_subMode, inputNotationIsDms);
         setSubmodeIsErrorView(_subMode, hasError);
@@ -570,27 +570,12 @@ var CoordinateCalculator = function() {
 
     // =============================================================
     // Lat/Lang
-    // 文字列がDMS表記かを返す
-    function notationIsDms(_str) {
-        if (_str) {
-            var str = _str;
-            if (typeof _str === "number") {
-                var str = _str.toString();
-            };
-            var chack_s = str.split(/[\.°'"]/);
-            if (chack_s.length <= 2) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    };
 
     // 二つの座標表記を比較し、同じ表記かを返す
     function isSameNotation(coordinaryA, ccordinatyB, _default) {
         if (coordinaryA.length > 0 && ccordinatyB.length > 0) {
-            var aIsDms = notationIsDms(coordinaryA);
-            var bIsDms = notationIsDms(ccordinatyB);
+            var aIsDms = util.notationIsDms(coordinaryA);
+            var bIsDms = util.notationIsDms(ccordinatyB);
 
             return aIsDms == bIsDms;
         }
@@ -763,10 +748,14 @@ var CoordinateCalculator = function() {
 
     // 現在の Value を D <> DMS 変換する
     function comvertDisplayValue() {
+        console.group("comvertDisplayValue()");
+
         var value = values[mode];
+        console.log("mode", mode, "value", value);
+
         if (value) {
             if (value.hasError) {
-                console.log("hasError");
+                console.log("hasError cancel");
             } else {
 
                 var validLat = validationLatLng(value.lat, true);
@@ -774,18 +763,14 @@ var CoordinateCalculator = function() {
                 var lat = validLat.value;
                 var lng = validLng.value;
 
-
-                console.log(lat, lng);
-
-                var latIsDms = notationIsDms(lat);
-                var lngIsDms = notationIsDms(lng);
+                var latIsDms = util.notationIsDms(lat);
+                var lngIsDms = util.notationIsDms(lng);
 
                 var modeObj = getModeObj(mode);
 
-                console.log(latIsDms, lngIsDms);
                 if (latIsDms && lngIsDms) {
-                    var newLat = util.dmsToD(lat, 6);
-                    var newLng = util.dmsToD(lng, 　6);
+                    var newLat = util.toD(lat, 6);
+                    var newLng = util.toD(lng, 　6);
 
                     console.log(newLat, newLng);
 
@@ -815,7 +800,10 @@ var CoordinateCalculator = function() {
 
                 }
             }
+        }else{
+            console.log("cancel");
         }
+        console.groupEnd();
     }
 
     // =============================================================
@@ -1002,34 +990,50 @@ var CoordinateCalculator = function() {
         if(fromMode != toMode && value && !value.hasError){
             var wgsLat, wgsLng, tokyoLat, tokyoLng;
             if(fromMode == modes[1].name){
-                console.log("from tokyo");
-                tokyoLat = value.lat;
-                tokyoLng = value.lng;
-                var latlng = util.tokyoToWgs(value.lat, value.lng);
+                // 現在のモードがTokyoの場合
+                tokyoLat = util.toD(value.lat);
+                tokyoLng = util.toD(value.lng);
+
+                // WGS取得
+                var latlng = util.tokyoToWgs(tokyoLat, tokyoLng, 6);
                 wgsLat = latlng.lat;
                 wgsLng = latlng.lng;
 
+                // 表示用丸めWGS
+                var roundedWgsLat = util.round(wgsLat, 6);
+                var roundedWgsLng = util.round(wgsLng, 6);
             }else{
-                wgsLat = value.lat;
-                wgsLng = value.lng;
-                var latlng = util.wgsToTokyo(value.lat, value.lng);
+                // WGS取得
+                wgsLat = util.toD(value.lat);
+                wgsLng = util.toD(value.lng);
+
+                // 表示用丸めWGS
+                var roundedWgsLat = util.round(wgsLat, 6);
+                var roundedWgsLng = util.round(wgsLng, 6);
+
+                // 表示用Tokyo
+                var latlng = util.wgsToTokyo(wgsLat, wgsLng, 6);
                 tokyoLat = latlng.lat;
                 tokyoLng = latlng.lng;
             }
 
             if(toMode == modes[0].name){
-                setModeSubModeValue(modes[0].name, modes[0].subMode[0], wgsLat);
-                setModeSubModeValue(modes[0].name, modes[0].subMode[1], wgsLng);
+                //var setLat = util.round(wgsLat, 6);
+                //var setLng = util.round(wgsLng, 6);
+                setModeSubModeValue(modes[0].name, modes[0].subMode[0], roundedWgsLat);
+                setModeSubModeValue(modes[0].name, modes[0].subMode[1], roundedWgsLng);
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
-                setValue(modes[0].name, wgsLat, wgsLng, null, false, false, fromMode, value.lat, value.lng);
+                setValue(modes[0].name, roundedWgsLat, roundedWgsLng, null, false, false, fromMode, value.lat, value.lng);
 
             }else if(toMode == modes[1].name){
+                //var setLat = util.round(tokyoLat, 6);
+                //var setLng = util.round(tokyoLng, 6);
                 setModeSubModeValue(modes[1].name, modes[1].subMode[0], tokyoLat);
                 setModeSubModeValue(modes[1].name, modes[1].subMode[1], tokyoLng);
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
-                setValue(modes[1].name, wgsLat, wgsLng, null, false, false, fromMode, value.lat, value.lng);
+                setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, fromMode, value.lat, value.lng);
 
             }else if(toMode == modes[2].name){
                 setAnchor(wgsLat, wgsLng);
