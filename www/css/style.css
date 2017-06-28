@@ -287,18 +287,41 @@ body.n-mesh-error .display-container .n-mesh .icon-cc-error2 {
   height: 100%;
   text-align: center;
   box-sizing: border-box;
+  transition: all  0.3s ease;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84 {
   background-color: #1e441f;
+  transition-delay: 0.075s;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo {
   background-color: #01405d;
+  transition-delay: 0.05s;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-map {
   background-color: #2d0b33;
+  transition-delay: 0.025s;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-n {
   background-color: #640a29;
+  transition-delay: 0s;
+}
+body.flash-mode-ll-wgs84 .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84,
+body.flash-mode-ll-tokyo .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84,
+body.flash-mode-map .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84,
+body.flash-mode-n .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84,
+body.flash-mode-ll-wgs84 .keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo,
+body.flash-mode-ll-tokyo .keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo,
+body.flash-mode-map .keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo,
+body.flash-mode-n .keyboad .keyboad-row .keyboad-col .key.key-ll-tokyo,
+body.flash-mode-ll-wgs84 .keyboad .keyboad-row .keyboad-col .key.key-map,
+body.flash-mode-ll-tokyo .keyboad .keyboad-row .keyboad-col .key.key-map,
+body.flash-mode-map .keyboad .keyboad-row .keyboad-col .key.key-map,
+body.flash-mode-n .keyboad .keyboad-row .keyboad-col .key.key-map,
+body.flash-mode-ll-wgs84 .keyboad .keyboad-row .keyboad-col .key.key-n,
+body.flash-mode-ll-tokyo .keyboad .keyboad-row .keyboad-col .key.key-n,
+body.flash-mode-map .keyboad .keyboad-row .keyboad-col .key.key-n,
+body.flash-mode-n .keyboad .keyboad-row .keyboad-col .key.key-n {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .keyboad .keyboad-row .keyboad-col .key.key-desable {
   border: none;

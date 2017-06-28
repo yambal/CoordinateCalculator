@@ -306,6 +306,15 @@ var CoordinateCalculator = function() {
         }
     }
 
+    // モードボタンをフラッシュさせる
+    function modeFlash(_mode){
+        $("body").addClass('flash-mode-' + _mode);
+        setTimeout(function(){
+            $("body").removeClass('flash-mode-' + _mode);
+        },150);
+    }
+    
+
     // ************************************************************
     // 入力値
     // 指定した mode subMode の値を返す
@@ -986,6 +995,7 @@ var CoordinateCalculator = function() {
         console.groupEnd();
     }
 
+    // 現在のモードの値を指定のモードに反映させる
     function shareToMode(fromMode, toMode, value){
         console.group("shareToMode("+fromMode+","+toMode+","+value+")", value);
 
@@ -1041,10 +1051,13 @@ var CoordinateCalculator = function() {
                 }, false, false, fromMode, value.lat, value.lng);
             }
         }
-        
+
+
+        modeFlash(toMode);
         console.groupEnd();
     }
-    
+
+
 
     // ************************************************************
     _changeMode(modes[2].name, modes[2].subMode[0]);
