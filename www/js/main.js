@@ -47,10 +47,10 @@ var CoordinateCalculator = function() {
         ],
         keys: [
             [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-            [{ name: "zoom<br />in", value: "zoomIn", icon: "icon-cc-zoom_in" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-            [{ name: "zoom<br />out", value: "zoomOut", icon: "icon-cc-zoom_out" }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-            [{ name: "GPS", value: "gps", icon: "icon-cc-my_location" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: null, value: null }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "Anc", value: "anc" }, { name: "share", value: "shareToOtherModes" }]
+            [{ name: "zoom<br />in", value: "zoomIn", icon: "icon-cc-zoom_in" }, { name: null, value: null }, { name: "up", value: "up", icon:"icon-cc-arrow_upward"}, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+            [{ name: "zoom<br />out", value: "zoomOut", icon: "icon-cc-zoom_out" }, { name: "left", value: "left", icon:"icon-cc-arrow_back"}, { name: null, value: null }, { name: "right", value: "right", icon:"icon-cc-arrow_forward"}, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
+            [{ name: "GPS", value: "gps", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: "down", value: "icon-cc-arrow_downward", icon:"icon-cc-arrow_downward" }, { name: null, value: null }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null}, { name: null, value: null}, { name: null, value: null }]
         ]
     }, {
         name: 'n',
@@ -447,6 +447,10 @@ var CoordinateCalculator = function() {
 
             map.on('locationfound', onLocationFound);
             map.on('locationerror', onLocationError);
+
+            map.on('moveend', onMapMoveEnd);
+
+            onMapMoveEnd(null);
         }
     };
 
@@ -463,6 +467,31 @@ var CoordinateCalculator = function() {
             mapActiveLayer = filtered[0].layer;
             mapActiveLayerName = filtered[0].name;
         }
+    }
+
+    //　マップ位置が変更されたとき
+    function onMapMoveEnd(event){
+    	console.group("onMapMoveEnd(" + event + ")");
+    	console.log("event", event);
+
+    	var centerLatLng = map.getCenter();
+    	var lat = centerLatLng.lat;
+    	var lng = centerLatLng.lng;
+
+    	console.log('lat', lat, 'lng', lng);
+
+    	// 変化を検証
+    	var oldval = values[mode];
+    	if(!oldval || oldval.lat != lat && oldval.lng != lng){
+    		//変化あり
+    		setValue(mode, lat, lng, null, false, false, "user", null, null);
+    		shareToOtherModes();
+    	}else{
+    		// 変化なし
+    		console.log("no changed");
+    	}
+
+    	console.groupEnd();
     }
 
     function onLocationFound(e) {
@@ -612,6 +641,7 @@ var CoordinateCalculator = function() {
     }
 
     function setValue(mode, lat, lng, nCode, hasError, isDms, sourceType, sourceLat, sourceLng) {
+    	console.group("setValue("+mode + "," + lat + "," + lng + "," + nCode + "," + hasError + "," + isDms + "," + sourceType + "," + sourceLat + "," + sourceLng + ")");
         values[mode] = {
             lat: lat,
             lng: lng,
@@ -624,6 +654,8 @@ var CoordinateCalculator = function() {
                 lng: sourceLng
             }
         }
+        console.log(values[mode]);
+        console.groupEnd();
     }
 
     // LatLang の validation
