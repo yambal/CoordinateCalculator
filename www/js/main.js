@@ -1066,7 +1066,6 @@ var CoordinateCalculator = function() {
     // ************************************************************
     _changeMode(modes[2].name, modes[2].subMode[0]);
 
-
     return {
         onKeyPress: function(val) {
             _onKeyPress(val);
