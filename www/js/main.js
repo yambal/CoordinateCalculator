@@ -633,6 +633,7 @@ var CoordinateCalculator = function() {
     // GPS 追従をOn
     function enableMyLocation() {
         $('body').addClass("gps-setview");
+        console.warn("enableMyLocation()");
         gpsSetView = true;
         if (lastGPSLatLng) {
             map.panTo(lastGPSLatLng, {
@@ -647,6 +648,7 @@ var CoordinateCalculator = function() {
     // GPS 追従をOff
     function disableMyLocation() {
         $('body').removeClass("gps-setview");
+        console.warn("disableMyLocation()");
         gpsSetView = false;
     }
 
