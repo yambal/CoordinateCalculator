@@ -370,7 +370,7 @@ var CoordinateCalculator = function() {
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
 
-        shareToOtherModes();// 他に反映する
+        shareToOtherModes(); // 他に反映する
     }
 
     // mode/subMode の値から一文字追加
@@ -381,7 +381,7 @@ var CoordinateCalculator = function() {
         var newVal = oldVal + val;
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
 
-        shareToOtherModes();// 他に反映する
+        shareToOtherModes(); // 他に反映する
         console.groupEnd();
     }
 
@@ -410,7 +410,7 @@ var CoordinateCalculator = function() {
 
     // mode/submode に値を、検証を行い、表示を変更、結果を返す
     function setDisplayValueToLatLng(_mode, _subMode, val) {
-        console.group("setDisplayValueToLatLng("+_mode+","+_subMode+","+val+")");
+        console.group("setDisplayValueToLatLng(" + _mode + "," + _subMode + "," + val + ")");
 
         var isLat = subModeIsLat(_subMode);
 
@@ -449,6 +449,12 @@ var CoordinateCalculator = function() {
         iconAnchor: [12, 40],
         popupAnchor: [12 - 2]
     });
+    var gpsIcon = L.icon({
+        iconUrl: 'images/gps-icon.png',
+        iconSize: [25, 63],
+        iconAnchor: [12, 58],
+        popupAnchor: [12 - 2]
+    });
 
     var mapLayers = [{
         name: "map-std",
@@ -485,12 +491,14 @@ var CoordinateCalculator = function() {
             map.on('locationerror', onLocationError);
 
             map.on('moveend', onMapMoveEnd);
+            map.on('dragstart', onDragstart);
+
 
             onMapMoveEnd(null);
         }
     };
 
-    function panTo(lat, lng, fireMoveEnd){
+    function panTo(lat, lng, fireMoveEnd) {
         console.group("panTo(" + lat + "," + lng + "," + fireMoveEnd + ")");
 
         latlang = new L.latLng(lat, lng);
@@ -517,6 +525,7 @@ var CoordinateCalculator = function() {
 
     //　マップ位置が変更されたとき
     function onMapMoveEnd(event) {
+        /*
         var mapMode = modes[2].name;
         console.group("onMapMoveEnd(" + event + ")");
         console.log("event", event);
@@ -525,37 +534,49 @@ var CoordinateCalculator = function() {
         var lat = centerLatLng.lat;
         var lng = centerLatLng.lng;
 
-        console.warn('center lat:' + lat  + ' lng:' + lng);
+        console.warn('center lat:' + lat + ' lng:' + lng);
 
         // 変化を検証
         var oldval = values[mapMode];
         if (!oldval || oldval.lat != lat && oldval.lng != lng) {
             //変化あり
-            setValue(mapMode, lat, lng, null, false, false, "user", null, null);
-            shareToOtherModes();
+            //setValue(mapMode, lat, lng, null, false, false, "user", null, null);
+            //shareToOtherModes();
         } else {
             // 変化なし
             console.log("no changed");
         }
 
         console.groupEnd();
+        */
+    }
+
+    function onDragstart() {
+        disableMyLocation();
     }
 
     // GPS を受信したとき
     function onLocationFound(e) {
+        console.group("onLocationFound()");
+        var gpsLat = e.latlng.lat;
+        var gpsLng = e.latlng.lng;
         lastGPSLatLng = e.latlng;
 
         if (!gpsMaker) {
-            gpsMaker = L.marker(lastGPSLatLng, { icon: maker }).addTo(map);
+            gpsMaker = L.marker(lastGPSLatLng, { icon: gpsIcon }).addTo(map);
         } else {
             gpsMaker.setLatLng(lastGPSLatLng);
         }
 
         if (gpsSetView) {
-            map.panTo(lastGPSLatLng, {
-                noMoveStart: true
-            });
+            var mapMode = modes[2].name;
+            setValue(mapMode, gpsLat, gpsLng, null, false, false, "gps", null, null);
+            shareToOtherModes();
+
+            map.panTo(lastGPSLatLng);
         }
+
+        console.groupEnd();
     }
 
     function onLocationError(e) {
@@ -1156,6 +1177,8 @@ var CoordinateCalculator = function() {
 
             } else if (toMode == modes[2].name) {
                 //setAnchor(wgsLat, wgsLng);
+
+
                 disableMyLocation(); // GPS 追従Off
 
                 panTo(wgsLat, wgsLng, false);
@@ -1174,7 +1197,7 @@ var CoordinateCalculator = function() {
                     mesh: nCode.ewMeshName + "-" + nCode.nsMeshName
                 }, false, false, fromMode, value.lat, value.lng);
             }
-        }else{
+        } else {
             console.log("skip or cancel");
         }
 
