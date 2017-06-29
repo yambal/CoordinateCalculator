@@ -525,7 +525,7 @@ var CoordinateCalculator = function() {
         var lat = centerLatLng.lat;
         var lng = centerLatLng.lng;
 
-        console.log('lat', lat, 'lng', lng);
+        console.warn('center lat:' + lat ; ' lng:', lng);
 
         // 変化を検証
         var oldval = values[mapMode];
