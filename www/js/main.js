@@ -24,7 +24,7 @@ var CoordinateCalculator = function() {
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: "share", value: "shareToOtherModes" }]
+            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: null, value: null }]
         ]
     }, {
         name: 'll-tokyo',
@@ -37,7 +37,7 @@ var CoordinateCalculator = function() {
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: "share", value: "shareToOtherModes" }]
+            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: null, value: null }]
         ]
     }, {
         name: 'map',
@@ -322,13 +322,14 @@ var CoordinateCalculator = function() {
     }
 
     // モードボタンをフラッシュさせる
+    /*
     function modeFlash(_mode) {
         $("body").addClass('flash-mode-' + _mode);
         setTimeout(function() {
             $("body").removeClass('flash-mode-' + _mode);
         }, 150);
     }
-
+    */
 
     // ************************************************************
     // 入力値
@@ -346,10 +347,15 @@ var CoordinateCalculator = function() {
     }
 
     function subModeIsLat(_subMode) {
-        console.log("subModeIsLat(" + _subMode + ")");
+        console.group("subModeIsLat(" + _subMode + ")");
         if (_subMode == modes[0].subMode[0] || _subMode == modes[1].subMode[0]) {
+            console.log("is lat");
+            console.groupEnd();
             return true;
         }
+
+        console.log("not lat");
+        console.groupEnd();
         return false;
     }
 
@@ -359,17 +365,24 @@ var CoordinateCalculator = function() {
     // mode/subMode の値から一文字削除
     // バリデーション/エラー判断/Class設定を含む
     function deleteDisplayValueToTargetLatLng() {
+
         var oldVal = getCurrentModeSubModeValue(true);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
+
+        shareToOtherModes();// 他に反映する
     }
 
     // mode/subMode の値から一文字追加
     // バリデーション/エラー判断/Class設定を含む
     function addDisplayValueToTargetLatLng(val) {
+        console.group("addDisplayValueToTargetLatLng(" + val + ")");
         var oldVal = getCurrentModeSubModeValue(false);
         var newVal = oldVal + val;
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
+
+        shareToOtherModes();// 他に反映する
+        console.groupEnd();
     }
 
     function clearDisplayValueTargetLatLng() {
@@ -397,21 +410,29 @@ var CoordinateCalculator = function() {
 
     // mode/submode に値を、検証を行い、表示を変更、結果を返す
     function setDisplayValueToLatLng(_mode, _subMode, val) {
-        var a = subModeIsLat(_subMode);
-        console.log(a);
-        var validated = validationLatLng(val, a);
-        var newVal = validated.value;
-        var hasError = validated.error;
-        var inputNotationIsDms = util.notationIsDms(newVal);
+        console.group("setDisplayValueToLatLng("+_mode+","+_subMode+","+val+")");
 
+        var isLat = subModeIsLat(_subMode);
+
+        var validated = validationLatLng(val, isLat);
+        console.log("validated", validated);
+
+        var inputNotationIsDms = util.notationIsDms(validated.value);
+
+        // View
         setNotationView(_subMode, inputNotationIsDms);
-        setSubmodeIsErrorView(_subMode, hasError);
+        setSubmodeIsErrorView(_subMode, validated.error);
 
-        setModeSubModeValue(_mode, _subMode, newVal);
+        // 値を更新
+        setModeSubModeValue(_mode, _subMode, validated.value);
+        console.log("set to display ", validated.value, "to", _mode, _subMode);
+
+        console.groupEnd();
         return {
-            hasError: hasError,
-            value: newVal,
-            isDms: inputNotationIsDms
+            hasError: validated.error,
+            value: validated.value,
+            isDms: inputNotationIsDms,
+            isLat: isLat
         }
     }
 
@@ -469,6 +490,16 @@ var CoordinateCalculator = function() {
         }
     };
 
+    function panTo(lat, lng, fireMoveEnd){
+        console.group("panTo(" + lat + "," + lng + "," + fireMoveEnd + ")");
+
+        latlang = new L.latLng(lat, lng);
+        map.panTo(latlang, {
+            noMoveStart: fireMoveEnd
+        });
+        console.groupEnd();
+    }
+
     // マップに表示する地図を変更する
     function setActiveLayer(name) {
         var filtered = mapLayers.filter(function(element, index, array) {
@@ -486,6 +517,7 @@ var CoordinateCalculator = function() {
 
     //　マップ位置が変更されたとき
     function onMapMoveEnd(event) {
+        var mapMode = modes[2].name;
         console.group("onMapMoveEnd(" + event + ")");
         console.log("event", event);
 
@@ -496,10 +528,10 @@ var CoordinateCalculator = function() {
         console.log('lat', lat, 'lng', lng);
 
         // 変化を検証
-        var oldval = values[mode];
+        var oldval = values[mapMode];
         if (!oldval || oldval.lat != lat && oldval.lng != lng) {
             //変化あり
-            setValue(mode, lat, lng, null, false, false, "user", null, null);
+            setValue(mapMode, lat, lng, null, false, false, "user", null, null);
             shareToOtherModes();
         } else {
             // 変化なし
@@ -643,34 +675,41 @@ var CoordinateCalculator = function() {
 
     // =============================================================
     // Lat/Lang
-
-    // 二つの座標表記を比較し、同じ表記かを返す
-    function isSameNotation(coordinaryA, ccordinatyB, _default) {
-        if (coordinaryA.length > 0 && ccordinatyB.length > 0) {
-            var aIsDms = util.notationIsDms(coordinaryA);
-            var bIsDms = util.notationIsDms(ccordinatyB);
-
-            return aIsDms == bIsDms;
-        }
-        return _default;
-    }
-
-
     // mode/submode に値をセットする
     // バリデーション/エラー判断/Class設定を含む
     function setDisplayValueToCurrentLatLng(val, surceType, sourceLat, sourceLng) {
-        var result = setDisplayValueToLatLng(mode, subMode, val);
-        var hasError = result.hasError;
-        var newVal = result.value;
-        var inputNotationIsDms = result.isDms;
+        console.group("setDisplayValueToCurrentLatLng(" + val + "," + surceType + "," + sourceLat + "," + sourceLng + ")");
 
+        // 検証
+        var validated = setDisplayValueToLatLng(mode, subMode, val);
+        console.log("validated", validated);
+        var hasError = validated.hasError;
+        var newVal = validated.value;
+        var inputNotationIsDms = validated.isDms;
+
+        // 対を検証する
         var pairMode = getPairCurrentSubMode();
         var pairVal = getModeSubModeValue(mode, pairMode);
+        var pairIsLat = subModeIsLat(pairMode);
+        var pairIsDms = util.notationIsDms(pairVal);
 
-        var isSameN = isSameNotation(newVal, pairVal, true);
+        var pairValidated = validationLatLng(pairVal, pairIsLat);
+        var pairHasError = pairValidated.error;
+        console.log("pairValidated", pairValidated);
 
+        // ペアとセットで検証
+        // ペアはDMSか
+        var notationIsDMS = inputNotationIsDms && pairIsDms;
+        // ペアは同じ表記か
+        var isSameN = inputNotationIsDms == pairIsDms;
+        // セットでエラーがあるか
+        var setHasError = hasError || pairHasError || !isSameN;
+        console.log("setHasError", hasError, pairHasError, isSameN, "=", setHasError);
+
+        // View
         setSubmodeIsErrorView(subMode, hasError || !isSameN);
         setSubmodeIsErrorView(pairMode, !isSameN);
+        /** ToDo : セットのエラー表現 **/
 
         var lat, lng;
         if (subModeIsLat(subMode)) {
@@ -681,7 +720,9 @@ var CoordinateCalculator = function() {
             lng = newVal;
         }
 
-        setValue(mode, lat, lng, null, hasError || !isSameN, 'toDo', surceType, sourceLat, sourceLng)
+        setValue(mode, lat, lng, null, setHasError, notationIsDMS, surceType, sourceLat, sourceLng);
+
+        console.groupEnd();
     }
 
     function setValue(mode, lat, lng, nCode, hasError, isDms, sourceType, sourceLat, sourceLng) {
@@ -1112,9 +1153,10 @@ var CoordinateCalculator = function() {
                 setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, fromMode, value.lat, value.lng);
 
             } else if (toMode == modes[2].name) {
-                setAnchor(wgsLat, wgsLng);
+                //setAnchor(wgsLat, wgsLng);
+                disableMyLocation(); // GPS 追従Off
 
-                map.panTo(new L.LatLng(wgsLat, wgsLng));
+                panTo(wgsLat, wgsLng, false);
                 setValue(modes[2].name, wgsLat, wgsLng, null, false, false, fromMode, value.lat, value.lng);
 
             } else if (toMode == modes[3].name) {
@@ -1130,10 +1172,13 @@ var CoordinateCalculator = function() {
                     mesh: nCode.ewMeshName + "-" + nCode.nsMeshName
                 }, false, false, fromMode, value.lat, value.lng);
             }
+        }else{
+            console.log("skip or cancel");
         }
 
-
+        /*
         modeFlash(toMode);
+        */
         console.groupEnd();
     }
 

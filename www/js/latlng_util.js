@@ -146,6 +146,7 @@ function latlng_util(){
 
     // DNS表記だと断定できる場合はTrue
     function _notationIsDms(_str) {
+        console.group("_notationIsDms(" + _str + ")");
         if (_str) {
             var str = _str;
             if (typeof _str === "number") {
@@ -153,10 +154,18 @@ function latlng_util(){
             };
             var chack_s = str.split(/[\.°'"]/);
             if (chack_s.length <= 2) {
+                console.log("not dms");
+                console.groupEnd();
                 return false;
             }
+
+            console.log("is dms");
+            console.groupEnd();
             return true;
         }
+
+        console.log("not dms");
+        console.groupEnd();
         return false;
     };
 
