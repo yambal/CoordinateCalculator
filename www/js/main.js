@@ -1193,7 +1193,7 @@ var CoordinateCalculator = function() {
                 console.warn(fromMode, toMode, mode);
                 console.warn(value);
 
-                console.log("disableMyLocation()", fromMode, toMode, value.source.source);
+                console.log("disableMyLocation()" + ", " + fromMode + ", " + toMode, + ", " + value.source.source);
                 disableMyLocation(); // GPS 追従Off
 
                 panTo(wgsLat, wgsLng, false);
