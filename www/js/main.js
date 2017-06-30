@@ -492,6 +492,7 @@ var CoordinateCalculator = function() {
 
             map.on('moveend', onMapMoveEnd);
             map.on('dragstart', onDragstart);
+            map.on('dragend', onDragend);
 
 
             onMapMoveEnd(null);
@@ -556,6 +557,14 @@ var CoordinateCalculator = function() {
         disableMyLocation();
     }
 
+    function onDragend(){
+        var latlang = map.getCenter();
+
+        var mapMode = modes[2].name;
+        setValue(mapMode, latlang.lat, latlang.lng, null, false, false, "user", null, null);
+        shareToOtherModes();
+    }
+
     // GPS を受信したとき
     function onLocationFound(e) {
         console.group("onLocationFound()");
@@ -584,6 +593,7 @@ var CoordinateCalculator = function() {
         alert(e.message);
     }
 
+    /*
     function setAnchor(lat, lng) {
         console.group();
         console.log("setAnchor(" + lat + ", " + lng + ")");
@@ -607,6 +617,7 @@ var CoordinateCalculator = function() {
             lng: latlang.lng
         }
     }
+    */
 
     // GPSの on off をトグル
     function gpsToggle() {
@@ -1178,7 +1189,7 @@ var CoordinateCalculator = function() {
                 setModeSubModeValue(modes[0].name, modes[0].subMode[1], roundedWgsLng);
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
-                setValue(modes[0].name, roundedWgsLat, roundedWgsLng, null, false, false, fromMode, value.lat, value.lng);
+                setValue(modes[0].name, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
 
             } else if (toMode == modes[1].name) {
                 //var setLat = util.round(tokyoLat, 6);
@@ -1187,19 +1198,23 @@ var CoordinateCalculator = function() {
                 setModeSubModeValue(modes[1].name, modes[1].subMode[1], tokyoLng);
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
-                setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, fromMode, value.lat, value.lng);
+                setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
 
             } else if (toMode == modes[2].name) {
                 console.warn(fromMode, toMode, mode);
                 console.warn(value);
 
-                console.log("disableMyLocation()" + ", " + fromMode + ", " + toMode, + ", " + value.source.source);
+                console.log("disableMyLocation()" + ", " + fromMode + ", " + toMode, + ", " + mode + ", " + value.source.source);
                 disableMyLocation(); // GPS 追従Off
 
                 panTo(wgsLat, wgsLng, false);
-                setValue(modes[2].name, wgsLat, wgsLng, null, false, false, fromMode, value.lat, value.lng);
+                setValue(modes[2].name, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
 
             } else if (toMode == modes[3].name) {
+                // N-Code
+
+                console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
+
                 var latlng = n.latlng(wgsLat, wgsLng);
                 var nCode = n.latlngToNCode(latlng);
                 setModeSubModeValue(modes[3].name, modes[3].subMode[0], nCode.blockName);
@@ -1210,7 +1225,7 @@ var CoordinateCalculator = function() {
                     block: nCode.blockName,
                     unit: nCode.unitName,
                     mesh: nCode.ewMeshName + "-" + nCode.nsMeshName
-                }, false, false, fromMode, value.lat, value.lng);
+                }, false, false, value.source.source, value.lat, value.lng);
             }
         } else {
             console.log("skip or cancel");
