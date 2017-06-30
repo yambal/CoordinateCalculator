@@ -20,7 +20,7 @@ var CoordinateCalculator = function() {
             'll-wgs84-lng'
         ],
         keys: [
-            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -33,7 +33,7 @@ var CoordinateCalculator = function() {
             'll-tokyo-lng'
         ],
         keys: [
-            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
             [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -46,11 +46,11 @@ var CoordinateCalculator = function() {
             'map-photo'
         ],
         keys: [
-            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-            [{ name: "zoom<br />in", value: "zoomIn", icon: "icon-cc-zoom_in" }, { name: null, value: null }, { name: "up", value: "up", icon: "icon-cc-arrow_upward" }, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-            [{ name: "zoom<br />out", value: "zoomOut", icon: "icon-cc-zoom_out" }, { name: "left", value: "left", icon: "icon-cc-arrow_back" }, { name: null, value: null }, { name: "right", value: "right", icon: "icon-cc-arrow_forward" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-            [{ name: "GPS", value: "gps", icon: "icon-cc-GPS" }, { name: null, value: null }, { name: "down", value: "down", icon: "icon-cc-arrow_downward" }, { name: null, value: null }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }]
+            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "GPS", value: "gps", icon: "icon-cc-GPS" }, { name: null, value: null }, { name: "up", value: "up", icon: "icon-cc-arrow_upward" }, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+            [{ name: "zoom<br />in", value: "zoomIn", icon: "icon-cc-zoom_in" }, { name: "left", value: "left", icon: "icon-cc-arrow_back" }, { name: null, value: null }, { name: "right", value: "right", icon: "icon-cc-arrow_forward" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
+            [{ name: "zoom<br />out", value: "zoomOut", icon: "icon-cc-zoom_out" }, { name: null, value: null }, { name: "down", value: "down", icon: "icon-cc-arrow_downward" }, { name: null, value: null }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }]
         ]
     }, {
         name: 'n',
@@ -61,21 +61,21 @@ var CoordinateCalculator = function() {
         ],
         keys: {
             "n-block": [
-                [{ name: "X", value: "X" }, { name: "A", value: "A" }, { name: "B", value: "B" }, { name: "C", value: "C" }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-                [{ name: "Y", value: "Y" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-                [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
+                [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+                [{ name: "X", value: "X" }, { name: "A", value: "A" }, { name: "B", value: "B" }, { name: "C", value: "C" }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+                [{ name: "Y", value: "Y" }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
                 [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name:null, value:null}]
             ],
             "n-unit": [
-                [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+                [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
                 [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name:null, value:null}]
             ],
             "n-mesh": [
-                [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+                [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
@@ -373,6 +373,7 @@ var CoordinateCalculator = function() {
         console.group("addDisplayValueToTargetLatLng(" + val + ")");
         var oldVal = getCurrentModeSubModeValue(false);
         var newVal = oldVal + val;
+
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
 
         shareToOtherModes(mode); // 他に反映する
@@ -734,7 +735,13 @@ var CoordinateCalculator = function() {
         var isSameN = inputNotationIsDms == pairIsDms;
         // セットでエラーがあるか
         var setHasError = hasError || pairHasError || !isSameN;
+        console.warn(setHasError, hasError, pairHasError, !isSameN);
+
         console.log("setHasError", hasError, pairHasError, isSameN, "=", setHasError);
+
+        console.warn(setHasError);
+
+        setModeIsErrorView(mode, setHasError);
 
         // View
         setSubmodeIsErrorView(subMode, hasError || !isSameN);
@@ -750,13 +757,14 @@ var CoordinateCalculator = function() {
             lng = newVal;
         }
 
+        console.warn(setHasError);
         setValue(mode, lat, lng, null, setHasError, notationIsDMS, surceType, sourceLat, sourceLng);
 
         console.groupEnd();
     }
 
     function setValue(mode, lat, lng, nCode, hasError, isDms, sourceType, sourceLat, sourceLng) {
-        console.group("setValue(" + mode + "," + lat + "," + lng + "," + nCode + "," + hasError + "," + isDms + "," + sourceType + "," + sourceLat + "," + sourceLng + ")");
+        console.group("setValue(mode:" + mode + ",lat:" + lat + ",lng:" + lng + ",ncode:" + nCode + ",hasError:" + hasError + "," + isDms + "," + sourceType + "," + sourceLat + "," + sourceLng + ")");
         values[mode] = {
             lat: lat,
             lng: lng,
@@ -778,6 +786,10 @@ var CoordinateCalculator = function() {
         var hasError = false;
         var retVal;
 
+        if(check.length == 0){
+            hasError = true;
+        }
+
         //console.log("check", check);
 
         if (typeof check === "number") {
@@ -791,14 +803,16 @@ var CoordinateCalculator = function() {
         if (chack_s[0]) {
             var d = parseInt(chack_s[0], 10);
             if (isLat && (d < -90 || d > 90)) {
+                hasError = true;
                 return {
-                    error: true,
+                    error: hasError,
                     value: parseInt(d, 10)
                 }
 
             } else if (d < -180 || d > 180) {
+                hasError = true;
                 return {
-                    error: true,
+                    error: hasError,
                     value: parseInt(d, 10)
                 }
             }
@@ -807,24 +821,27 @@ var CoordinateCalculator = function() {
         if (chack_s.length >= 3) {
             // dms として評価
             if (chack_s.length > 5) {
+                hasError = true;
                 return {
-                    error: true,
+                    error: hasError,
                     value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + _zPad2(chack_s[2], "00") + '.' + chack_s[3].substr(0, 3) + '"'
                 }
             }
 
             var m = parseInt(chack_s[1], 10);
             if (m >= 60) {
+                hasError = true;
                 return {
-                    error: true,
+                    error: hasError,
                     value: chack_s[0] + "°" + chack_s[1] + "'"
                 }
             }
 
             var s = parseInt(chack_s[2], 10);
             if (s >= 60) {
+                hasError = true;
                 return {
-                    error: true,
+                    error: hasError,
                     value: chack_s[0] + "°" + chack_s[1] + "'" + chack_s[2] + '"'
                 }
             }
@@ -832,19 +849,19 @@ var CoordinateCalculator = function() {
             if (chack_s.length == 3) {
                 if (chack_s[2].length > 0) {
                     return {
-                        error: false,
+                        error: hasError,
                         value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + chack_s[2] + '"'
                     }
                 }
                 return {
-                    error: false,
+                    error: hasError,
                     value: chack_s[0] + "°" + _zPad2(chack_s[1]) + "'"
                 }
             }
 
             if (chack_s.length == 4) {
                 return {
-                    error: false,
+                    error: hasError,
                     value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + _zPad2(chack_s[2], "00") + "." + chack_s[3].substr(0, 3) + '"'
                 }
             }
@@ -856,7 +873,7 @@ var CoordinateCalculator = function() {
                     _sS += chack_s[i];
                 }
                 return {
-                    error: false,
+                    error: hasError,
                     value: chack_s[0] + "°" + _zPad2(chack_s[1], "00") + "'" + _zPad2(chack_s[2], "00") + '.' + _sS + '"'
                 }
             }
@@ -865,12 +882,12 @@ var CoordinateCalculator = function() {
             // d として評価
             if (chack_s.length == 1) {
                 return {
-                    error: false,
+                    error: hasError,
                     value: chack_s[0]
                 }
             }
             return {
-                error: false,
+                error: hasError,
                 value: chack_s[0] + "." + chack_s[1].substr(0, 7)
             }
         }
