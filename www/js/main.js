@@ -1235,7 +1235,10 @@ var CoordinateCalculator = function() {
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
                 setValue(toMode, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                
                 setModeIsErrorView(toMode, false);
+                setSubmodeIsErrorView(modes[0].subMode[0], false);
+                setSubmodeIsErrorView(modes[0].subMode[1], false);
 
             } else if (toMode == modes[1].name) {
                 setModeSubModeValue(toMode, modes[1].subMode[0], tokyoLat);
@@ -1243,7 +1246,10 @@ var CoordinateCalculator = function() {
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
                 setValue(toMode, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
+
                 setModeIsErrorView(toMode, false);
+                setSubmodeIsErrorView(modes[1].subMode[0], false);
+                setSubmodeIsErrorView(modes[2].subMode[1], false);
 
             } else if (toMode == modes[2].name) {
                 if (value.source.source != "gps") {
@@ -1265,6 +1271,9 @@ var CoordinateCalculator = function() {
                 }, false, false, value.source.source, value.lat, value.lng);
 
                 setModeIsErrorView(toMode, false);
+                setSubmodeIsErrorView(modes[3].subMode[0], false);
+                setSubmodeIsErrorView(modes[3].subMode[1], false);
+                setSubmodeIsErrorView(modes[3].subMode[2], false);
 
             }
         } else {
