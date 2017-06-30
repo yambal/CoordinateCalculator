@@ -65,21 +65,21 @@ var CoordinateCalculator = function() {
                 [{ name: "Y", value: "Y" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: "share", value: "shareToOtherModes" }]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name:null, value:null}]
             ],
             "n-unit": [
                 [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name: "share", value: "shareToOtherModes" }]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name:null, value:null}]
             ],
             "n-mesh": [
                 [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name: "share", value: "shareToOtherModes" }]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name:null, value:null}]
             ]
         }
     }, ];
@@ -182,9 +182,6 @@ var CoordinateCalculator = function() {
                 break;
             case "cmv":
                 comvertDisplayValue();
-                break;
-            case "shareToOtherModes":
-                shareToOtherModes();
                 break;
             default:
                 addDisplayValue(val);
@@ -321,15 +318,14 @@ var CoordinateCalculator = function() {
         }
     }
 
-    // モードボタンをフラッシュさせる
-    /*
-    function modeFlash(_mode) {
-        $("body").addClass('flash-mode-' + _mode);
-        setTimeout(function() {
-            $("body").removeClass('flash-mode-' + _mode);
-        }, 150);
+    // 指定した Mode にエラーの有無についてのクラスをセットする
+    function setModeIsErrorView(_mode, bool) {
+        if (bool) {
+            $("body").addClass(_mode + "-" + "error");
+        } else {
+            $("body").removeClass(_mode + "-" + "error");
+        }
     }
-    */
 
     // ************************************************************
     // 入力値
@@ -1094,6 +1090,9 @@ var CoordinateCalculator = function() {
 
         setSubmodeIsErrorView('n-block', bError);
         setSubmodeIsErrorView('n-unit', uError);
+        setSubmodeIsErrorView('n-mesh', mError);
+
+        setModeIsErrorView('n', bError || uError || mError);
 
         console.log(b, bError, u, uError, m, mError);
 
