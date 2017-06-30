@@ -552,6 +552,7 @@ var CoordinateCalculator = function() {
     }
 
     function onDragstart() {
+        console.log("onDragstart() > disableMyLocation()");
         disableMyLocation();
     }
 
@@ -615,6 +616,7 @@ var CoordinateCalculator = function() {
 
         } else {
             // GPSが有効でセンター化も有効 > GPSをOff
+            console.log("gpsToggle() > disableMyLocation()");
             deActiveGps();
             disableMyLocation();
         }
@@ -625,6 +627,7 @@ var CoordinateCalculator = function() {
         if (!gpsSetView) {
             enableMyLocation();
         } else {
+            console.log("myLocationToggle() > disableMyLocation()");
             disableMyLocation();
         }
     }
