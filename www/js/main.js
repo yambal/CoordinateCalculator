@@ -153,20 +153,24 @@ var CoordinateCalculator = function() {
                 map.zoomOut();
                 break;
             case "left":
+                disableMyLocation();
                 var mw = $("#map").width();
-                map.panBy([mw * -0.5, 0]);
+                map.panBy([mw * -0.33, 0]);
                 break;
             case "right":
+                disableMyLocation();
                 var mw = $("#map").width();
-                map.panBy([mw * 0.5, 0]);
+                map.panBy([mw * 0.33, 0]);
                 break;
             case "up":
+                disableMyLocation();
                 var mh = $("#map").height();
-                map.panBy([0, mh * -0.5]);
+                map.panBy([0, mh * -0.33]);
                 break;
             case "down":
+                disableMyLocation();
                 var mh = $("#map").height();
-                map.panBy([0, mh * 0.5]);
+                map.panBy([0, mh * 0.33]);
                 break;
             case "gps":
                 gpsToggle();
