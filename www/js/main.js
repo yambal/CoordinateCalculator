@@ -65,21 +65,21 @@ var CoordinateCalculator = function() {
                 [{ name: "X", value: "X" }, { name: "A", value: "A" }, { name: "B", value: "B" }, { name: "C", value: "C" }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: "Y", value: "Y" }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name:null, value:null}]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: null, value: null }]
             ],
             "n-unit": [
                 [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name:null, value:null}]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name: null, value: null }]
             ],
             "n-mesh": [
                 [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
                 [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
                 [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
                 [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name:null, value:null}]
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name: null, value: null }]
             ]
         }
     }, ];
@@ -120,6 +120,7 @@ var CoordinateCalculator = function() {
                     // 同じモードの場合は SubMode を変更する
                     toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
+                navigator.vibrate(25);
                 _changeMode(val, toSubMode);
                 break;
 
@@ -132,8 +133,10 @@ var CoordinateCalculator = function() {
                     preSububMode = modes[2].subMode[0];
                 }
                 preMode = val;
+                navigator.vibrate(25);
                 _changeMode(preMode, preSububMode);
                 break;
+
             case modes[3].name:
                 var preMode = mode;
                 var preSububMode = subMode;
@@ -145,51 +148,76 @@ var CoordinateCalculator = function() {
                     preSububMode = modes[3].subMode[0];
                 }
                 preMode = val;
+                navigator.vibrate(25);
                 _changeMode(preMode, preSububMode);
                 break;
+
             case "zoomIn":
                 map.zoomIn();
+                navigator.vibrate(25);
                 break;
+
             case "zoomOut":
                 map.zoomOut();
+                navigator.vibrate(25);
                 break;
+
             case "left":
                 disableMyLocation();
                 var mw = $("#map").width();
                 map.panBy([mw * -0.33, 0]);
+                navigator.vibrate(25);
                 break;
+
             case "right":
                 disableMyLocation();
                 var mw = $("#map").width();
                 map.panBy([mw * 0.33, 0]);
+                navigator.vibrate(25);
                 break;
+
             case "up":
                 disableMyLocation();
                 var mh = $("#map").height();
                 map.panBy([0, mh * -0.33]);
+                navigator.vibrate(25);
                 break;
+
             case "down":
                 disableMyLocation();
                 var mh = $("#map").height();
                 map.panBy([0, mh * 0.33]);
+                navigator.vibrate(25);
                 break;
+
             case "gps":
                 gpsToggle();
+                navigator.vibrate(25);
                 break;
+
             case "my_location":
                 myLocationToggle();
+                navigator.vibrate(25);
                 break;
+
             case "del":
                 deleteDisplayValue();
+                navigator.vibrate(25);
                 break;
+                
             case "c":
                 clearDisplayValue();
+                navigator.vibrate(25);
                 break;
+
             case "cmv":
                 comvertDisplayValue();
+                navigator.vibrate(25);
                 break;
+
             default:
                 addDisplayValue(val);
+                navigator.vibrate(25);
                 break;
         }
     }
@@ -557,7 +585,7 @@ var CoordinateCalculator = function() {
         disableMyLocation();
     }
 
-    function onDragend(){
+    function onDragend() {
         var latlang = map.getCenter();
         var mapMode = modes[2].name;
         setValue(mapMode, latlang.lat, latlang.lng, null, false, false, "user", null, null);
@@ -746,11 +774,12 @@ var CoordinateCalculator = function() {
 
         console.warn(setHasError);
 
-        setModeIsErrorView(mode, setHasError);
+        
 
         // View
         setSubmodeIsErrorView(subMode, hasError || !isSameN);
         setSubmodeIsErrorView(pairMode, !isSameN);
+        setModeIsErrorView(mode, setHasError);
         /** ToDo : セットのエラー表現 **/
 
         var lat, lng;
@@ -791,7 +820,7 @@ var CoordinateCalculator = function() {
         var hasError = false;
         var retVal;
 
-        if(check.length == 0){
+        if (check.length == 0) {
             hasError = true;
         }
 
@@ -979,14 +1008,14 @@ var CoordinateCalculator = function() {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = (oldVal + val).substr(0, 2);
 
-        
+
         setModeSubModeValue(mode, subMode, newVal);
 
         onNCodeDisplayChange();
     };
 
     function NBlockHasError(val) {
-        if(val.length != 2){
+        if (val.length != 2) {
             return true;
         }
 
@@ -1042,7 +1071,7 @@ var CoordinateCalculator = function() {
         if (val.length > 0) {
             var a = val.split('-');
 
-            if(a.length == 1 || a.length == 2 ){
+            if (a.length == 1 || a.length == 2) {
                 // 1か2項目しか許さない
 
                 var meshEW = a[0];
@@ -1201,51 +1230,42 @@ var CoordinateCalculator = function() {
             }
 
             if (toMode == modes[0].name) {
-                //var setLat = util.round(wgsLat, 6);
-                //var setLng = util.round(wgsLng, 6);
-                setModeSubModeValue(modes[0].name, modes[0].subMode[0], roundedWgsLat);
-                setModeSubModeValue(modes[0].name, modes[0].subMode[1], roundedWgsLng);
+                setModeSubModeValue(toMode, modes[0].subMode[0], roundedWgsLat);
+                setModeSubModeValue(toMode, modes[0].subMode[1], roundedWgsLng);
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
-                setValue(modes[0].name, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                setValue(toMode, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                setModeIsErrorView(toMode, false);
 
             } else if (toMode == modes[1].name) {
-                //var setLat = util.round(tokyoLat, 6);
-                //var setLng = util.round(tokyoLng, 6);
-                setModeSubModeValue(modes[1].name, modes[1].subMode[0], tokyoLat);
-                setModeSubModeValue(modes[1].name, modes[1].subMode[1], tokyoLng);
+                setModeSubModeValue(toMode, modes[1].subMode[0], tokyoLat);
+                setModeSubModeValue(toMode, modes[1].subMode[1], tokyoLng);
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
-                setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
+                setValue(toMode, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
+                setModeIsErrorView(toMode, false);
 
             } else if (toMode == modes[2].name) {
-                //console.warn(fromMode, toMode, mode);
-                //console.warn(value);
-
-                //console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
-                //disableMyLocation(); // GPS 追従Off
-
                 if (value.source.source != "gps") {
                     panTo(wgsLat, wgsLng, false);
-                    setValue(modes[2].name, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                    setValue(toMode, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
                 }
 
             } else if (toMode == modes[3].name) {
-                // N-Code
-
-                //console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
-
                 var latlng = n.latlng(wgsLat, wgsLng);
                 var nCode = n.latlngToNCode(latlng);
-                setModeSubModeValue(modes[3].name, modes[3].subMode[0], nCode.blockName);
-                setModeSubModeValue(modes[3].name, modes[3].subMode[1], nCode.unitName);
-                setModeSubModeValue(modes[3].name, modes[3].subMode[2], nCode.ewMeshName + "-" + nCode.nsMeshName);
+                setModeSubModeValue(toMode, modes[3].subMode[0], nCode.blockName);
+                setModeSubModeValue(toMode, modes[3].subMode[1], nCode.unitName);
+                setModeSubModeValue(toMode, modes[3].subMode[2], nCode.ewMeshName + "-" + nCode.nsMeshName);
 
-                setValue(modes[3].name, wgsLat, wgsLng, {
+                setValue(toMode, wgsLat, wgsLng, {
                     block: nCode.blockName,
                     unit: nCode.unitName,
                     mesh: nCode.ewMeshName + "-" + nCode.nsMeshName
                 }, false, false, value.source.source, value.lat, value.lng);
+
+                setModeIsErrorView(toMode, false);
+
             }
         } else {
             console.log("skip or cancel");
