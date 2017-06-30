@@ -1204,8 +1204,8 @@ var CoordinateCalculator = function() {
                 console.warn(fromMode, toMode, mode);
                 console.warn(value);
 
-                console.log("disableMyLocation()" + ", " + fromMode + ", " + toMode, + ", " + mode + ", " + value.source.source);
-                disableMyLocation(); // GPS 追従Off
+                console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
+                //disableMyLocation(); // GPS 追従Off
 
                 panTo(wgsLat, wgsLng, false);
                 setValue(modes[2].name, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
