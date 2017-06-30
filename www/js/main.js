@@ -936,8 +936,6 @@ var CoordinateCalculator = function() {
                     // D モード表示に更新
                     setNotationView(subMode, true);
                     setNotationView(getPairCurrentSubMode(), true);
-
-
                 }
             }
         } else {
@@ -952,17 +950,20 @@ var CoordinateCalculator = function() {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = (oldVal + val).substr(0, 2);
 
-        if (NBlockHasError(newVal)) {
+        
+        setModeSubModeValue(mode, subMode, newVal);
 
-        } else {
-            setModeSubModeValue(mode, subMode, newVal);
-        }
         onNCodeDisplayChange();
     };
 
     function NBlockHasError(val) {
+        if(val.length != 2){
+            return true;
+        }
+
         var header;
         var body;
+
         var hasError = false;
         if (val.length >= 1) {
             header = parseInt(val.substr(0, 1), 10);
@@ -976,6 +977,7 @@ var CoordinateCalculator = function() {
             if (body != "X" && body != "A" && body != "B" && body != "C" && body != "Y") {
                 hasError = true;
             }
+
         }
         return hasError;
     }
@@ -1076,7 +1078,9 @@ var CoordinateCalculator = function() {
         var uError = nUnitHasError(u);
         var mError = nMeshHasError(m);
 
-        //console.log(bError, uError, mError);
+        setSubmodeIsErrorView('n-block', bError);
+
+        console.log(b, bError, u, uError, m, mError);
 
         if (!bError && !uError && !mError) {
             var ms = m.split('-');
@@ -1107,6 +1111,9 @@ var CoordinateCalculator = function() {
         }
 
         console.log("values", values);
+
+        shareToOtherModes()
+
         console.groupEnd();
     }
 
@@ -1176,9 +1183,7 @@ var CoordinateCalculator = function() {
                 setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, fromMode, value.lat, value.lng);
 
             } else if (toMode == modes[2].name) {
-                //setAnchor(wgsLat, wgsLng);
-
-
+                console.log("disableMyLocation()", fromMode, toMode);
                 disableMyLocation(); // GPS 追従Off
 
                 panTo(wgsLat, wgsLng, false);
