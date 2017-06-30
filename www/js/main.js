@@ -365,12 +365,10 @@ var CoordinateCalculator = function() {
     // mode/subMode の値から一文字削除
     // バリデーション/エラー判断/Class設定を含む
     function deleteDisplayValueToTargetLatLng() {
-
         var oldVal = getCurrentModeSubModeValue(true);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
-
-        shareToOtherModes(); // 他に反映する
+        shareToOtherModes(mode); // 他に反映する
     }
 
     // mode/subMode の値から一文字追加
@@ -381,7 +379,7 @@ var CoordinateCalculator = function() {
         var newVal = oldVal + val;
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
 
-        shareToOtherModes(); // 他に反映する
+        shareToOtherModes(mode); // 他に反映する
         console.groupEnd();
     }
 
@@ -559,10 +557,9 @@ var CoordinateCalculator = function() {
 
     function onDragend(){
         var latlang = map.getCenter();
-
         var mapMode = modes[2].name;
         setValue(mapMode, latlang.lat, latlang.lng, null, false, false, "user", null, null);
-        shareToOtherModes();
+        shareToOtherModes(mapMode);
     }
 
     // GPS を受信したとき
@@ -581,7 +578,7 @@ var CoordinateCalculator = function() {
         if (gpsSetView) {
             var mapMode = modes[2].name;
             setValue(mapMode, gpsLat, gpsLng, null, false, false, "gps", null, null);
-            shareToOtherModes();
+            shareToOtherModes(mapMode);
 
             map.panTo(lastGPSLatLng);
         }
@@ -1130,19 +1127,19 @@ var CoordinateCalculator = function() {
 
         console.log("values", values);
 
-        shareToOtherModes()
+        shareToOtherModes(modes[3].name);
 
         console.groupEnd();
     }
 
-    function shareToOtherModes() {
+    function shareToOtherModes(fireMode) {
         console.group("shareToOtherModes()");
 
-        var value = values[mode];
-        shareToMode(mode, modes[0].name, value);
-        shareToMode(mode, modes[1].name, value);
-        shareToMode(mode, modes[2].name, value);
-        shareToMode(mode, modes[3].name, value);
+        var value = values[fireMode];
+        shareToMode(fireMode, modes[0].name, value);
+        shareToMode(fireMode, modes[1].name, value);
+        shareToMode(fireMode, modes[2].name, value);
+        shareToMode(fireMode, modes[3].name, value);
 
         console.log("values", values);
         console.groupEnd();
