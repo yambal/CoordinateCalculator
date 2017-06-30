@@ -1002,11 +1002,6 @@ var CoordinateCalculator = function() {
             var oldVal = getModeSubModeValue(mode, subMode);
             var newVal = (oldVal + val).substr(0, 9);
 
-            if (nMeshHasError(newVal)) {
-
-            } else {
-
-            }
             setModeSubModeValue(mode, subMode, newVal);
         }
         onNCodeDisplayChange();
@@ -1017,17 +1012,25 @@ var CoordinateCalculator = function() {
 
         if (val.length > 0) {
             var a = val.split('-');
-            var meshEW = a[0];
-            if (meshEW.length == 0 || meshEW.length > 4) {
-                hasError = true;
-            }
 
-            var meshSN = '';
-            if (a.length >= 2) {
-                meshSN = a[1];
+            if(a.length == 1 || a.length == 2 ){
+                // 1か2項目しか許さない
 
-                if (meshSN.length == 0 || meshSN.length > 4) {
+                var meshEW = a[0];
+                if (meshEW.length != 2 && meshEW.length != 4) {
+                    // ew mesh は 2桁か4桁で計算可能
                     hasError = true;
+                }
+
+                var meshSN = '';
+                if (a.length <= 2) {
+                    // （sn mesh は無くとも計算可能）
+                    meshSN = a[1];
+
+                    if (meshSN.length != 2 && meshSN.length != 4) {
+                        // sn mesh は 2桁か4桁で計算可能
+                        hasError = true;
+                    }
                 }
             }
         }
@@ -1069,7 +1072,7 @@ var CoordinateCalculator = function() {
         console.group();
         console.log("onNCodeDisplayChange()");
 
-        $('.bound').html("?");
+        //$('.bound').html("?");
         var b = getModeSubModeValue('n', 'n-block');
         var u = getModeSubModeValue('n', 'n-unit');
         var m = getModeSubModeValue('n', 'n-mesh');
@@ -1079,6 +1082,7 @@ var CoordinateCalculator = function() {
         var mError = nMeshHasError(m);
 
         setSubmodeIsErrorView('n-block', bError);
+        setSubmodeIsErrorView('n-unit', uError);
 
         console.log(b, bError, u, uError, m, mError);
 
