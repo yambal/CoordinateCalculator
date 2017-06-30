@@ -1190,7 +1190,10 @@ var CoordinateCalculator = function() {
                 setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, fromMode, value.lat, value.lng);
 
             } else if (toMode == modes[2].name) {
-                console.log("disableMyLocation()", fromMode, toMode);
+                console.warn(fromMode, toMode, mode);
+                console.warn(value);
+
+                console.log("disableMyLocation()", fromMode, toMode, value.source.source);
                 disableMyLocation(); // GPS 追従Off
 
                 panTo(wgsLat, wgsLng, false);
