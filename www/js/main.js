@@ -110,6 +110,7 @@ var CoordinateCalculator = function() {
                     // 同じモードの場合は SubMode を変更する
                     toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
+                navigator.vibrate(0.25);
                 _changeMode(val, toSubMode);
                 break;
 
