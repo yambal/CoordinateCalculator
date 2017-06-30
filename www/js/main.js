@@ -1201,19 +1201,21 @@ var CoordinateCalculator = function() {
                 setValue(modes[1].name, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
 
             } else if (toMode == modes[2].name) {
-                console.warn(fromMode, toMode, mode);
-                console.warn(value);
+                //console.warn(fromMode, toMode, mode);
+                //console.warn(value);
 
-                console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
+                //console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
                 //disableMyLocation(); // GPS 追従Off
 
-                panTo(wgsLat, wgsLng, false);
-                setValue(modes[2].name, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                if (value.source.source != "gps") {
+                    panTo(wgsLat, wgsLng, false);
+                    setValue(modes[2].name, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                }
 
             } else if (toMode == modes[3].name) {
                 // N-Code
 
-                console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
+                //console.log(fromMode + ", " + toMode + ", " + mode + ", " + value.source.source);
 
                 var latlng = n.latlng(wgsLat, wgsLng);
                 var nCode = n.latlngToNCode(latlng);
