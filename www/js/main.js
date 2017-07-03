@@ -156,6 +156,7 @@ var CoordinateCalculator = function() {
             case "zoomIn":
                 map.zoomIn();
                 navigator.vibrate(25);
+
                 break;
 
             case "zoomOut":
@@ -530,6 +531,15 @@ var CoordinateCalculator = function() {
             map.on('dragstart', onDragstart);
             map.on('dragend', onDragend);
 
+            // Zoom時のセンター調整
+            map.on('zoomend', function() {
+                if (gpsSetView && lastGPSLatLng) {
+                    map.panTo(lastGPSLatLng, {
+                        noMoveStart: true
+                    });
+                }
+            });
+
 
             onMapMoveEnd(null);
 
@@ -570,12 +580,12 @@ var CoordinateCalculator = function() {
 
     //　マップ位置が変更されたとき
     function onMapMoveEnd(event) {
-            var centerLatLng = map.getCenter();
-            if (!centerMaker) {
-                centerMaker = L.marker(centerLatLng, { icon: centerIcon }).addTo(map);
-            } else {
-                centerMaker.setLatLng(centerLatLng);
-            }
+        var centerLatLng = map.getCenter();
+        if (!centerMaker) {
+            centerMaker = L.marker(centerLatLng, { icon: centerIcon }).addTo(map);
+        } else {
+            centerMaker.setLatLng(centerLatLng);
+        }
     }
 
     function onDragstart() {
