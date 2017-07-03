@@ -94,6 +94,7 @@ var CoordinateCalculator = function() {
     var mapActiveLayerName;
     var gpsMaker = false;
     var anchorMarker = false;
+    var centerMaker = false;
     var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
     var util = latlng_util();
     //_mapSetup();
@@ -204,7 +205,7 @@ var CoordinateCalculator = function() {
                 deleteDisplayValue();
                 navigator.vibrate(25);
                 break;
-                
+
             case "c":
                 clearDisplayValue();
                 navigator.vibrate(25);
@@ -484,6 +485,13 @@ var CoordinateCalculator = function() {
         popupAnchor: [12 - 2]
     });
 
+    var centerIcon = L.icon({
+        iconUrl: 'images/center-icon.png',
+        iconSize: [41, 41],
+        iconAnchor: [20, 20],
+        popupAnchor: [20 - 2]
+    });
+
     var mapLayers = [{
         name: "map-std",
         layer: L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
@@ -524,6 +532,14 @@ var CoordinateCalculator = function() {
 
 
             onMapMoveEnd(null);
+
+            var centerLatLng = map.getCenter();
+            if (!centerMaker) {
+                centerMaker = L.marker(centerLatLng, { icon: centerIcon }).addTo(map);
+            } else {
+                centerMaker.setLatLng(centerLatLng);
+            }
+
         }
     };
 
@@ -554,30 +570,12 @@ var CoordinateCalculator = function() {
 
     //　マップ位置が変更されたとき
     function onMapMoveEnd(event) {
-        /*
-        var mapMode = modes[2].name;
-        console.group("onMapMoveEnd(" + event + ")");
-        console.log("event", event);
-
-        var centerLatLng = map.getCenter();
-        var lat = centerLatLng.lat;
-        var lng = centerLatLng.lng;
-
-        console.warn('center lat:' + lat + ' lng:' + lng);
-
-        // 変化を検証
-        var oldval = values[mapMode];
-        if (!oldval || oldval.lat != lat && oldval.lng != lng) {
-            //変化あり
-            //setValue(mapMode, lat, lng, null, false, false, "user", null, null);
-            //shareToOtherModes();
-        } else {
-            // 変化なし
-            console.log("no changed");
-        }
-
-        console.groupEnd();
-        */
+            var centerLatLng = map.getCenter();
+            if (!centerMaker) {
+                centerMaker = L.marker(centerLatLng, { icon: centerIcon }).addTo(map);
+            } else {
+                centerMaker.setLatLng(centerLatLng);
+            }
     }
 
     function onDragstart() {
@@ -774,7 +772,7 @@ var CoordinateCalculator = function() {
 
         console.warn(setHasError);
 
-        
+
 
         // View
         setSubmodeIsErrorView(subMode, hasError || !isSameN);
@@ -1235,7 +1233,7 @@ var CoordinateCalculator = function() {
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
                 setValue(toMode, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
-                
+
                 setModeIsErrorView(toMode, false);
                 setSubmodeIsErrorView(modes[0].subMode[0], false);
                 setSubmodeIsErrorView(modes[0].subMode[1], false);
