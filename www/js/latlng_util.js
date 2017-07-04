@@ -1,33 +1,34 @@
-function latlng_util(){
+function latlng_util() {
 
-    function _dmsToD(d, m, s, digit){
-    	console.group("_dmsToD(" + d + ", " + m + ", " + s + ", " + digit + ")");
+    function _dmsToD(d, m, s, digit) {
+        console.group("_dmsToD(" + d + ", " + m + ", " + s + ", " + digit + ")");
 
-    	var res = parseInt(d, 10);
-    	res += parseInt(m, 10) / 60;
-    	res += parseFloat(s, 10) / 3600;
+        var res = parseInt(d, 10);
+        res += parseInt(m, 10) / 60;
+        res += parseFloat(s, 10) / 3600;
 
-    	console.log("d", res);
+        console.log("d", res);
 
         res = _round(res, digit);
 
         console.log("rounded d", res);
 
-    	console.groupEnd();
-    	return res;
+        console.groupEnd();
+        return res;
     }
 
-    function _dmsStringToD(str, digit){
-    	console.group("_dmsStringToD(" + str + ", " + digit + ")");
+    function _dmsStringToD(str, digit) {
+        console.group("_dmsStringToD(" + str + ", " + digit + ")");
 
-    	var noS = str.replace(/"/, "");
+        var noS = str.replace(/"/, "");
         var chack_s = noS.split(/[\°'"]/);
-        var d = parseInt(chack_s[0],10);
-        var m = parseInt(chack_s[1],10);
-        var s = parseFloat(chack_s[2]);
+        var d = _parseInt(chack_s[0], 0);
+        var m = _parseInt(chack_s[1], 0);
+        var s = _parseFloat(chack_s[2], 0);
+
         console.log("d", d, "m", m, "s", s);
-        
-        var res =  _dmsToD(d, m, s, digit);
+
+        var res = _dmsToD(d, m, s, digit);
 
         console.groupEnd();
         return res;
@@ -54,21 +55,21 @@ function latlng_util(){
         console.groupEnd();
 
         return {
-        	d:d,
-        	m:m,
-        	s:s
+            d: d,
+            m: m,
+            s: s
         }
     }
 
     //日本測地系から世界測地系
-    function _tokyoToWgs(lat, lng, digit){
+    function _tokyoToWgs(lat, lng, digit) {
         console.group("_tokyoToWgs(" + lat + "," + lng + "," + digit + ")");
 
         var lat = parseFloat(lat);
         var lng = parseFloat(lng);
 
-		var wgsLat = lat - lat * 0.00010695 + lng * 0.000017464 + 0.0046017;
-  		var wgsLng = lng - lat * 0.000046038 - lng * 0.000083043 + 0.01004;
+        var wgsLat = lat - lat * 0.00010695 + lng * 0.000017464 + 0.0046017;
+        var wgsLng = lng - lat * 0.000046038 - lng * 0.000083043 + 0.01004;
 
         console.log("wgs", "lat", wgsLat, "lng", wgsLng);
 
@@ -78,33 +79,33 @@ function latlng_util(){
         console.log("wgs", "rounded lat", wgsLat, "rounded lng", wgsLng);
 
         console.groupEnd();
-  		return {
-  			lat:wgsLat,
-  			lng:wgsLng
-  		}
+        return {
+            lat: wgsLat,
+            lng: wgsLng
+        }
     }
 
     //世界測地系から日本測地系
-    function _wgsToTokyo(lat, lng, digit){
+    function _wgsToTokyo(lat, lng, digit) {
         console.group("_wgsToTokyo(" + lat + "," + lng + "," + digit + ")");
 
-    	var lat = parseFloat(lat);
-    	var lng = parseFloat(lng);
+        var lat = parseFloat(lat);
+        var lng = parseFloat(lng);
 
-    	var tokyoLat = lat + 0.000106961 * lat - 0.000017467 * lng - 0.004602017;
-		var tokyoLng = lng + 0.000046047 * lat + 0.000083049 * lng - 0.010041046;
+        var tokyoLat = lat + 0.000106961 * lat - 0.000017467 * lng - 0.004602017;
+        var tokyoLng = lng + 0.000046047 * lat + 0.000083049 * lng - 0.010041046;
 
         console.log("tokyo", "lat", tokyoLat, "lng", tokyoLng);
 
-		tokyoLat = _round(tokyoLat, digit);
+        tokyoLat = _round(tokyoLat, digit);
         tokyoLng = _round(tokyoLng, digit);
 
         console.log("tokyo", "rounded lat", tokyoLat, "rounded lng", tokyoLng);
         console.groupEnd();
-		return {
-  			lat:tokyoLat,
-  			lng:tokyoLng
-  		}
+        return {
+            lat: tokyoLat,
+            lng: tokyoLng
+        }
     }
 
 
@@ -116,8 +117,8 @@ function latlng_util(){
             Math.sin(_degToRad(lat1)) *
             Math.sin(_degToRad(lat2))) * 1000;
 
-        if(format){
-			return _distanceUnitAdjust(m, digit);
+        if (format) {
+            return _distanceUnitAdjust(m, digit);
         }
 
         m = _round(m, digit);
@@ -125,23 +126,23 @@ function latlng_util(){
         return m;
     }
 
-    function _degToRad(deg){
-    	return deg * Math.PI / 180;
+    function _degToRad(deg) {
+        return deg * Math.PI / 180;
     }
 
-    function _distanceUnitAdjust(m, _digit){
-    	var digit = _digit | 1;
+    function _distanceUnitAdjust(m, _digit) {
+        var digit = _digit | 1;
 
-    	var f = m;
-    	var unit = "m";
-    	if(m >= 1000){
-    		var unit = "km";
-    		var f = m / 1000;
-    	}
+        var f = m;
+        var unit = "m";
+        if (m >= 1000) {
+            var unit = "km";
+            var f = m / 1000;
+        }
 
         f = _round(f, _digit);
 
-    	return f + unit;
+        return f + unit;
     }
 
     // DNS表記だと断定できる場合はTrue
@@ -169,6 +170,25 @@ function latlng_util(){
         return false;
     };
 
+    function _parseInt(str, _dfault) {
+        if (str) {
+            var _int = parseInt(str, 10);
+            if (!isNaN(_int)) {
+                return _int;
+            }
+        }
+        return _dfault;
+    }
+
+    function _parseFloat(str, _dfault) {
+        if (str) {
+            var _float = parseFloat(str);
+            if (!isNaN(_float)) {
+                return _float;
+            }
+        }
+        return _dfault;
+    }
 
     // 0埋め
     function _zPad2(str, _default) {
@@ -181,17 +201,17 @@ function latlng_util(){
         return ("0" + parseInt(str, 10)).slice(-2);
     }
 
-    function _round(_float, digit){
+    function _round(_float, digit) {
 
-        if(typeof digit === "number"){
+        if (typeof digit === "number") {
             var p = Math.pow(10, digit);
 
             var float = _float;
-            if(typeof float !== "number"){
+            if (typeof float !== "number") {
                 float = parseFloat(float);
             }
 
-            if(!isNaN(float)){
+            if (!isNaN(float)) {
                 return Math.round(float * p) / p;
             }
         }
@@ -199,46 +219,46 @@ function latlng_util(){
         return _float;
     }
 
-	return {
-		wgsToTokyo:function(lat, lng, digit){
-			return _wgsToTokyo(lat, lng, digit);
-		},
-        tokyoToWgs:function(lat, lng, digit){
+    return {
+        wgsToTokyo: function(lat, lng, digit) {
+            return _wgsToTokyo(lat, lng, digit);
+        },
+        tokyoToWgs: function(lat, lng, digit) {
             return _tokyoToWgs(lat, lng, digit);
         },
-		dmsToD:function(d, m, s, digit){
-			//console.log("dmsTo", d, m, s, digit);
-			if(typeof d === "string" && typeof s === "undefined"){
-				return _dmsStringToD(d, m);
-			}
-			return _dmsToD(d, m, s, digit);
-		},
-		dToDms:function (float, digit){
-			return _dToDms(float, digit);
-		},
-		dToDmsString:function(float, digit){
-			var dms = _dToDms(float, digit);
+        dmsToD: function(d, m, s, digit) {
+            //console.log("dmsTo", d, m, s, digit);
+            if (typeof d === "string" && typeof s === "undefined") {
+                return _dmsStringToD(d, m);
+            }
+            return _dmsToD(d, m, s, digit);
+        },
+        dToDms: function(float, digit) {
+            return _dToDms(float, digit);
+        },
+        dToDmsString: function(float, digit) {
+            var dms = _dToDms(float, digit);
 
-			// 秒の0埋め
-	        if (dms.s < 10) {
-	            dms.s = "0" + dms.s;
-	        }
+            // 秒の0埋め
+            if (dms.s < 10) {
+                dms.s = "0" + dms.s;
+            }
 
-	        return dms.d + "°" + _zPad2(dms.m, "00") + "'" + dms.s + '"';
-		},
-		getDistance(lat1, lng1, lat2, lng2, format, digit){
-			return _getDistance(lat1, lng1, lat2, lng2, format, digit);
-		},
-        round(float, digit){
+            return dms.d + "°" + _zPad2(dms.m, "00") + "'" + dms.s + '"';
+        },
+        getDistance(lat1, lng1, lat2, lng2, format, digit) {
+            return _getDistance(lat1, lng1, lat2, lng2, format, digit);
+        },
+        round(float, digit) {
             return _round(float, digit);
         },
         notationIsDms(_str) {
             return _notationIsDms(_str);
         },
-        toD:function(_str, digit){
+        toD: function(_str, digit) {
             console.group("toD(" + _str + "," + digit + ")");
 
-            if(_notationIsDms(_str)){
+            if (_notationIsDms(_str)) {
                 // DMS
                 var float = _dmsStringToD(_str, digit);
                 console.log(float, typeof float);
@@ -247,7 +267,7 @@ function latlng_util(){
             }
 
             var float = _str;
-            if(typeof _str === "string"){
+            if (typeof _str === "string") {
                 float = parseFloat(_str);
             }
 
@@ -257,5 +277,5 @@ function latlng_util(){
             console.groupEnd();
             return float;
         }
-	}
+    }
 }

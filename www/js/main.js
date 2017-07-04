@@ -97,7 +97,9 @@ var CoordinateCalculator = function() {
     var centerMaker = false;
     var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
     var util = latlng_util();
-    //_mapSetup();
+    var isDms = {};
+    isDms['ll-wgs84'] = false;
+    isDms['ll-tokyo'] = false;
 
     // ************************************************************
     // トリガー
@@ -426,12 +428,6 @@ var CoordinateCalculator = function() {
     // バリデーションは含まない
     function setModeSubModeValue(_mode, _subMode, value) {
         if (_mode === modes[2].name) {
-            // maのとき
-            /*
-            var lat = _subMode;
-            var lng = value;
-            map.panTo(new L.LatLng(lat, lng));
-            */
             return;
         };
         var target = ".value-" + _mode + "-" + _subMode;
@@ -540,7 +536,6 @@ var CoordinateCalculator = function() {
                 }
             });
 
-
             onMapMoveEnd(null);
 
             var centerLatLng = map.getCenter();
@@ -627,32 +622,6 @@ var CoordinateCalculator = function() {
     function onLocationError(e) {
         alert(e.message);
     }
-
-    /*
-    function setAnchor(lat, lng) {
-        console.group();
-        console.log("setAnchor(" + lat + ", " + lng + ")");
-
-        var latlang = map.getCenter();
-        if (typeof lat !== "undefined" && typeof lng !== "undefined") {
-            latlang = L.latLng(lat, lng);
-        }
-
-        if (!anchorMarker) {
-            anchorMarker = L.marker(latlang, { icon: anchorIcon }).addTo(map);
-        } else {
-            anchorMarker.setLatLng(latlang);
-        }
-
-        console.log("values", values);
-        console.groupEnd();
-
-        return {
-            lat: latlang.lat,
-            lng: latlang.lng
-        }
-    }
-    */
 
     // GPSの on off をトグル
     function gpsToggle() {
@@ -772,6 +741,9 @@ var CoordinateCalculator = function() {
         // ペアとセットで検証
         // ペアはDMSか
         var notationIsDMS = inputNotationIsDms && pairIsDms;
+        isDms[mode] = notationIsDMS;
+        console.log('isDms', isDms);
+
         // ペアは同じ表記か
         var isSameN = inputNotationIsDms == pairIsDms;
         // セットでエラーがあるか
@@ -781,8 +753,6 @@ var CoordinateCalculator = function() {
         console.log("setHasError", hasError, pairHasError, isSameN, "=", setHasError);
 
         console.warn(setHasError);
-
-
 
         // View
         setSubmodeIsErrorView(subMode, hasError || !isSameN);
