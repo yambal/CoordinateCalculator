@@ -945,10 +945,13 @@ var CoordinateCalculator = function() {
                 var modeObj = getModeObj(mode);
 
                 if (latIsDms && lngIsDms) {
+                    // DMS を D に変換
                     var newLat = util.toD(lat, 6);
                     var newLng = util.toD(lng, 　6);
 
                     console.log(newLat, newLng);
+
+                    isDms[mode] = false;
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -960,9 +963,12 @@ var CoordinateCalculator = function() {
                     setNotationView(getPairCurrentSubMode(), false);
 
                 } else if (!latIsDms && !lngIsDms) {
-                    //console.log(lat,lng);
+                    // D を DMS に変換
+
                     var newLat = util.dToDmsString(lat, 4); //dToDms(lat);
                     var newLng = util.dToDmsString(lng, 4); //.dToDms(lng);
+
+                    isDms[mode] = true;
 
                     setModeSubModeValue(mode, modeObj.subMode[0], newLat);
                     setModeSubModeValue(mode, modeObj.subMode[1], newLng);
@@ -973,6 +979,8 @@ var CoordinateCalculator = function() {
                     setNotationView(subMode, true);
                     setNotationView(getPairCurrentSubMode(), true);
                 }
+
+                console.warn("isDms", isDms);
             }
         } else {
             console.log("cancel");
@@ -1208,8 +1216,17 @@ var CoordinateCalculator = function() {
             }
 
             if (toMode == modes[0].name) {
+
+                console.warn("isDms", isDms[toMode]);
+                if( isDms[toMode] ){
+                	// 現在の表示がDMSなら変換
+                	roundedWgsLat = util.dToDmsString(wgsLat, 4);
+                	roundedWgsLng = util.dToDmsString(wgsLng, 4);
+                }
+
                 setModeSubModeValue(toMode, modes[0].subMode[0], roundedWgsLat);
                 setModeSubModeValue(toMode, modes[0].subMode[1], roundedWgsLng);
+
                 setNotationView(modes[0].subMode[0], false);
                 setNotationView(modes[0].subMode[1], false);
                 setValue(toMode, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
@@ -1219,6 +1236,14 @@ var CoordinateCalculator = function() {
                 setSubmodeIsErrorView(modes[0].subMode[1], false);
 
             } else if (toMode == modes[1].name) {
+
+                console.warn("isDms", isDms[toMode]);
+                if( isDms[toMode] ){
+                	// 現在の表示がDMSなら変換
+                	tokyoLat = util.dToDmsString(tokyoLat, 4);
+                	tokyoLng = util.dToDmsString(tokyoLng, 4);
+                }
+
                 setModeSubModeValue(toMode, modes[1].subMode[0], tokyoLat);
                 setModeSubModeValue(toMode, modes[1].subMode[1], tokyoLng);
                 setNotationView(modes[0].subMode[0], false);
