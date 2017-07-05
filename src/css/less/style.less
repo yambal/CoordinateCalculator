@@ -296,7 +296,8 @@ body{
     }
 
     &.mode-map .display-header .icon-cc-GPS,
-    &.mode-map .display-header .icon-cc-my_location{
+    &.mode-map .display-header .icon-cc-my_location,
+    .display-header .icon-cc-my_location{
         /** デフォルトでOffにするアイコン **/
         color: rgba(256,256,256,0.3);
     }; 
@@ -329,7 +330,12 @@ body{
     &.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2,
     &.ll-tokyo-lat-error .display-container .ll-tokyo-lat .icon-cc-error2,
     &.ll-tokyo-lng-error .display-container .ll-tokyo-lng .icon-cc-error2,
-    &.n-mesh-error .display-container .n-mesh .icon-cc-error2{
+    &.n-block-error .display-container .n-block .icon-cc-error2,
+    &.n-unit-error .display-container .n-unit .icon-cc-error2,
+    &.n-mesh-error .display-container .n-mesh .icon-cc-error2,
+    &.ll-wgs84-error .mode-ll-wgs84-show .display-header .icon-cc-error2,
+    &.ll-tokyo-error .mode-ll-tokyo-show .display-header .icon-cc-error2, 
+    &.n-error .mode-n-show .display-header .icon-cc-error2{
         /**　DMSモードエラーアイコンを表示する **/
         color: rgba(256,256,256,1);
     }
