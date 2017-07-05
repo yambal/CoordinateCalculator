@@ -1586,7 +1586,7 @@ var nCode = function(){
 				return _meshToBound(lngMin, lngMax, nCode.ewMeshName.substr(2,2), false);
 
 			}else if(nCode.ewMeshName.length == 3){
-
+				return _meshToBound(lngMin, lngMax, nCode.ewMeshName.substr(2,1), false, 10);
 			}
 		}
 		return null;
@@ -1599,7 +1599,7 @@ var nCode = function(){
 				return _meshToBound(latMin, latMax, nCode.nsMeshName.substr(2,2), true);
 
 			}else if(nCode.nsMeshName.length == 3){
-
+				return _meshToBound(latMin, latMax, nCode.nsMeshName.substr(2,1), true, 10);
 			}
 		}
 		return null;
