@@ -1537,21 +1537,23 @@ var nCode = function(){
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	// メッシュ計算
-	function _meshToBound(_min, _max, meshName, flip){
-		
+	function _meshToBound(_min, _max, meshName, flip, _split){
+		if(typeof _split === "undefined"){
+			_split = 100;
+		}
 
 		var res = null;
 		var num = parseInt(meshName,10);
 		if(_min && _max && !isNaN(num)){
 			if(flip){
 				res = {
-					min:_min + (_max - _min) / 100 * (99 - num),
-					max:_min + (_max - _min) / 100 * (99 - num) + (_max - _min) / 100
+					min:_min + (_max - _min) / _split * (_split - 1 - num),
+					max:_min + (_max - _min) / _split * (_split - 1 - num) + (_max - _min) / _split
 				}
 			}else{
 				res = {
-					min:_min + (_max - _min) / 100 * num,
-					max:_min + (_max - _min) / 100 * num + (_max - _min) / 100
+					min:_min + (_max - _min) / _split * num,
+					max:_min + (_max - _min) / _split * num + (_max - _min) / _split
 				}
 			}
 		};
@@ -1579,16 +1581,26 @@ var nCode = function(){
 
 	// 東西 1/10000 メッシュ範囲計算
 	function _nCodeToEwMBound(lngMin, lngMax, nCode){
-		if(lngMin && lngMax && nCode  && nCode.ewMeshName && nCode.ewMeshName.length >= 4){
-			return _meshToBound(lngMin, lngMax, nCode.ewMeshName.substr(2,2), false);
+		if(lngMin && lngMax && nCode  && nCode.ewMeshName){
+			if(nCode.ewMeshName.length >= 4){
+				return _meshToBound(lngMin, lngMax, nCode.ewMeshName.substr(2,2), false);
+
+			}else if(nCode.ewMeshName.length == 3){
+
+			}
 		}
 		return null;
 	}
 
 	// 南北 1/1000 メッシュ範囲計算
 	function _nCodeToNsMBound(latMin, latMax, nCode){
-		if(latMin && latMax && nCode  && nCode.nsMeshName && nCode.nsMeshName.length >= 4){
-			return _meshToBound(latMin, latMax, nCode.nsMeshName.substr(2,2), true);
+		if(latMin && latMax && nCode  && nCode.nsMeshName){
+			if(nCode.nsMeshName.length >= 4){
+				return _meshToBound(latMin, latMax, nCode.nsMeshName.substr(2,2), true);
+
+			}else if(nCode.nsMeshName.length == 3){
+
+			}
 		}
 		return null;
 	}
