@@ -994,9 +994,7 @@ var CoordinateCalculator = function() {
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = (oldVal + val).substr(0, 2);
 
-
         setModeSubModeValue(mode, subMode, newVal);
-
         onNCodeDisplayChange();
     };
 
@@ -1061,18 +1059,26 @@ var CoordinateCalculator = function() {
                 // 1か2項目しか許さない
 
                 var meshEW = a[0];
-                if (meshEW.length != 2 && meshEW.length != 4) {
-                    // ew mesh は 2桁か4桁で計算可能
+                console.warn("meshEW.length", meshEW.length);
+                if (meshEW.length >= 2 && meshEW.length <= 4) {
+                    // ew mesh は 2～4桁で計算可能
+                    
+                }else{
+                    
                     hasError = true;
                 }
 
                 var meshSN = '';
                 if (a.length <= 2) {
                     // （sn mesh は無くとも計算可能）
+                    
                     meshSN = a[1];
-
-                    if (meshSN.length != 2 && meshSN.length != 4) {
+                    console.warn("meshSN.length", meshSN.length);
+                    if (meshSN.length >= 2 && meshSN.length <= 4) {
                         // sn mesh は 2桁か4桁で計算可能
+
+                    }else{
+                        
                         hasError = true;
                     }
                 }
