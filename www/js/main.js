@@ -95,6 +95,7 @@ var CoordinateCalculator = function() {
     var gpsMaker = false;
     var anchorMarker = false;
     var centerMaker = false;
+    var errorMaker = false;
     var n = nCode(); // https://raw.githubusercontent.com/yambal/N-Code/master/nCode.js
     var util = latlng_util();
     var isDms = {};
@@ -364,6 +365,21 @@ var CoordinateCalculator = function() {
         }
     }
 
+    function showMapErrorIcon() {
+        var centerLatLng = map.getCenter();
+        if (!errorMaker) {
+            errorMaker = L.marker(centerLatLng, { icon: errorIcon }).addTo(map);
+        } else {
+            errorMaker.setLatLng(centerLatLng);
+        }
+    }
+    function hideMapErrorIcon() {
+        if (errorMaker) {
+            map.removeLayer(errorMaker);
+            errorMaker = null;
+        }
+    }
+
     // ************************************************************
     // 入力値
     // 指定した mode subMode の値を返す
@@ -489,6 +505,13 @@ var CoordinateCalculator = function() {
         popupAnchor: [20 - 2]
     });
 
+    var errorIcon = L.icon({
+        iconUrl: 'images/error-icon.png',
+        iconSize: [41, 41],
+        iconAnchor: [20, 20],
+        popupAnchor: [20 - 2]
+    });
+
     var mapLayers = [{
         name: "map-std",
         layer: L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
@@ -585,6 +608,7 @@ var CoordinateCalculator = function() {
 
     function onDragstart() {
         console.log("onDragstart() > disableMyLocation()");
+        hideMapErrorIcon(); // ドラッグ開始したらエラーは非表示
         disableMyLocation();
     }
 
@@ -656,6 +680,7 @@ var CoordinateCalculator = function() {
         });
         $('body').addClass("gps-active");
         gpsIsActive = true;
+        hideMapErrorIcon(); // GPS開始したらエラーは非表示
     }
 
     // GPS を停止する
@@ -1062,23 +1087,23 @@ var CoordinateCalculator = function() {
                 console.warn("meshEW.length", meshEW.length);
                 if (meshEW.length >= 2 && meshEW.length <= 4) {
                     // ew mesh は 2～4桁で計算可能
-                    
-                }else{
-                    
+
+                } else {
+
                     hasError = true;
                 }
 
                 var meshSN = '';
                 if (a.length <= 2) {
                     // （sn mesh は無くとも計算可能）
-                    
+
                     meshSN = a[1];
                     console.warn("meshSN.length", meshSN.length);
                     if (meshSN.length >= 2 && meshSN.length <= 4) {
                         // sn mesh は 2桁か4桁で計算可能
 
-                    }else{
-                        
+                    } else {
+
                         hasError = true;
                     }
                 }
@@ -1191,99 +1216,110 @@ var CoordinateCalculator = function() {
     function shareToMode(fromMode, toMode, value) {
         console.group("shareToMode(" + fromMode + "," + toMode + "," + value + ")", value);
 
-        if (fromMode != toMode && value && !value.hasError) {
-            var wgsLat, wgsLng, tokyoLat, tokyoLng;
-            if (fromMode == modes[1].name) {
-                // 現在のモードがTokyoの場合
-                tokyoLat = util.toD(value.lat);
-                tokyoLng = util.toD(value.lng);
+        if (fromMode != toMode && value) {
 
-                // WGS取得
-                var latlng = util.tokyoToWgs(tokyoLat, tokyoLng, 6);
-                wgsLat = latlng.lat;
-                wgsLng = latlng.lng;
+            if (!value.hasError) {
+                var wgsLat, wgsLng, tokyoLat, tokyoLng;
+                if (fromMode == modes[1].name) {
+                    // 現在のモードがTokyoの場合
+                    tokyoLat = util.toD(value.lat);
+                    tokyoLng = util.toD(value.lng);
 
-                // 表示用丸めWGS
-                var roundedWgsLat = util.round(wgsLat, 6);
-                var roundedWgsLng = util.round(wgsLng, 6);
+                    // WGS取得
+                    var latlng = util.tokyoToWgs(tokyoLat, tokyoLng, 6);
+                    wgsLat = latlng.lat;
+                    wgsLng = latlng.lng;
+
+                    // 表示用丸めWGS
+                    var roundedWgsLat = util.round(wgsLat, 6);
+                    var roundedWgsLng = util.round(wgsLng, 6);
+                } else {
+                    // WGS取得
+                    wgsLat = util.toD(value.lat);
+                    wgsLng = util.toD(value.lng);
+
+                    // 表示用丸めWGS
+                    var roundedWgsLat = util.round(wgsLat, 6);
+                    var roundedWgsLng = util.round(wgsLng, 6);
+
+                    // 表示用Tokyo
+                    var latlng = util.wgsToTokyo(wgsLat, wgsLng, 6);
+                    tokyoLat = latlng.lat;
+                    tokyoLng = latlng.lng;
+                }
+
+                if (toMode == modes[0].name) {
+
+                    console.warn("isDms", isDms[toMode]);
+                    if (isDms[toMode]) {
+                        // 現在の表示がDMSなら変換
+                        roundedWgsLat = util.dToDmsString(wgsLat, 4);
+                        roundedWgsLng = util.dToDmsString(wgsLng, 4);
+                    }
+
+                    setModeSubModeValue(toMode, modes[0].subMode[0], roundedWgsLat);
+                    setModeSubModeValue(toMode, modes[0].subMode[1], roundedWgsLng);
+
+                    setNotationView(modes[0].subMode[0], false);
+                    setNotationView(modes[0].subMode[1], false);
+                    setValue(toMode, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
+
+                    setModeIsErrorView(toMode, false);
+                    setSubmodeIsErrorView(modes[0].subMode[0], false);
+                    setSubmodeIsErrorView(modes[0].subMode[1], false);
+
+                } else if (toMode == modes[1].name) {
+
+                    console.warn("isDms", isDms[toMode]);
+                    if (isDms[toMode]) {
+                        // 現在の表示がDMSなら変換
+                        tokyoLat = util.dToDmsString(tokyoLat, 4);
+                        tokyoLng = util.dToDmsString(tokyoLng, 4);
+                    }
+
+                    setModeSubModeValue(toMode, modes[1].subMode[0], tokyoLat);
+                    setModeSubModeValue(toMode, modes[1].subMode[1], tokyoLng);
+                    setNotationView(modes[0].subMode[0], false);
+                    setNotationView(modes[0].subMode[1], false);
+                    setValue(toMode, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
+
+                    setModeIsErrorView(toMode, false);
+                    setSubmodeIsErrorView(modes[1].subMode[0], false);
+                    setSubmodeIsErrorView(modes[2].subMode[1], false);
+
+                } else if (toMode == modes[2].name) {
+                    hideMapErrorIcon();
+                    if (value.source.source != "gps") {
+                        panTo(wgsLat, wgsLng, false);
+                        setValue(toMode, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
+                    }
+
+                } else if (toMode == modes[3].name) {
+                    var latlng = n.latlng(wgsLat, wgsLng);
+                    var nCode = n.latlngToNCode(latlng);
+                    setModeSubModeValue(toMode, modes[3].subMode[0], nCode.blockName);
+                    setModeSubModeValue(toMode, modes[3].subMode[1], nCode.unitName);
+                    setModeSubModeValue(toMode, modes[3].subMode[2], nCode.ewMeshName + "-" + nCode.nsMeshName);
+
+                    setValue(toMode, wgsLat, wgsLng, {
+                        block: nCode.blockName,
+                        unit: nCode.unitName,
+                        mesh: nCode.ewMeshName + "-" + nCode.nsMeshName
+                    }, false, false, value.source.source, value.lat, value.lng);
+
+                    setModeIsErrorView(toMode, false);
+                    setSubmodeIsErrorView(modes[3].subMode[0], false);
+                    setSubmodeIsErrorView(modes[3].subMode[1], false);
+                    setSubmodeIsErrorView(modes[3].subMode[2], false);
+
+                }
             } else {
-                // WGS取得
-                wgsLat = util.toD(value.lat);
-                wgsLng = util.toD(value.lng);
+                // Error
+                if (toMode == modes[2].name) {
+                    console.log("error map");
+                    showMapErrorIcon();
 
-                // 表示用丸めWGS
-                var roundedWgsLat = util.round(wgsLat, 6);
-                var roundedWgsLng = util.round(wgsLng, 6);
-
-                // 表示用Tokyo
-                var latlng = util.wgsToTokyo(wgsLat, wgsLng, 6);
-                tokyoLat = latlng.lat;
-                tokyoLng = latlng.lng;
-            }
-
-            if (toMode == modes[0].name) {
-
-                console.warn("isDms", isDms[toMode]);
-                if( isDms[toMode] ){
-                	// 現在の表示がDMSなら変換
-                	roundedWgsLat = util.dToDmsString(wgsLat, 4);
-                	roundedWgsLng = util.dToDmsString(wgsLng, 4);
                 }
-
-                setModeSubModeValue(toMode, modes[0].subMode[0], roundedWgsLat);
-                setModeSubModeValue(toMode, modes[0].subMode[1], roundedWgsLng);
-
-                setNotationView(modes[0].subMode[0], false);
-                setNotationView(modes[0].subMode[1], false);
-                setValue(toMode, roundedWgsLat, roundedWgsLng, null, false, false, value.source.source, value.lat, value.lng);
-
-                setModeIsErrorView(toMode, false);
-                setSubmodeIsErrorView(modes[0].subMode[0], false);
-                setSubmodeIsErrorView(modes[0].subMode[1], false);
-
-            } else if (toMode == modes[1].name) {
-
-                console.warn("isDms", isDms[toMode]);
-                if( isDms[toMode] ){
-                	// 現在の表示がDMSなら変換
-                	tokyoLat = util.dToDmsString(tokyoLat, 4);
-                	tokyoLng = util.dToDmsString(tokyoLng, 4);
-                }
-
-                setModeSubModeValue(toMode, modes[1].subMode[0], tokyoLat);
-                setModeSubModeValue(toMode, modes[1].subMode[1], tokyoLng);
-                setNotationView(modes[0].subMode[0], false);
-                setNotationView(modes[0].subMode[1], false);
-                setValue(toMode, tokyoLat, tokyoLng, null, false, false, value.source.source, value.lat, value.lng);
-
-                setModeIsErrorView(toMode, false);
-                setSubmodeIsErrorView(modes[1].subMode[0], false);
-                setSubmodeIsErrorView(modes[2].subMode[1], false);
-
-            } else if (toMode == modes[2].name) {
-                if (value.source.source != "gps") {
-                    panTo(wgsLat, wgsLng, false);
-                    setValue(toMode, wgsLat, wgsLng, null, false, false, value.source.source, value.lat, value.lng);
-                }
-
-            } else if (toMode == modes[3].name) {
-                var latlng = n.latlng(wgsLat, wgsLng);
-                var nCode = n.latlngToNCode(latlng);
-                setModeSubModeValue(toMode, modes[3].subMode[0], nCode.blockName);
-                setModeSubModeValue(toMode, modes[3].subMode[1], nCode.unitName);
-                setModeSubModeValue(toMode, modes[3].subMode[2], nCode.ewMeshName + "-" + nCode.nsMeshName);
-
-                setValue(toMode, wgsLat, wgsLng, {
-                    block: nCode.blockName,
-                    unit: nCode.unitName,
-                    mesh: nCode.ewMeshName + "-" + nCode.nsMeshName
-                }, false, false, value.source.source, value.lat, value.lng);
-
-                setModeIsErrorView(toMode, false);
-                setSubmodeIsErrorView(modes[3].subMode[0], false);
-                setSubmodeIsErrorView(modes[3].subMode[1], false);
-                setSubmodeIsErrorView(modes[3].subMode[2], false);
-
             }
         } else {
             console.log("skip or cancel");
