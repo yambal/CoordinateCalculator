@@ -548,6 +548,7 @@ var CoordinateCalculator = function() {
 
             map.on('moveend', onMapMoveEnd);
             map.on('dragstart', onDragstart);
+            map.on('move', onMove);
             map.on('dragend', onDragend);
 
             // Zoom時のセンター調整
@@ -596,8 +597,7 @@ var CoordinateCalculator = function() {
         }
     }
 
-    //　マップ位置が変更されたとき
-    function onMapMoveEnd(event) {
+    function onMove(){
         var centerLatLng = map.getCenter();
         if (!centerMaker) {
             centerMaker = L.marker(centerLatLng, { icon: centerIcon }).addTo(map);
@@ -606,11 +606,18 @@ var CoordinateCalculator = function() {
         }
     }
 
+    //　マップ位置が変更されたとき
+    function onMapMoveEnd(event) {
+
+    }
+
     function onDragstart() {
         console.log("onDragstart() > disableMyLocation()");
         hideMapErrorIcon(); // ドラッグ開始したらエラーは非表示
         disableMyLocation();
     }
+
+
 
     function onDragend() {
         var latlang = map.getCenter();
