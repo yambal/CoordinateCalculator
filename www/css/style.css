@@ -11,6 +11,18 @@ body {
   height: 100%;
   font-size: 5vmin;
 }
+body {
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer */
+  -khtml-user-select: none;
+  /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none;
+  /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none;
+  /* Disable Android and iOS callouts*/
+}
 #display {
   width: 100vmin;
   height: calc(100vmax - 100vmin);
@@ -82,7 +94,7 @@ body {
   color: white;
   font-family: 'LexiaReadable';
   background-color: #383838;
-  transition: all  0.5s ease;
+  transition: all 0.5s ease;
 }
 body.mode-ll-wgs84 {
   background-color: #1e441f;
@@ -293,7 +305,7 @@ body.n-error .mode-n-show .display-header .icon-cc-error2 {
   height: 100%;
   text-align: center;
   box-sizing: border-box;
-  transition: all  0.3s ease;
+  transition: all 0.3s ease;
 }
 .keyboad .keyboad-row .keyboad-col .key.key-ll-wgs84 {
   background-color: #1e441f;

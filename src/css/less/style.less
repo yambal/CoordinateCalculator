@@ -1,66 +1,75 @@
 /** style.less **/
-.flex(@direction:row){
-  display: flex;
-  flex-direction: @direction;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  box-sizing: border-box;
+
+.flex(@direction: row) {
+    display: flex;
+    flex-direction: @direction;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    box-sizing: border-box;
 }
 
-@colorGray:#9E9E9E;
-@colorGrayBG:darken(@colorGray, 40%);
-
-@colorWgs84:#4CAF50;
-@colorWgs84Mid:darken(@colorWgs84, 15%);
-@colorWgs84BG:darken(@colorWgs84, 30%);
-
-@colorTokyo:#03A9F4;
-@colorTokyoMid:darken(@colorTokyo, 15%);
-@colorTokyoBG:darken(@colorTokyo, 30%);
-
-@colorMap:#9C27B0;
-@colorMapMid:darken(@colorMap, 15%);
-@colorMapBG:darken(@colorMap, 30%);
-
-@colorN:#E91E63;
-@colorNMid:darken(@colorN, 15%);
-@colorNBG:darken(@colorN, 30%);
-
-.focusedDisplayGroup(){
-    background-color: rgba(0,0,0,0.125);
+@colorGray: #9E9E9E;
+@colorGrayBG: darken(@colorGray, 40%);
+@colorWgs84: #4CAF50;
+@colorWgs84Mid: darken(@colorWgs84, 15%);
+@colorWgs84BG: darken(@colorWgs84, 30%);
+@colorTokyo: #03A9F4;
+@colorTokyoMid: darken(@colorTokyo, 15%);
+@colorTokyoBG: darken(@colorTokyo, 30%);
+@colorMap: #9C27B0;
+@colorMapMid: darken(@colorMap, 15%);
+@colorMapBG: darken(@colorMap, 30%);
+@colorN: #E91E63;
+@colorNMid: darken(@colorN, 15%);
+@colorNBG: darken(@colorN, 30%);
+.focusedDisplayGroup() {
+    background-color: rgba(0, 0, 0, 0.125);
 }
 
 @font-face {
-  font-family: 'LexiaReadable';
-  src: url('../fonts/LexiaReadable-Regular.ttf') format('truetype');
+    font-family: 'LexiaReadable';
+    src: url('../fonts/LexiaReadable-Regular.ttf') format('truetype');
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 5vmin;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 5vmin;
+}
+
+body {
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer */
+    -khtml-user-select: none;
+    /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none;
+    /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none;
+    /* Disable Android and iOS callouts*/
 }
 
 #display {
     width: 100vmin;
     height: calc(~'100vmax - 100vmin');
     padding-bottom: 2px;
-    .display-container{
+    .display-container {
         .display-header {
             flex-shrink: 1;
             padding: 0 2px;
             display: table;
             width: 100%;
             .display-header-left,
-            .display-header-right{
+            .display-header-right {
                 display: table-cell;
             }
-            .display-header-right{
+            .display-header-right {
                 text-align: right;
             }
         }
@@ -72,29 +81,28 @@ body {
                 flex-grow: 1;
                 flex-shrink: 1;
                 position: relative;
-
-                .display-body-group-fitter{
+                .display-body-group-fitter {
                     position: absolute;
-                    top:0;
-                    bottom:0;
-                    left:0;
-                    right:0;
-                    .display-body-group-inner{
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    .display-body-group-inner {
                         .flex(row);
                         padding: 2px;
-                        .value{
+                        .value {
                             flex-grow: 1;
                             width: 100%;
-                            &.value-num{
+                            &.value-num {
                                 text-align: right;
                             }
-                            &.value-block{
+                            &.value-block {
                                 text-align: right;
                             }
-                            &.value-unit{
+                            &.value-unit {
                                 text-align: right;
                             }
-                            &.value-mesh{
+                            &.value-mesh {
                                 text-align: right;
                             }
                         }
@@ -105,36 +113,35 @@ body {
     }
 }
 
-
-body{
+body {
     color: white;
     font-family: 'LexiaReadable';
     background-color: @colorGrayBG;
-    transition: all  0.5s ease;
-    &.mode-{
-        &ll-wgs84{
+    transition: all 0.5s ease;
+    &.mode- {
+        &ll-wgs84 {
             background-color: @colorWgs84BG;
-            .mode-{
-                &ll-wgs84-show{
+            .mode- {
+                &ll-wgs84-show {
                     /** body.[mode] 配下の .[mode]-show を可視 */
                     display: block;
                 }
                 &ll-tokyo-,
                 &map-,
-                &n-{
-                    &show{
+                &n- {
+                    &show {
                         /** body.[mode] 配下の .[<>mode]-show を不可視 */
                         display: none;
                     }
                 }
             }
-            .display-container{
-                &.mode-ll-wgs84-show{
+            .display-container {
+                &.mode-ll-wgs84-show {
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
                     background-color: @colorWgs84Mid;
-                    .display-header{
+                    .display-header {
                         background-color: @colorWgs84BG;
                     }
                 }
@@ -142,151 +149,151 @@ body{
         }
         &ll-tokyo {
             background-color: @colorTokyoBG;
-            .mode-{
-                &ll-tokyo-show{
+            .mode- {
+                &ll-tokyo-show {
                     /** body.[mode] 配下の .[mode]-show を可視 */
                     display: block;
                 }
                 &ll-wgs84-show,
                 &map-show,
-                &n-show{
+                &n-show {
                     /** body.[mode] 配下の .[<>mode]-show を不可視 */
                     display: none;
                 }
             }
-            .display-container{
-                &.mode-ll-tokyo-show{
+            .display-container {
+                &.mode-ll-tokyo-show {
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
                     background-color: @colorTokyoMid;
-                    .display-header{
+                    .display-header {
                         background-color: @colorTokyoBG;
                     }
                 }
             }
         }
-        &map{
+        &map {
             background-color: @colorMapBG;
-            .mode-{
-                &map-show{
+            .mode- {
+                &map-show {
                     /** body.[mode] 配下の .[mode]-show を可視 */
                     display: block;
                 }
                 &ll-wgs84-show,
                 &ll-tokyo-show,
-                &n-show{
+                &n-show {
                     /** body.[mode] 配下の .[<>mode]-show を不可視 */
                     display: none;
                 }
             }
-            .display-container{
-                &.mode-map-show{
+            .display-container {
+                &.mode-map-show {
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
                     background-color: @colorMapMid;
-                    .display-header{
+                    .display-header {
                         background-color: @colorMapBG;
                     }
                 }
             }
         }
-        &n{
+        &n {
             background-color: @colorNBG;
-            .mode-{
+            .mode- {
                 &n-show {
                     /** body.[mode] 配下の .[mode]-show を可視 */
                     display: block;
                 }
                 &ll-wgs84-show,
                 &ll-tokyo-show,
-                &map-show{
+                &map-show {
                     /** body.[mode] 配下の .[<>mode]-show を不可視 */
                     display: none;
                 }
             }
-            .display-container{
-                &.mode-n-show{
+            .display-container {
+                &.mode-n-show {
                     /** body.[mode] 配下の .[mode]-show を可視(FLEX) */
                     height: 100%;
                     .flex(column);
                     background-color: @colorNMid;
-                    .display-header{
+                    .display-header {
                         background-color: @colorNBG;
                     }
                 }
             }
         }
     }
-
-    &.submode{
-        &-ll-wgs84{
-            &-lat{
-                .display-body-group{
-                    &.ll-wgs84-lat{
+    &.submode {
+        &-ll-wgs84 {
+            &-lat {
+                .display-body-group {
+                    &.ll-wgs84-lat {
                         /** サブモード（入力対象）でスタイルを変更 **/
                         .focusedDisplayGroup();
                     }
                 }
             }
-            &-lng{
-                .display-body-group{
-                    &.ll-wgs84-lng{
-                        /** サブモード（入力対象）でスタイルを変更 **/
-                        .focusedDisplayGroup();
-                    }
-                }
-            }
-        }
-        &-ll-tokyo{
-            &-lat{
-                .display-body-group{
-                    &.ll-tokyo-lat{
-                        /** サブモード（入力対象）でスタイルを変更 **/
-                        .focusedDisplayGroup();
-                    }
-                }
-            }
-            &-lng{
-                .display-body-group{
-                    &.ll-tokyo-lng{
+            &-lng {
+                .display-body-group {
+                    &.ll-wgs84-lng {
                         /** サブモード（入力対象）でスタイルを変更 **/
                         .focusedDisplayGroup();
                     }
                 }
             }
         }
-        &-map{
-            &-std, &-photo{
-                .display-body-group{
-                    &.map-map{
+        &-ll-tokyo {
+            &-lat {
+                .display-body-group {
+                    &.ll-tokyo-lat {
+                        /** サブモード（入力対象）でスタイルを変更 **/
+                        .focusedDisplayGroup();
+                    }
+                }
+            }
+            &-lng {
+                .display-body-group {
+                    &.ll-tokyo-lng {
                         /** サブモード（入力対象）でスタイルを変更 **/
                         .focusedDisplayGroup();
                     }
                 }
             }
         }
-        &-n{
-            &-block{
-                .display-body-group{
-                    &.n-block{
+        &-map {
+            &-std,
+            &-photo {
+                .display-body-group {
+                    &.map-map {
                         /** サブモード（入力対象）でスタイルを変更 **/
                         .focusedDisplayGroup();
                     }
                 }
             }
-            &-unit{
-                .display-body-group{
-                    &.n-unit{
+        }
+        &-n {
+            &-block {
+                .display-body-group {
+                    &.n-block {
                         /** サブモード（入力対象）でスタイルを変更 **/
                         .focusedDisplayGroup();
                     }
                 }
             }
-            &-mesh{
-                .display-body-group{
-                    &.n-mesh{
+            &-unit {
+                .display-body-group {
+                    &.n-unit {
+                        /** サブモード（入力対象）でスタイルを変更 **/
+                        .focusedDisplayGroup();
+                    }
+                }
+            }
+            &-mesh {
+                .display-body-group {
+                    &.n-mesh {
                         /** サブモード（入力対象）でスタイルを変更 **/
                         .focusedDisplayGroup();
                     }
@@ -294,38 +301,34 @@ body{
             }
         }
     }
-
     &.mode-map .display-header .icon-cc-GPS,
     &.mode-map .display-header .icon-cc-my_location,
-    .display-header .icon-cc-my_location{
+    .display-header .icon-cc-my_location {
         /** デフォルトでOffにするアイコン **/
-        color: rgba(256,256,256,0.3);
-    }; 
-    &.gps-active .display-header .icon-cc-GPS,
-    &.gps-setview .display-header .icon-cc-my_location{
-        color: rgba(256,256,256,1);
+        color: rgba(256, 256, 256, 0.3);
     }
-
-    .display-container{
+    ;
+    &.gps-active .display-header .icon-cc-GPS,
+    &.gps-setview .display-header .icon-cc-my_location {
+        color: rgba(256, 256, 256, 1);
+    }
+    .display-container {
         .icon-cc-error2,
-        .icon-cc-dms{
+        .icon-cc-dms {
             /** デフォルトでOffにするアイコン **/
-            color: rgba(256,256,256,0.3);
+            color: rgba(256, 256, 256, 0.3);
         }
     }
-
-    &.mode-map.gps-setview .display-header .icon-cc-location_disabled{
-        color: rgba(256,256,256,0.3);
+    &.mode-map.gps-setview .display-header .icon-cc-location_disabled {
+        color: rgba(256, 256, 256, 0.3);
     }
-
     &.ll-wgs84-lat-notation-dms .display-container .ll-wgs84-lat .icon-cc-dms,
     &.ll-wgs84-lng-notation-dms .display-container .ll-wgs84-lng .icon-cc-dms,
     &.ll-tokyo-lat-notation-dms .display-container .ll-tokyo-lat .icon-cc-dms,
-    &.ll-tokyo-lng-notation-dms .display-container .ll-tokyo-lng .icon-cc-dms{
+    &.ll-tokyo-lng-notation-dms .display-container .ll-tokyo-lng .icon-cc-dms {
         /**　DMSモードアイコンを表示する **/
-        color: rgba(256,256,256,1);
+        color: rgba(256, 256, 256, 1);
     }
-
     &.ll-wgs84-lat-error .display-container .ll-wgs84-lat .icon-cc-error2,
     &.ll-wgs84-lng-error .display-container .ll-wgs84-lng .icon-cc-error2,
     &.ll-tokyo-lat-error .display-container .ll-tokyo-lat .icon-cc-error2,
@@ -334,84 +337,88 @@ body{
     &.n-unit-error .display-container .n-unit .icon-cc-error2,
     &.n-mesh-error .display-container .n-mesh .icon-cc-error2,
     &.ll-wgs84-error .mode-ll-wgs84-show .display-header .icon-cc-error2,
-    &.ll-tokyo-error .mode-ll-tokyo-show .display-header .icon-cc-error2, 
-    &.n-error .mode-n-show .display-header .icon-cc-error2{
+    &.ll-tokyo-error .mode-ll-tokyo-show .display-header .icon-cc-error2,
+    &.n-error .mode-n-show .display-header .icon-cc-error2 {
         /**　DMSモードエラーアイコンを表示する **/
-        color: rgba(256,256,256,1);
+        color: rgba(256, 256, 256, 1);
     }
 }
 
-
 .keyboad {
-  width: 100vmin;
-  height: 100vmin;
-  box-sizing: border-box;
+    width: 100vmin;
+    height: 100vmin;
+    box-sizing: border-box;
 }
+
 .keyboad .keyboad-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  height: 20vmin;
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    height: 20vmin;
+    box-sizing: border-box;
 }
 
 .keyboad .keyboad-row .keyboad-col {
-  width: 20%;
-  box-sizing: border-box;
-  flex-grow: 1;
-  flex-shrink: 1;
-  //padding: 1px;
+    width: 20%;
+    box-sizing: border-box;
+    flex-grow: 1;
+    flex-shrink: 1;
+    //padding: 1px;
 }
+
 .keyboad .keyboad-row .keyboad-col .key {
     width: 100%;
     height: 100%;
     text-align: center;
     box-sizing: border-box;
-    transition: all  0.3s ease;
-    &.key-ll-wgs84{
-        background-color:@colorWgs84BG;
-        transition-delay:1/40*3s;
+    transition: all 0.3s ease;
+    &.key-ll-wgs84 {
+        background-color: @colorWgs84BG;
+        transition-delay: 1/40*3s;
     }
-    &.key-ll-tokyo{
-        background-color:@colorTokyoBG;
-        transition-delay:1/40*2s;
+    &.key-ll-tokyo {
+        background-color: @colorTokyoBG;
+        transition-delay: 1/40*2s;
     }
-    &.key-map{
-        background-color:@colorMapBG;
-        transition-delay:1/40*1s;
+    &.key-map {
+        background-color: @colorMapBG;
+        transition-delay: 1/40*1s;
     }
-    &.key-n{
-        background-color:@colorNBG;
-        transition-delay:0s;
+    &.key-n {
+        background-color: @colorNBG;
+        transition-delay: 0s;
     }
 }
-body{
+
+body {
     &.flash-mode-ll-wgs84,
     &.flash-mode-ll-tokyo,
     &.flash-mode-map,
-    &.flash-mode-n{
-        .keyboad .keyboad-row .keyboad-col .key{
+    &.flash-mode-n {
+        .keyboad .keyboad-row .keyboad-col .key {
             &.key-ll-wgs84,
             &.key-ll-tokyo,
             &.key-map,
-            &.key-n{
-                background-color:rgba(255,255,255,0.5);
+            &.key-n {
+                background-color: rgba(255, 255, 255, 0.5);
             }
         }
     }
 }
+
 .keyboad .keyboad-row .keyboad-col .key.key-desable {
-  border: none;
-  cursor: default;
-  opacity: 0;
+    border: none;
+    cursor: default;
+    opacity: 0;
 }
+
 .layout-teble {
-  display: table;
-  height: 100%;
-  width: 100%;
+    display: table;
+    height: 100%;
+    width: 100%;
     .teble-cell {
         display: table-cell;
         &.vm {
@@ -420,16 +427,15 @@ body{
     }
 }
 
-
 .display-input-groups {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  height: 100%;
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 @import "icon-cc-style.less";
