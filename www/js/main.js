@@ -497,7 +497,7 @@ var CoordinateCalculator = function() {
             minZoom: 2,
             minNativeZoom: 2,
             errorTileUrl: "http://placehold.jp/256x256.png?text=no%20tile",
-            attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
+            attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_system">国土地理院/地理院タイル</a>'
         })
     }, {
         name: "map-photo",
@@ -507,7 +507,7 @@ var CoordinateCalculator = function() {
             minZoom: 14,
             minNativeZoom: 14,
             errorTileUrl: "http://placehold.jp/256x256.png?text=no%20tile",
-            attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html">国土地理院/地理院タイル</a>'
+            attribution: '出典:<a href="http://maps.gsi.go.jp/development/ichiran.html" target="_system">国土地理院/地理院タイル</a>'
         })
     }];
 
