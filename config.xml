@@ -91,11 +91,11 @@
   </platform>
   <preference name="WindowsStorePublisherName" value="My Name"/>
   <preference name="WindowsStoreIdentityName" value="fdb2a489-afe6-7be7-8b4f-8275636a35c5"/>
-  <access origin="*"/>
+  <access origin="http://maps.gsi.go.jp/development/ichiran.html"/>
   <preference name="KeepRunning" value="true"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="Orientation" value="portrait"/>
   <preference name="SplashScreenDelay" value="1000"/>
-  <preference name="Fullscreen" value="false"/>
+  <preference name="Fullscreen" value="true"/>
 </widget>
