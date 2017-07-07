@@ -168,6 +168,7 @@ var CoordinateCalculator = function() {
                 break;
 
             case "left":
+                hideMapErrorIcon();
                 disableMyLocation();
                 var mw = $("#map").width();
                 map.panBy([mw * -0.33, 0]);
@@ -175,6 +176,7 @@ var CoordinateCalculator = function() {
                 break;
 
             case "right":
+                hideMapErrorIcon();
                 disableMyLocation();
                 var mw = $("#map").width();
                 map.panBy([mw * 0.33, 0]);
@@ -182,6 +184,7 @@ var CoordinateCalculator = function() {
                 break;
 
             case "up":
+                hideMapErrorIcon();
                 disableMyLocation();
                 var mh = $("#map").height();
                 map.panBy([0, mh * -0.33]);
@@ -189,6 +192,7 @@ var CoordinateCalculator = function() {
                 break;
 
             case "down":
+                hideMapErrorIcon();
                 disableMyLocation();
                 var mh = $("#map").height();
                 map.panBy([0, mh * 0.33]);
@@ -417,6 +421,7 @@ var CoordinateCalculator = function() {
         var oldVal = getCurrentModeSubModeValue(true);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
+        disableMyLocation();// GPS追従を停止
         shareToOtherModes(mode); // 他に反映する
     }
 
@@ -428,16 +433,32 @@ var CoordinateCalculator = function() {
         var newVal = oldVal + val;
 
         setDisplayValueToCurrentLatLng(newVal, 'user', null, null);
-
+        disableMyLocation();// GPS追従を停止
         shareToOtherModes(mode); // 他に反映する
         console.groupEnd();
     }
 
+    // clear
     function clearDisplayValueTargetLatLng() {
-        setDisplayValueToLatLng(mode, subMode, '');
-        var pairSubMode = getPairCurrentSubMode();
-        setDisplayValueToLatLng(mode, pairSubMode, '');
-        setValue(mode, null, null, null, false, false, 'user', null, null);
+        clearDisplayValueModeLatLng(mode);
+    }
+
+    function clearDisplayValueModeLatLng(_mode, _share){
+        if(typeof _share === "undefined"){
+            _share = true;
+        }
+
+        var modeObj = getModeObj(_mode);
+        var subModeA = modeObj.subMode[0];
+        var subModeB = modeObj.subMode[1];
+
+        setDisplayValueToLatLng(_mode, subModeA, '');
+        setDisplayValueToLatLng(_mode, subModeB, '');
+        disableMyLocation();// GPS追従を停止
+        setValue(mode, null, null, null, true, false, 'user', null, null);
+        if(_share){
+            shareToOtherModes(mode); // 他に反映する
+        }
     }
 
     // 指定した mode subMode に値をセットする
@@ -569,6 +590,11 @@ var CoordinateCalculator = function() {
                 centerMaker.setLatLng(centerLatLng);
             }
 
+            // Map初期の座標を他のモードに通知する
+            var latlang = map.getCenter();
+            var mapMode = modes[2].name;
+            setValue(mapMode, latlang.lat, latlang.lng, null, false, false, "user", null, null);
+            shareToOtherModes(mode);
         }
     };
 
@@ -616,8 +642,6 @@ var CoordinateCalculator = function() {
         hideMapErrorIcon(); // ドラッグ開始したらエラーは非表示
         disableMyLocation();
     }
-
-
 
     function onDragend() {
         var latlang = map.getCenter();
@@ -714,6 +738,7 @@ var CoordinateCalculator = function() {
         if (!gpsIsActive) {
             activeGps();
         }
+        hideMapErrorIcon();
     }
 
     // GPS 追従をOff
@@ -1023,9 +1048,9 @@ var CoordinateCalculator = function() {
     // =============================================================
     // N-code
     function addDisplayValueToTargetNBlock(val) {
+        disableMyLocation();// GPS追従を停止
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = (oldVal + val).substr(0, 2);
-
         setModeSubModeValue(mode, subMode, newVal);
         onNCodeDisplayChange();
     };
@@ -1057,6 +1082,7 @@ var CoordinateCalculator = function() {
     }
 
     function addDisplayValueToTargetNUnit(val) {
+        disableMyLocation();// GPS追従を停止
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = (oldVal + val).substr(0, 4);
         setModeSubModeValue(mode, subMode, newVal);
@@ -1072,6 +1098,7 @@ var CoordinateCalculator = function() {
     }
 
     function addDisplayValueToTargetNMesh(val) {
+        disableMyLocation();// GPS追従を停止
         if (!isNaN(parseInt(val, 10)) || val == '-') {
             var oldVal = getModeSubModeValue(mode, subMode);
             var newVal = (oldVal + val).substr(0, 9);
@@ -1122,6 +1149,7 @@ var CoordinateCalculator = function() {
     }
 
     function deleteDisplayValueToTargetNBlock() {
+        disableMyLocation();// GPS追従を停止
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setModeSubModeValue(mode, subMode, newVal);
@@ -1129,6 +1157,7 @@ var CoordinateCalculator = function() {
     }
 
     function deleteDisplayValueToTargetNUnit() {
+        disableMyLocation();// GPS追従を停止
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setModeSubModeValue(mode, subMode, newVal);
@@ -1136,6 +1165,7 @@ var CoordinateCalculator = function() {
     }
 
     function deleteDisplayValueToTargetNMesh() {
+        disableMyLocation();// GPS追従を停止
         var oldVal = getModeSubModeValue(mode, subMode);
         var newVal = oldVal.substr(0, oldVal.length - 1);
         setModeSubModeValue(mode, subMode, newVal);
@@ -1144,6 +1174,7 @@ var CoordinateCalculator = function() {
     }
 
     function clearDisplayValueTargetN() {
+        disableMyLocation();// GPS追従を停止
         setModeSubModeValue('n', 'n-block', '');
         setModeSubModeValue('n', 'n-unit', '');
         setModeSubModeValue('n', 'n-mesh', '');
@@ -1322,10 +1353,18 @@ var CoordinateCalculator = function() {
                 }
             } else {
                 // Error
-                if (toMode == modes[2].name) {
+                if (toMode == modes[0].name) {
+                    clearDisplayValueModeLatLng(toMode, false);
+
+                }else if(toMode == modes[1].name){
+                    clearDisplayValueModeLatLng(toMode, false);
+
+                }else if (toMode == modes[2].name) {
                     console.log("error map");
                     showMapErrorIcon();
 
+                }else if(toMode == modes[3].name){
+                    clearDisplayValueTargetN();
                 }
             }
         } else {
