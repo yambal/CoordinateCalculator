@@ -20,11 +20,11 @@ var CoordinateCalculator = function() {
             'll-wgs84-lng'
         ],
         keys: [
-            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-            [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-            [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-            [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: null, value: null }]
+            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+            [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
         ]
     }, {
         name: 'll-tokyo',
@@ -33,11 +33,11 @@ var CoordinateCalculator = function() {
             'll-tokyo-lng'
         ],
         keys: [
-            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-            [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-            [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-            [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: null, value: null }]
+            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+            [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
         ]
     }, {
         name: 'map',
@@ -46,11 +46,11 @@ var CoordinateCalculator = function() {
             'map-photo'
         ],
         keys: [
-            [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-            [{ name: "GPS", value: "gps", icon: "icon-cc-GPS" }, { name: null, value: null }, { name: "up", value: "up", icon: "icon-cc-arrow_upward" }, { name: null, value: null }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-            [{ name: "zoom<br />in", value: "zoomIn", icon: "icon-cc-zoom_in" }, { name: "left", value: "left", icon: "icon-cc-arrow_back" }, { name: null, value: null }, { name: "right", value: "right", icon: "icon-cc-arrow_forward" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-            [{ name: "zoom<br />out", value: "zoomOut", icon: "icon-cc-zoom_out" }, { name: null, value: null }, { name: "down", value: "down", icon: "icon-cc-arrow_downward" }, { name: null, value: null }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }]
+            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+            [{ name: null, value: null }, { name: null, value: null }, { name: "up", value: "up", icon: "icon-cc-arrow_upward" }, { name: null, value: null }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: null, value: null }, { name: "left", value: "left", icon: "icon-cc-arrow_back" }, { name: null, value: null }, { name: "right", value: "right", icon: "icon-cc-arrow_forward" }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+            [{ name: "+", value: "zoomIn"}, { name: null, value: null }, { name: "down", value: "down", icon: "icon-cc-arrow_downward" }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+            [{ name: "-", value: "zoomOut"}, { name: null, value: null }, { name: "GPS", value: "gps", icon: "icon-cc-GPS" }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
         ]
     }, {
         name: 'n',
@@ -61,25 +61,25 @@ var CoordinateCalculator = function() {
         ],
         keys: {
             "n-block": [
-                [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-                [{ name: "X", value: "X" }, { name: "A", value: "A" }, { name: "B", value: "B" }, { name: "C", value: "C" }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-                [{ name: "Y", value: "Y" }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-                [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: null, value: null }, { name: null, value: null }]
+                [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+                [{ name: "X", value: "X" }, { name: "A", value: "A" }, { name: "B", value: "B" }, { name: "C", value: "C" }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+                [{ name: "Y", value: "Y" }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+                [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: null, value: null }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
             ],
             "n-unit": [
-                [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-                [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-                [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-                [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name: null, value: null }]
+                [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+                [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+                [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+                [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: null, value: null }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
             ],
             "n-mesh": [
-                [{ name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
-                [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
-                [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }],
-                [{ name: "C", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
-                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: null, value: null }, { name: null, value: null }]
+                [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+                [{ name: null, value: null }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+                [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
+                [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
+                [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: "-", value: "-" }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
             ]
         }
     }, ];
