@@ -101,6 +101,7 @@ var CoordinateCalculator = function() {
     var isDms = {};
     isDms['ll-wgs84'] = false;
     isDms['ll-tokyo'] = false;
+    var keyVib = 13;// バイブレーション時間
 
     // ************************************************************
     // トリガー
@@ -114,7 +115,7 @@ var CoordinateCalculator = function() {
                     // 同じモードの場合は SubMode を変更する
                     toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 _changeMode(val, toSubMode);
                 break;
 
@@ -124,7 +125,7 @@ var CoordinateCalculator = function() {
                     // 同じモードの場合は SubMode を変更する
                     toSubMode = getLatLonPairSubMode(mode, subMode);
                 }
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 _changeMode(val, toSubMode);
                 break;
 
@@ -137,7 +138,7 @@ var CoordinateCalculator = function() {
                     preSububMode = modes[2].subMode[0];
                 }
                 preMode = val;
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 _changeMode(preMode, preSububMode);
                 break;
 
@@ -152,19 +153,19 @@ var CoordinateCalculator = function() {
                     preSububMode = modes[3].subMode[0];
                 }
                 preMode = val;
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 _changeMode(preMode, preSububMode);
                 break;
 
             case "zoomIn":
                 map.zoomIn();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
 
                 break;
 
             case "zoomOut":
                 map.zoomOut();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "left":
@@ -172,7 +173,7 @@ var CoordinateCalculator = function() {
                 disableMyLocation();
                 var mw = $("#map").width();
                 map.panBy([mw * -0.33, 0]);
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "right":
@@ -180,7 +181,7 @@ var CoordinateCalculator = function() {
                 disableMyLocation();
                 var mw = $("#map").width();
                 map.panBy([mw * 0.33, 0]);
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "up":
@@ -188,7 +189,7 @@ var CoordinateCalculator = function() {
                 disableMyLocation();
                 var mh = $("#map").height();
                 map.panBy([0, mh * -0.33]);
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "down":
@@ -196,37 +197,37 @@ var CoordinateCalculator = function() {
                 disableMyLocation();
                 var mh = $("#map").height();
                 map.panBy([0, mh * 0.33]);
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "gps":
                 gpsToggle();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "my_location":
                 myLocationToggle();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "del":
                 deleteDisplayValue();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "c":
                 clearDisplayValue();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             case "cmv":
                 comvertDisplayValue();
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
 
             default:
                 addDisplayValue(val);
-                navigator.vibrate(25);
+                navigator.vibrate(keyVib);
                 break;
         }
     }
