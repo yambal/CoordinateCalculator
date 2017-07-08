@@ -108,6 +108,29 @@ var CoordinateCalculator = function() {
 
     // ************************************************************
     // トリガー
+
+    $('.display-body-group.ll-wgs84-lat').click(function(event) {
+        _changeMode('ll-wgs84', 'll-wgs84-lat');
+    });
+    $('.display-body-group.ll-wgs84-lng').click(function(event) {
+        _changeMode('ll-wgs84', 'll-wgs84-lng');
+    });
+    $('.display-body-group.ll-tokyo-lat').click(function(event) {
+        _changeMode('ll-tokyo', 'll-tokyo-lat');
+    });
+    $('.display-body-group.ll-tokyo-lng').click(function(event) {
+        _changeMode('ll-tokyo', 'll-tokyo-lng');
+    });
+    $('.display-body-group.n-block').click(function(event) {
+        _changeMode('n', 'n-block');
+    });
+    $('.display-body-group.n-unit').click(function(event) {
+        _changeMode('n', 'n-unit');
+    });
+    $('.display-body-group.n-mesh').click(function(event) {
+        _changeMode('n', 'n-mesh');
+    });
+
     function _onKeyPress(val) {
         console.log("_onKeyPress(" + val + ")");
         switch (val) {
