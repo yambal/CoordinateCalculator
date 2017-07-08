@@ -80,15 +80,19 @@ body {
 }
 #display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-num {
   text-align: right;
+  padding: 0 0.5em;
 }
 #display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-block {
   text-align: right;
+  padding: 0 0.5em;
 }
 #display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-unit {
   text-align: right;
+  padding: 0 0.5em;
 }
 #display .display-container .display-body .display-body-group .display-body-group-fitter .display-body-group-inner .value.value-mesh {
   text-align: right;
+  padding: 0 0.5em;
 }
 body {
   color: white;
