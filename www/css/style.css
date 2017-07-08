@@ -212,17 +212,29 @@ body.submode-ll-wgs84-lat .display-body-group.ll-wgs84-lat {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
 }
+body.submode-ll-wgs84-lat .display-body-group.ll-wgs84-lat .icon-cc-play_arrow {
+  color: #ffffff;
+}
 body.submode-ll-wgs84-lng .display-body-group.ll-wgs84-lng {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-ll-wgs84-lng .display-body-group.ll-wgs84-lng .icon-cc-play_arrow {
+  color: #ffffff;
 }
 body.submode-ll-tokyo-lat .display-body-group.ll-tokyo-lat {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
 }
+body.submode-ll-tokyo-lat .display-body-group.ll-tokyo-lat .icon-cc-play_arrow {
+  color: #ffffff;
+}
 body.submode-ll-tokyo-lng .display-body-group.ll-tokyo-lng {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-ll-tokyo-lng .display-body-group.ll-tokyo-lng .icon-cc-play_arrow {
+  color: #ffffff;
 }
 body.submode-map-std .display-body-group.map-map,
 body.submode-map-photo .display-body-group.map-map {
@@ -233,13 +245,22 @@ body.submode-n-block .display-body-group.n-block {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
 }
+body.submode-n-block .display-body-group.n-block .icon-cc-play_arrow {
+  color: #ffffff;
+}
 body.submode-n-unit .display-body-group.n-unit {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
 }
+body.submode-n-unit .display-body-group.n-unit .icon-cc-play_arrow {
+  color: #ffffff;
+}
 body.submode-n-mesh .display-body-group.n-mesh {
   /** サブモード（入力対象）でスタイルを変更 **/
   background-color: rgba(0, 0, 0, 0.125);
+}
+body.submode-n-mesh .display-body-group.n-mesh .icon-cc-play_arrow {
+  color: #ffffff;
 }
 body.mode-map .display-header .icon-cc-GPS,
 body.mode-map .display-header .icon-cc-my_location,
@@ -252,7 +273,8 @@ body.gps-setview .display-header .icon-cc-my_location {
   color: #ffffff;
 }
 body .display-container .icon-cc-error2,
-body .display-container .icon-cc-dms {
+body .display-container .icon-cc-dms,
+body .display-container .icon-cc-play_arrow {
   /** デフォルトでOffにするアイコン **/
   color: rgba(255, 255, 255, 0.3);
 }
