@@ -1244,17 +1244,20 @@ var CoordinateCalculator = function() {
         onNCodeDisplayChange();
     }
 
-    function clearDisplayValueTargetN() {
+    function clearDisplayValueTargetN(_share) {
         disableMyLocation(); // GPS追従を停止
         setModeSubModeValue('n', 'n-block', '');
         setModeSubModeValue('n', 'n-unit', '');
         setModeSubModeValue('n', 'n-mesh', '');
-        onNCodeDisplayChange();
+        onNCodeDisplayChange(_share);
     }
 
-    function onNCodeDisplayChange() {
+    function onNCodeDisplayChange(_share) {
         console.group();
         console.log("onNCodeDisplayChange()");
+        if (typeof _share === "undefined") {
+            _share = true;
+        }
 
         //$('.bound').html("?");
         var b = getModeSubModeValue('n', 'n-block');
@@ -1303,7 +1306,10 @@ var CoordinateCalculator = function() {
 
         console.log("values", values);
 
-        shareToOtherModes(modes[3].name);
+        if(_share){
+            shareToOtherModes(modes[3].name);
+        }
+        
 
         console.groupEnd();
     }
@@ -1424,6 +1430,7 @@ var CoordinateCalculator = function() {
                 }
             } else {
                 // Error
+                console.log("error", toMode);
                 if (toMode == modes[0].name) {
                     clearDisplayValueModeLatLng(toMode, false);
 
@@ -1435,7 +1442,7 @@ var CoordinateCalculator = function() {
                     showMapErrorIcon();
 
                 } else if (toMode == modes[3].name) {
-                    clearDisplayValueTargetN();
+                    clearDisplayValueTargetN(false);
                 }
             }
         } else {
