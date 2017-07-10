@@ -1400,7 +1400,7 @@ var CoordinateCalculator = function() {
 
                     setModeIsErrorView(toMode, false);
                     setSubmodeIsErrorView(modes[1].subMode[0], false);
-                    setSubmodeIsErrorView(modes[2].subMode[1], false);
+                    setSubmodeIsErrorView(modes[1].subMode[1], false);
 
                 } else if (toMode == modes[2].name) {
                     hideMapErrorIcon();
