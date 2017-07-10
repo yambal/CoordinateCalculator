@@ -20,7 +20,7 @@ var CoordinateCalculator = function() {
             'll-wgs84-lng'
         ],
         keys: [
-            [{ name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
+            [{ name: "share", value: 'share', icon: 'icon-cc-share' }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
             [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
@@ -250,11 +250,34 @@ var CoordinateCalculator = function() {
                 navigator.vibrate(keyVib);
                 break;
 
+            case "share":
+                share();
+                break;
+
             default:
                 addDisplayValue(val);
                 navigator.vibrate(keyVib);
                 break;
         }
+    }
+    // ************************************************************
+    function share() {
+        //getModeSubModeValue(_mode, _subMode);
+        if(mode == "ll-wgs84"){
+            var subject = 'WGS 84';
+            var text = getModeSubModeValue('ll-wgs84', 'll-wgs84-lat') +  ',' + getModeSubModeValue('ll-wgs84', 'll-wgs84-lng') ;
+        }
+
+        window.plugins.share.show({
+            subject: subject,
+            text: text
+        }, function() {
+            // Share success
+            console.log("共有ダイアログ表示に成功した時のコールバック関数");
+        }, function() {
+            // Share failed
+            console.log("共有ダイアログ表示に失敗した時のコールバック関数");
+        });
     }
 
     // ************************************************************
@@ -586,7 +609,7 @@ var CoordinateCalculator = function() {
         if (!map) {
 
             var strageLatLng = loatCenter()
-             var strageZoom = loadZoom();
+            var strageZoom = loadZoom();
 
             map = L.map('map', {
                 center: [strageLatLng.lat, strageLatLng.lng],
@@ -1306,10 +1329,10 @@ var CoordinateCalculator = function() {
 
         console.log("values", values);
 
-        if(_share){
+        if (_share) {
             shareToOtherModes(modes[3].name);
         }
-        
+
 
         console.groupEnd();
     }
