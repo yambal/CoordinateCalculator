@@ -1,8 +1,10 @@
 /** style.less **/
+/*
 @font-face {
-  font-family: 'LexiaReadable';
-  src: url('../fonts/LexiaReadable-Regular.ttf') format('truetype');
+    font-family: 'LexiaReadable';
+    src: url('../fonts/LexiaReadable-Regular.ttf') format('truetype');
 }
+*/
 html,
 body {
   margin: 0;
@@ -96,7 +98,6 @@ body {
 }
 body {
   color: white;
-  font-family: 'LexiaReadable';
   background-color: #383838;
   transition: all 0.5s ease;
 }
@@ -395,7 +396,7 @@ body.flash-mode-n .keyboad .keyboad-row .keyboad-col .key.key-n {
 }
 @font-face {
   font-family: 'Coordinate-Calculator';
-  src: url('../fonts/Coordinate-Calculator.ttf?nm1sb9') format('truetype');
+  src: url('../fonts/Coordinate-Calculator.ttf?f4m7fl') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -411,6 +412,9 @@ i {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-cc-d-dms2:before {
+  content: "\e913";
 }
 .icon-cc-d-dms:before {
   content: "\e910";

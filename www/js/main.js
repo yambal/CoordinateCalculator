@@ -21,7 +21,7 @@ var CoordinateCalculator = function() {
         ],
         keys: [
             [{ name: "share", value: 'share', icon: 'icon-cc-share' }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
-            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms2" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
@@ -34,7 +34,7 @@ var CoordinateCalculator = function() {
         ],
         keys: [
             [{ name: "share", value: 'share', icon: 'icon-cc-share' }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }, { name: null, value: null }],
-            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
+            [{ name: "cmv", value: "cmv", icon: "icon-cc-d-dms2" }, { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 }, { name: 'n', value: 'n', icon: 'icon-cc-n' }],
             [{ name: null, value: null }, { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 }, { name: 'Tokyo', value: 'll-tokyo', icon: 'icon-cc-Tokyo' }],
             [{ name: "AC", value: "c" }, { name: "1", value: 1 }, { name: "2", value: 2 }, { name: "3", value: 3 }, { name: 'WGS84', value: 'll-wgs84', icon: 'icon-cc-WGS84' }],
             [{ name: "Del", value: "del" }, { name: "0", value: 0 }, { name: ".", value: "." }, { name: "My Location", value: "my_location", icon: "icon-cc-my_location" }, { name: 'Map', value: 'map', icon: 'icon-cc-map' }]
