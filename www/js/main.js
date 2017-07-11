@@ -601,7 +601,7 @@ var CoordinateCalculator = function() {
     function _mapSetup() {
         if (!map) {
 
-            var strageLatLng = loatCenter()
+            var strageLatLng = loadCenter()
             var strageZoom = loadZoom();
 
             map = L.map('map', {
@@ -658,7 +658,7 @@ var CoordinateCalculator = function() {
         });
     }
 
-    function loatCenter() {
+    function loadCenter() {
         return s.get('latlng', {
             lat: 35.0,
             lng: 135.0
