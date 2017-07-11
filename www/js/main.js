@@ -96,6 +96,9 @@ var CoordinateCalculator = function() {
     var anchorMarker = false;
     var centerMaker = false;
     var errorMaker = false;
+    var rectMesh = null;
+    var blockMesh = null;
+    var unitMesh = null;
 
     var isDms = {};
     isDms['ll-wgs84'] = false;
@@ -697,6 +700,7 @@ var CoordinateCalculator = function() {
         }
     }
 
+    // 地図が動いている最中
     function onMove() {
         var centerLatLng = map.getCenter();
         if (!centerMaker) {
@@ -708,14 +712,16 @@ var CoordinateCalculator = function() {
 
     //　マップ位置が変更されたとき
     function onMapMoveEnd(event) {
-
+        drawNcodeRectangle(map.getCenter());
     }
 
+    // マップのドラッグを開始したとき
     function onDragstart() {
         hideMapErrorIcon(); // ドラッグ開始したらエラーは非表示
         disableMyLocation();
     }
 
+    // マップのドラッグが完了したとき
     function onDragend() {
         var latlang = map.getCenter();
         var mapMode = modes[2].name;
@@ -821,6 +827,48 @@ var CoordinateCalculator = function() {
     function disableMyLocation() {
         $('body').removeClass("gps-setview");
         gpsSetView = false;
+    }
+
+    // 地図にNコードの範囲を描画する
+    function drawNcodeRectangle(_LatLng){
+        //var centerLatLng = map.getCenter();
+        var nLatLng = n.latlng(_LatLng.lat, _LatLng.lng);
+        var nCode = n.latlngToNCode(nLatLng);
+        var meshNBound = n.nCodeToBound(nCode);
+        var meshSouthWest = meshNBound.getSouthWest();
+        var meshNorthEast = meshNBound.getNorthEast();
+        if(rectMesh){
+            map.removeLayer(rectMesh);
+            rectMesh = null;
+        }
+        var llMeshBounds = [[meshNorthEast.lat, meshNorthEast.lng], [meshSouthWest.lat, meshSouthWest.lng]];
+        rectMesh = L.rectangle(llMeshBounds, {color: "#E91E63", weight: 1, fill:false}).addTo(map);
+
+        if(nCode.blockName){
+            var blockNcode = n.nCode(nCode.blockName, null, null, null);
+            var blockBound = n.nCodeToBound(blockNcode);
+            var blockSouthWest = blockBound.getSouthWest();
+            var blockNorthEast = blockBound.getNorthEast();
+            if(blockMesh){
+                map.removeLayer(blockMesh);
+                blockMesh = null;
+            }
+            var llBlockBounds = [[blockNorthEast.lat, blockNorthEast.lng], [blockSouthWest.lat, blockSouthWest.lng]];
+            blockMesh = L.rectangle(llBlockBounds, {color: "#E91E63", weight: 1, fill:false}).addTo(map);
+
+            if(nCode.unitName){
+                var unitNcode = n.nCode(nCode.blockName, nCode.unitName, null, null);
+                var unitBound = n.nCodeToBound(unitNcode);
+                var unitSouthWest = unitBound.getSouthWest();
+                var unitNorthEast = unitBound.getNorthEast();
+                if(unitMesh){
+                    map.removeLayer(unitMesh);
+                    unitMesh = null;
+                }
+                var llUnitBounds = [[unitNorthEast.lat, unitNorthEast.lng], [unitSouthWest.lat, unitSouthWest.lng]];
+                unitMesh = L.rectangle(llUnitBounds, {color: "#E91E63", weight: 1, fill:false}).addTo(map);
+            }
+        }
     }
 
     // =============================================================
